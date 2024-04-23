@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  font-family: 'SUITE-Regular';
+}
+
+/* header 설정 */
+header {
+  text-align:center;
+
+}
+
+/* 로고 이미지 설정 */
+.mainimage {
+  width:200px;
+  padding-top: 20px;
+}
+
+/* home으로 가기 이미지 */
+#logo_home {
+  width:40px;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* fieldset 설정 */
+
+#fieldset {
+  width: 500px;
+  height: 1125px;
+  margin: 0 auto;
+  margin-top: 40px;
+  border-radius: 50px;
+  border-color: yellowgreen;
+}
+
+
+body {
+  background-image:#34495e;
+}
+
+h2 {
+  font-family: 'SUITE-Regular';
+}
+
+.joinForm {
+  position:absolute;
+  width:400px;
+  height:400px;
+  padding: 30px, 20px;
+  background-color:#FFFFFF;
+  text-align:center;
+  top:52%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 15px;
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-bottom: 2px solid #adadad;
+  margin: 30px;
+  padding: 10px 10px;
+}
+
+
+.input_text {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+  font-family: 'SUITE-Regular';
+}
+
+.pw {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.btn {
+  position:relative;
+  left:40%;
+  transform: translateX(-50%);
+  margin-bottom: 40px;
+  width:80%;
+  height:50px;
+  background: #eee;
+  background-position: left;
+  background-size: 200%;
+  border:none;
+  border-radius: 100px;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+  font-size: 25px;;
+  font-family: 'SUITE-Regular';
+}
+
+.btn:hover {
+  background-position: right;
+}
+
+#sample6_postcode {
+  width:50%;
+  float:left
+}
+
+.address_btn {
+  font-family: 'SUITE-Regular';
+  font-size: 16px;
+  width: 100px;
+  background: #eee;
+  border: none;
+  border-radius: 100px;
+  outline: none;
+  cursor:pointer;
+  float:right;
+}
+
+.on:hover {
+  background-color: yellowgreen;
+}

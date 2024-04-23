@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+  
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'SUITE-Regular';
+}
+
+/* header 설정 */
+header {
+    text-align:center;
+}
+  
+/* 로고 이미지 설정 */
+.mainimage {
+    width:200px;
+    padding-top: 20px;
+}
+
+
+.board_view_div {
+    margin: 60px;
+    text-align: center;
+}
+
+.board_view_div p {
+    font-size: 20px;
+    padding-bottom: 3px;
+}
+  
+#board_view_p_date {
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+#board_view_hr {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.board_content {
+    width: 50%; /* 게시글 내용의 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    overflow-y: visible; /* 세로 스크롤바가 필요한 경우만 표시 */
+    padding: 10px; /* 내용과 컨테이너 간의 간격 설정 */
+
+}
+
+.comment_list {
+	padding-top: 60px;
+	text-align:left
+}
+
+#replyId {
+	float:left;
+}
+
+
+  /* 댓글 스타일 */
+  .comment {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    position: relative;
+  }
+
+  /* 작성자명 스타일 */
+  .author {
+    font-weight: bold;
+  }
+
+  /* 수정, 삭제 버튼 스타일 */
+  .actions {
+    position: absolute;
+    top: 5px;
+    right: 0;
+  }
+
+  /* 답글달기 버튼 스타일 */
+  .reply-btn {
+    display: block;
+    margin-top: 5px;
+    color: blue;
+    cursor: pointer;
+  }
+
+  /* 답글 입력창 스타일 */
+  .reply-form {
+    margin-top: 10px;
+  }
+/* footer 설정 */
+.site-footer hr{
+  border-top-color:#bbb;
+  opacity:0.5
+}
+
+.footer-links{
+  padding-left:0;
+  list-style:none
+}
+
+.footer-links a{
+  color:#737373
+}
