@@ -33,8 +33,6 @@ public class MainPageServiceImpl implements MainPageService {
 		
 		selectVeterinaryFields = mainPageMapper.selectVeterinaryField();
 		
-		int veterinaryFieldsSize = selectVeterinaryFields.size();
-		
 		return selectVeterinaryFields;
 	}
 
