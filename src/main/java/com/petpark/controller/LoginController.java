@@ -1,13 +1,13 @@
 package com.petpark.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class LoginController {
 
-	@RequestMapping("login.do")
+	@GetMapping("login.do")
 	public ModelAndView login() {
 		
 		ModelAndView mv = new ModelAndView();
@@ -16,7 +16,7 @@ public class LoginController {
 		return mv;
 	}
 	
-	@RequestMapping("signup.do")
+	@GetMapping("signup.do")
 	public ModelAndView signup() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("signup");

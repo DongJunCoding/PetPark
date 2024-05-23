@@ -53,45 +53,7 @@
      	        
 		        <br>
 		        <hr>
-		        <br>
-	        
-		        <div class="card mb-2 comment">
-					<div class="card-header bg-light">
-						<i class="fa fa-comment fa"></i> 댓글 쓰기
-					</div>
-					<div class="card-body">
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">
-						    	<!-- 댓글 form -->
-								<form action="#" method="post">
-									<div class="form-inline mb-2">
-										<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-										<input type="text" class="form-control ml-2" placeholder="Enter yourId" id="replyId">
-										<label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
-									</div>
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-									<button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">댓글 달기</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-				</div>
-				
-				<div class="comment_list">
-					<h2>댓글</h2>
-					<div class="comment" id="comment1">
-					    <span class="author">작성자명</span>
-						<p>댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-						<div class="actions">
-							<span class="edit-btn">수정</span> | <span class="delete-btn">삭제</span>
-						</div>
-						    <span class="reply-btn">답글달기</span>
-						<div class="reply-form" style="display: none;">
-						    <textarea class="reply-input" placeholder="답글 내용을 입력하세요"></textarea><br>
-						    <button class="reply-submit">답글 작성</button>
-					    </div>
-					</div>		
-				</div>
+		        <br>       
 	        </div>
 		</div>
     </main>

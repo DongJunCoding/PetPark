@@ -3,8 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
         <mapper namespace="com.petpark.mapper.CrawlingMapper">
-        	<insert id="industryList" parameterType="com.petpark.dto.CrawlingDTO">
-        		insert into news(newsId, categories, subject, writer, main_image, content, date, update_date, view_count) 
-        		values (0, "industry", #{subject}, #{writer}, #{main_image}, #{content}, #{date}, 0, 0)
-        	</insert>
+        	<insert id="newsCrawling" parameterType="com.petpark.dto.CrawlingDTO">
+        		insert into news(newsId, categories, subject, writer, main_image, content, date, view_count) 
+        		values (0, #{categories}, #{subject}, #{writer}, #{main_image}, #{content}, #{date}, 0)
+        	</insert>        
+        	
+        	<select id="newsCount" resultType="int">
+        		select count(subject) from news where subject=#{subject}
+        	</select>
         </mapper>

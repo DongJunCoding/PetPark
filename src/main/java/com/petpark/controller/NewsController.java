@@ -1,34 +1,36 @@
 package com.petpark.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.petpark.dto.CrawlingDTO;
-import com.petpark.service.MainPageServiceImpl;
+import com.petpark.service.NewsServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-public class BoardController {
+public class NewsController {
 
 	@Autowired
-	private MainPageServiceImpl mainPageServiceImpl;
+	private NewsServiceImpl newsServiceImpl;
 	
-	@GetMapping("/board.do")
-	public ModelAndView board(HttpServletRequest req) throws Exception {
+	@GetMapping("/newsView.do")
+	public ModelAndView newsView(HttpServletRequest req) {
+		
+		CrawlingDTO newsView = new CrawlingDTO();
+		
+		String newsId = req.getParameter("newsId");
+		
+		newsView = newsServiceImpl.newsView(newsId);
 		
 		ModelAndView mv = new ModelAndView();
 		
-		ArrayList<CrawlingDTO> news = new ArrayList<CrawlingDTO>();
+		mv.addObject("newsView", newsView);
 		
-		news = mainPageServiceImpl.selectRecentNews();
-				
-		mv.addObject("news",news);
-		mv.setViewName("board_view");
+		mv.setViewName("news_view");
+		
 		return mv;
 	}
 }

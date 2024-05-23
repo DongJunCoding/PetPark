@@ -179,9 +179,14 @@ a {
 
 .board_list_image {
   width: 100px;
+  height:100px;
   padding-right: 20px;
 }
 
+#board-size {
+	float:right;
+	color:orange;
+}
 
 
 /* paging 버튼 설정 */

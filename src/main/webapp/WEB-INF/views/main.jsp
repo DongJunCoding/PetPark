@@ -1,5 +1,71 @@
+<%@page import="java.io.Console"%>
+<%@page import="com.petpark.dto.CrawlingDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+ArrayList<CrawlingDTO> recentNews = new ArrayList<CrawlingDTO>();
+ArrayList<CrawlingDTO> veterinaryFields = new ArrayList<CrawlingDTO>();
+	
+recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
+veterinaryFields = (ArrayList<CrawlingDTO>)request.getAttribute("veterinaryFields");
+
+String newsId = "";
+String subject = "";
+String writer = "";
+String date = "";
+String image = "";
+int viewCount = 0;
+
+int veterinaryFieldsSize = veterinaryFields.size();
+
+StringBuilder newsSB = new StringBuilder();
+
+for(CrawlingDTO news : recentNews) {
+	
+	newsId = news.getNewsId();
+	subject = news.getSubject();
+	writer = news.getWriter();
+	date = news.getDate();
+	viewCount = news.getView_count();
+	
+	newsSB.append("<tr>");
+	newsSB.append("<td>" + newsId + "</td>");
+	newsSB.append("<td class='tit'>");
+	newsSB.append("<a href='/newsView.do?newsId=" + newsId + "'>" + subject + "</a>");
+	newsSB.append("</td>");
+	newsSB.append("<td>" + writer + "</td>");
+	newsSB.append("<td>" + date + "</td>");
+	newsSB.append("<td>" + viewCount + "</td>");
+	newsSB.append("<tr>");
+	
+}
+
+StringBuilder veterinaryFieldSB = new StringBuilder();
+
+for(CrawlingDTO veterinaryField : veterinaryFields) {
+	
+	newsId = veterinaryField.getNewsId();
+	subject = veterinaryField.getSubject();
+	writer = veterinaryField.getWriter();
+	date = veterinaryField.getDate();
+	viewCount = veterinaryField.getView_count();
+	image = veterinaryField.getMain_image();
+		
+	veterinaryFieldSB.append("<tr>");
+	veterinaryFieldSB.append("<td>" + newsId + "</td>");
+	veterinaryFieldSB.append("<td class='tit'>");
+	veterinaryFieldSB.append("<a href='/newsView.do?newsId=" + newsId + "'><img class='board_list_image' src='" + image + "'>" + subject + "</a>");
+	veterinaryFieldSB.append("</td>");
+	veterinaryFieldSB.append("<td>" + writer + "</td>");
+	veterinaryFieldSB.append("<td>" + date + "</td>");
+	veterinaryFieldSB.append("<td>" + viewCount + "</td>");
+	veterinaryFieldSB.append("</tr>");
+	
+}
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,15 +179,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="tit">
-                                                <a href="#">반려동물 사진들 !</a>
-                                            </td>
-                                            <td>이동준</td>
-                                            <td>2024-03-23</td>
-                                            <td>216</td>
-                                        </tr>                             
+                                        <%=newsSB %>                            
                                     </tbody>
                                 </table>
                             </div> 
@@ -410,6 +468,7 @@
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        <span id="board-size">게시글 : <%=veterinaryFieldsSize %> 개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -421,15 +480,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="tit">
-                                            <a href="#">수의계</a>
-                                        </td>
-                                        <td>이동준</td>
-                                        <td>2024-03-23</td>
-                                        <td>216</td>
-                                    </tr>                             
+                                    <%=veterinaryFieldSB %>                            
                                 </tbody>
                             </table>
                             <div class="paging">
