@@ -65,6 +65,11 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
 	
 }
 
+
+// Paging
+
+int currentPage = 1;
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -486,7 +491,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>
                                 <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
+                                <a href="/petpark.do?currentPage=<%=currentPage%>&categories=veterinaryField" class="num on">1</a>
                                 <a href="#" class="num">2</a>
                                 <a href="#" class="num">3</a>
                                 <a href="#" class="bt">다음 페이지</a>
