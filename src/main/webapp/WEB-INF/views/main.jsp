@@ -1,3 +1,4 @@
+<%@page import="com.petpark.dto.PageDTO"%>
 <%@page import="java.io.Console"%>
 <%@page import="com.petpark.dto.CrawlingDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -6,10 +7,10 @@
     
 <%
 ArrayList<CrawlingDTO> recentNews = new ArrayList<CrawlingDTO>();
-ArrayList<CrawlingDTO> veterinaryFields = new ArrayList<CrawlingDTO>();
-	
+//ArrayList<CrawlingDTO> veterinaryFields = new ArrayList<CrawlingDTO>();
+
 recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
-veterinaryFields = (ArrayList<CrawlingDTO>)request.getAttribute("veterinaryFields");
+//veterinaryFields = (ArrayList<CrawlingDTO>)request.getAttribute("veterinaryFields");
 
 String newsId = "";
 String subject = "";
@@ -18,7 +19,7 @@ String date = "";
 String image = "";
 int viewCount = 0;
 
-int veterinaryFieldsSize = veterinaryFields.size();
+// int veterinaryFieldsSize = veterinaryFields.size();
 
 StringBuilder newsSB = new StringBuilder();
 
@@ -42,6 +43,7 @@ for(CrawlingDTO news : recentNews) {
 	
 }
 
+/* 
 StringBuilder veterinaryFieldSB = new StringBuilder();
 
 for(CrawlingDTO veterinaryField : veterinaryFields) {
@@ -64,11 +66,9 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
 	veterinaryFieldSB.append("</tr>");
 	
 }
-
+*/
 
 // Paging
-
-int currentPage = 1;
 
 %>
 <!DOCTYPE html>
@@ -80,20 +80,60 @@ int currentPage = 1;
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-				   
-    <link rel="stylesheet" href="setting/css/main.css">
-	
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>				   
+    <link rel="stylesheet" href="setting/css/main.css">	
+    
+  
 	<script type="text/javascript">
-	
-	function page() {
+		
+	function page(pageNum) {
 		$.ajax({
-			type:"GET",
-			url:"petpark.do",
-			async:true,
-			
-			data:
+			type:'GET',
+			url:'/newsList.do',
+			async:true,	
+			dataType:'json',
+			data: {
+				'currentPage':pageNum
+			},
+			success: function(page) {
+				
+				let veterinaryFields = page.veterinaryFields;
+				
+				let veterinaryFieldSB = new StringBuilder();
+				
+	            veterinaryFields.forEach(veterinaryField => {
+	                veterinaryFieldSB.append("<tr>");
+	                veterinaryFieldSB.append("<td>" + veterinaryField.newsId + "</td>");
+	                veterinaryFieldSB.append("<td class='tit'>");
+	                veterinaryFieldSB.append("<a href='/newsView.do?newsId=" + veterinaryField.newsId + "'><img class='board_list_image' src='" + veterinaryField.main_image + "'>" + veterinaryField.subject + "</a>");
+	                veterinaryFieldSB.append("</td>");
+	                veterinaryFieldSB.append("<td>" + veterinaryField.writer + "</td>");
+	                veterinaryFieldSB.append("<td>" + veterinaryField.date + "</td>");
+	                veterinaryFieldSB.append("<td>" + veterinaryField.view_count + "</td>");
+	                veterinaryFieldSB.append("</tr>");
+	            });
+	            
+	            document.getElementById("veterinaryFieldsTableBody").innerHTML = veterinaryFieldSB.toString();
+			},
+			error: function(error) {
+				console.log("AJAX 요청 실패");
+			}
 		});
+	}
+	
+	// StringBuilder 유틸리티
+	class StringBuilder {
+	    constructor() {
+	        this._stringArray = [];
+	    }
+
+	    append(string) {
+	        this._stringArray.push(string);
+	    }
+
+	    toString() {
+	        return this._stringArray.join("");
+	    }
 	}
 	
 	</script>
@@ -339,11 +379,9 @@ int currentPage = 1;
                                 <a href="#" class="num">3</a>
                                 <a href="#" class="bt">다음 페이지</a>
                                 <a href="#" class="bt">마지막 페이지</a>
-
                             </div>
                         </div>                  
                     </div>
-
 
                     <div id="society" class="container tab-pane fade"><br>
                         <form action="#" method="post">
@@ -428,7 +466,6 @@ int currentPage = 1;
                                 <a href="#" class="num">3</a>
                                 <a href="#" class="bt">다음 페이지</a>
                                 <a href="#" class="bt">마지막 페이지</a>
-
                             </div>
                         </div>
                     </div>
@@ -486,7 +523,7 @@ int currentPage = 1;
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        <span id="board-size">게시글 : <%=veterinaryFieldsSize %> 개</span>
+                        <span id="board-size">게시글 :  개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -497,18 +534,18 @@ int currentPage = 1;
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <%=veterinaryFieldSB %>                            
+                                <tbody id="veterinaryFieldsTableBody"> 
+                                                         
                                 </tbody>
                             </table>
                             <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="/petpark.do?currentPage=<%=currentPage%>&categories=veterinaryField" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
+                                <a class="bt" onclick="page(1)" id="">첫 페이지</a>
+                                <a class="bt" onclick="page()">이전 페이지</a>
+                                <a class="num on" onclick="page(1)">1</a>
+                                <a class="num" onclick="page(2)">2</a>
+                                <a class="num" onclick="page(3)">3</a>
+                                <a class="bt" onclick="page()">다음 페이지</a>
+                                <a class="bt">마지막 페이지</a>
 
                             </div>
                         </div>

@@ -138,7 +138,8 @@ caption {
 
 a {
   text-decoration: none;
-  color:inherit
+  color:inherit;
+  cursor:pointer;
 }
 
 .board_list tr {

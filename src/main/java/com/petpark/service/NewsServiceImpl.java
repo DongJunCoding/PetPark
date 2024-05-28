@@ -1,5 +1,7 @@
 package com.petpark.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,17 @@ public class NewsServiceImpl implements NewsService {
 		
 		return newsView;
 		
+	}
+
+	
+	@Override
+	public ArrayList<CrawlingDTO> selectVeterinaryField() throws Exception {
+		
+		ArrayList<CrawlingDTO> selectVeterinaryFields = new ArrayList<CrawlingDTO>();
+		
+		selectVeterinaryFields = newsInfoMapper.selectVeterinaryField();
+		
+		return selectVeterinaryFields;
 	}
 
 }

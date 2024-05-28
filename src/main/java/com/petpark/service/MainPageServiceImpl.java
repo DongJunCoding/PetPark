@@ -25,15 +25,4 @@ public class MainPageServiceImpl implements MainPageService {
 		return mainPageMapper.selectRecentNews();
 	}
 
-	
-	@Override
-	public ArrayList<CrawlingDTO> selectVeterinaryField() throws Exception {
-		
-		ArrayList<CrawlingDTO> selectVeterinaryFields = new ArrayList<CrawlingDTO>();
-		
-		selectVeterinaryFields = mainPageMapper.selectVeterinaryField();
-		
-		return selectVeterinaryFields;
-	}
-
 }

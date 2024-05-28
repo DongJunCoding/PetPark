@@ -6,4 +6,9 @@
         	<select id="newsView" resultType="com.petpark.dto.CrawlingDTO">
         		select newsId, subject, writer, content, date, view_count from news where newsId=#{newsId}
         	</select>
+        	
+        	<!-- 수의계 뉴스 데이터 -->
+        	<select id="selectVeterinaryField" resultType="com.petpark.dto.CrawlingDTO">
+        		select newsId, subject, writer, main_image, date, view_count from news where categories="veterinary_field" order by date desc;
+        	</select>
         </mapper>
