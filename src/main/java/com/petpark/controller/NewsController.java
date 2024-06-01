@@ -29,7 +29,7 @@ public class NewsController {
 		String newsId = req.getParameter("newsId");
 		
 		newsView = newsServiceImpl.newsView(newsId);
-		
+				
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("newsView", newsView);

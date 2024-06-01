@@ -10,6 +10,7 @@
 	String writer = newsView.getWriter();
 	String date = newsView.getDate();
 	String content = newsView.getContent();
+	int viewCount = newsView.getView_count();
 	
 %>
 <!DOCTYPE html>
@@ -43,12 +44,15 @@
 	        <br>
 	        <p><%=writer %></p>
 	        <p id="board_view_p_date"><%=date %></p>
+	        <span>조회: <%=viewCount %></span>
+	        <br>
 	        <hr id="board_view_hr">
 	        
 	    	<div class="board_content">
 				<!-- 실제 게시글 내용 -->
 		        <span>
 		        	<%=content %>
+		    	원본출처 : <a href="https://www.pet-news.or.kr/">한국반려동물신문</a>
 		        </span>
      	        
 		        <br>

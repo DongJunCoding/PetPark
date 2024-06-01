@@ -345,7 +345,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        	<span id="policy_board-size">게시글 :  개</span>
+                        	<span id="policy_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -375,7 +375,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        	<span id="society_board-size">게시글 :  개</span>
+                        	<span id="society_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -405,7 +405,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        	<span id="culture_board-size">게시글 :  개</span>
+                        	<span id="culture_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -435,7 +435,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        	<span id="welfare_board-size">게시글 :  개</span>
+                        	<span id="welfare_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -465,7 +465,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        <span id="veterinary_field_board-size">게시글 :  개</span>
+                        <span id="veterinary_field_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>

@@ -21,6 +21,9 @@ public class NewsServiceImpl implements NewsService {
 		
 		newsView = newsInfoMapper.newsView(newsId);
 		
+		// 뉴스 게시글 조회수 증가
+		newsInfoMapper.viewCount(newsId);
+		
 		return newsView;
 		
 	}
