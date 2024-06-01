@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.petpark.dto.CrawlingDTO;
-import com.petpark.dto.PageDTO;
 import com.petpark.service.CrawlingServiceImpl;
 import com.petpark.service.MainPageServiceImpl;
 

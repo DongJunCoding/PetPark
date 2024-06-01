@@ -7,10 +7,8 @@
     
 <%
 ArrayList<CrawlingDTO> recentNews = new ArrayList<CrawlingDTO>();
-//ArrayList<CrawlingDTO> veterinaryFields = new ArrayList<CrawlingDTO>();
 
 recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
-//veterinaryFields = (ArrayList<CrawlingDTO>)request.getAttribute("veterinaryFields");
 
 String newsId = "";
 String subject = "";
@@ -18,8 +16,6 @@ String writer = "";
 String date = "";
 String image = "";
 int viewCount = 0;
-
-// int veterinaryFieldsSize = veterinaryFields.size();
 
 StringBuilder newsSB = new StringBuilder();
 
@@ -43,33 +39,6 @@ for(CrawlingDTO news : recentNews) {
 	
 }
 
-/* 
-StringBuilder veterinaryFieldSB = new StringBuilder();
-
-for(CrawlingDTO veterinaryField : veterinaryFields) {
-	
-	newsId = veterinaryField.getNewsId();
-	subject = veterinaryField.getSubject();
-	writer = veterinaryField.getWriter();
-	date = veterinaryField.getDate();
-	viewCount = veterinaryField.getView_count();
-	image = veterinaryField.getMain_image();
-		
-	veterinaryFieldSB.append("<tr>");
-	veterinaryFieldSB.append("<td>" + newsId + "</td>");
-	veterinaryFieldSB.append("<td class='tit'>");
-	veterinaryFieldSB.append("<a href='/newsView.do?newsId=" + newsId + "'><img class='board_list_image' src='" + image + "'>" + subject + "</a>");
-	veterinaryFieldSB.append("</td>");
-	veterinaryFieldSB.append("<td>" + writer + "</td>");
-	veterinaryFieldSB.append("<td>" + date + "</td>");
-	veterinaryFieldSB.append("<td>" + viewCount + "</td>");
-	veterinaryFieldSB.append("</tr>");
-	
-}
-*/
-
-// Paging
-
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,35 +54,76 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
     
   
 	<script type="text/javascript">
-		
-	function page(pageNum) {
+	
+	// 페이징 + 페이지별 뉴스 데이터 가져오기 ( 카테고리별 )
+	function page(pageNum, category) {
 		$.ajax({
 			type:'GET',
 			url:'/newsList.do',
 			async:true,	
 			dataType:'json',
 			data: {
-				'currentPage':pageNum
+				'currentPage' : pageNum,
+				'category' : category
 			},
 			success: function(page) {
 				
-				let veterinaryFields = page.veterinaryFields;
+				let postsPerPages = page.postsPerPage;
 				
-				let veterinaryFieldSB = new StringBuilder();
+				let newsSB = new StringBuilder();
 				
-	            veterinaryFields.forEach(veterinaryField => {
-	                veterinaryFieldSB.append("<tr>");
-	                veterinaryFieldSB.append("<td>" + veterinaryField.newsId + "</td>");
-	                veterinaryFieldSB.append("<td class='tit'>");
-	                veterinaryFieldSB.append("<a href='/newsView.do?newsId=" + veterinaryField.newsId + "'><img class='board_list_image' src='" + veterinaryField.main_image + "'>" + veterinaryField.subject + "</a>");
-	                veterinaryFieldSB.append("</td>");
-	                veterinaryFieldSB.append("<td>" + veterinaryField.writer + "</td>");
-	                veterinaryFieldSB.append("<td>" + veterinaryField.date + "</td>");
-	                veterinaryFieldSB.append("<td>" + veterinaryField.view_count + "</td>");
-	                veterinaryFieldSB.append("</tr>");
+				postsPerPages.forEach(postsPerPage => {
+	                newsSB.append("<tr>");
+	                newsSB.append("<td>" + postsPerPage.newsId + "</td>");
+	                newsSB.append("<td class='tit'>");
+	                newsSB.append("<a href='/newsView.do?newsId=" + postsPerPage.newsId + "'><img class='board_list_image' src='" + postsPerPage.main_image + "'>" + postsPerPage.subject + "</a>");
+	                newsSB.append("</td>");
+	                newsSB.append("<td>" + postsPerPage.writer + "</td>");
+	                newsSB.append("<td>" + postsPerPage.date + "</td>");
+	                newsSB.append("<td>" + postsPerPage.view_count + "</td>");
+	                newsSB.append("</tr>");
 	            });
 	            
-	            document.getElementById("veterinaryFieldsTableBody").innerHTML = veterinaryFieldSB.toString();
+				// 해당 페이지와 카테고리별 데이터를 가져온다.
+	            document.getElementById(category + "TableBody").innerHTML = newsSB.toString();
+	            
+				
+				// 페이징
+				let pagination = page.page;
+				
+				let pageSB = new StringBuilder();
+				
+                pageSB.append("<a href='#' class='bt' onclick='page("+1+",\""+category+"\")'>첫 페이지</a>");
+                
+				if(pagination.startPage > 1) {	
+					pageSB.append("<a href='#' class='bt' onclick='page("+(pageNum - 1)+",\""+category+"\")'>이전 페이지</a>");
+				} else {
+                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
+					
+				}
+                    
+				for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
+
+                    if(pageNum == i) {                    	
+                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
+                    } else {
+                    	pageSB.append("<a href='#' class='num' onclick='page("+i+",\""+category+"\")'>" + i + "</a>");                                     	
+                    }   
+
+				}
+                    		
+				if(pagination.endPage < pagination.totalPages) {					
+                	pageSB.append("<a href='#' class='bt' onclick='page("+(pageNum + 1)+",\""+category+"\")'>다음 페이지</a>");
+				} else {
+					pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
+				}
+				
+                pageSB.append("<a href='#' class='bt' onclick='page("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
+				
+				document.getElementById(category + "Paging").innerHTML = pageSB.toString();
+	            
+				$("#"+ category +"_board-size").text(pagination.totalPost+"개의 게시글");
+				
 			},
 			error: function(error) {
 				console.log("AJAX 요청 실패");
@@ -277,22 +287,22 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                 <div id="news" class="container tab-pane fade"><br>   
                     <ul class="nav" role="tablist">
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#industry">산업</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#industry" onclick="page(1, 'industry')">산업</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#policy">정책</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#policy" onclick="page(1, 'policy')">정책</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#society">사회</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#society" onclick="page(1, 'society')">사회</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#culture">문화</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#culture" onclick="page(1, 'culture')">문화</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#welfare">동물복지</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#welfare" onclick="page(1, 'welfare')">동물복지</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#veterinary_field">수의계</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#veterinary_field" onclick="page(1, 'veterinary_field')">수의계</a>
                         </li>
                     </ul>    
 
@@ -305,6 +315,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<span id="industry_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -315,26 +326,11 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="tit">
-                                            <a href="#">산업</a>
-                                        </td>
-                                        <td>이동준</td>
-                                        <td>2024-03-23</td>
-                                        <td>216</td>
-                                    </tr>                             
+                                <tbody id="industryTableBody">
+                            
                                 </tbody>
                             </table>
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
+                            <div class="paging" id="industryPaging">
 
                             </div>
                         </div>                  
@@ -349,6 +345,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<span id="policy_board-size">게시글 :  개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -359,26 +356,12 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="tit">
-                                            <a href="#">정책</a>
-                                        </td>
-                                        <td>이동준</td>
-                                        <td>2024-03-23</td>
-                                        <td>216</td>
-                                    </tr>                             
+                                <tbody id="policyTableBody">
+                            
                                 </tbody>
                             </table>
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
+                            <div class="paging" id="policyPaging">
+
                             </div>
                         </div>                  
                     </div>
@@ -392,6 +375,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<span id="society_board-size">게시글 :  개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -402,26 +386,11 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="tit">
-                                            <a href="#">사회</a>
-                                        </td>
-                                        <td>이동준</td>
-                                        <td>2024-03-23</td>
-                                        <td>216</td>
-                                    </tr>                             
+                                <tbody id="societyTableBody">
+                           
                                 </tbody>
                             </table>
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
+                            <div class="paging" id="societyPaging">
 
                             </div>
                         </div>
@@ -436,6 +405,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<span id="culture_board-size">게시글 :  개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -446,26 +416,12 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="tit">
-                                            <a href="#">문화</a>
-                                        </td>
-                                        <td>이동준</td>
-                                        <td>2024-03-23</td>
-                                        <td>216</td>
-                                    </tr>                             
+                                <tbody id="cultureTableBody">
+                            
                                 </tbody>
                             </table>
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
+                            <div class="paging" id="culturePaging">
+
                             </div>
                         </div>
                     </div>
@@ -479,6 +435,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<span id="welfare_board-size">게시글 :  개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -489,26 +446,11 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="tit">
-                                            <a href="#">동물복지</a>
-                                        </td>
-                                        <td>이동준</td>
-                                        <td>2024-03-23</td>
-                                        <td>216</td>
-                                    </tr>                             
+                                <tbody id="welfareTableBody">
+                            
                                 </tbody>
                             </table>
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
+                            <div class="paging" id="welfarePaging">
 
                             </div>
                         </div>
@@ -523,7 +465,7 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        <span id="board-size">게시글 :  개</span>
+                        <span id="veterinary_field_board-size">게시글 :  개</span>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -534,18 +476,11 @@ for(CrawlingDTO veterinaryField : veterinaryFields) {
                                         <th>조회</th>
                                     </tr>
                                 </thead>
-                                <tbody id="veterinaryFieldsTableBody"> 
+                                <tbody id="veterinary_fieldTableBody"> 
                                                          
                                 </tbody>
                             </table>
-                            <div class="paging">
-                                <a class="bt" onclick="page(1)" id="">첫 페이지</a>
-                                <a class="bt" onclick="page()">이전 페이지</a>
-                                <a class="num on" onclick="page(1)">1</a>
-                                <a class="num" onclick="page(2)">2</a>
-                                <a class="num" onclick="page(3)">3</a>
-                                <a class="bt" onclick="page()">다음 페이지</a>
-                                <a class="bt">마지막 페이지</a>
+                            <div class="paging" id="veterinary_fieldPaging">
 
                             </div>
                         </div>

@@ -7,8 +7,13 @@
         		select newsId, subject, writer, content, date, view_count from news where newsId=#{newsId}
         	</select>
         	
-        	<!-- 수의계 뉴스 데이터 -->
-        	<select id="selectVeterinaryField" resultType="com.petpark.dto.CrawlingDTO">
-        		select newsId, subject, writer, main_image, date, view_count from news where categories="veterinary_field" order by date desc;
+        	<!-- 뉴스 데이터 개수 -->
+        	<select id="newsDataSize" resultType="int">
+        		select count(categories) from news where categories = #{category};
+        	</select>
+        	
+        	<!-- 페이지별 보일 데이터 -->
+        	<select id="postsPerPage" resultType="com.petpark.dto.CrawlingDTO">
+        		select newsId, subject, writer, main_image, date, view_count from news where categories=#{category} order by date desc limit #{startIndex}, #{endIndex};
         	</select>
         </mapper>

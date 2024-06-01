@@ -13,5 +13,8 @@ public interface NewsInfoMapper {
 	CrawlingDTO newsView(String newsId);
 	
 	/* 수의계 뉴스 데이터 */
-	ArrayList<CrawlingDTO> selectVeterinaryField() throws Exception;
+	int newsDataSize(String category) throws Exception;
+	
+	/* 페이지당 보일 뉴스 데이터 */
+	ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int endIndex) throws Exception;
 }

@@ -27,13 +27,22 @@ public class NewsServiceImpl implements NewsService {
 
 	
 	@Override
-	public ArrayList<CrawlingDTO> selectVeterinaryField() throws Exception {
+	public int newsDataSize(String category) throws Exception {
+						
+		int newsDataSize = newsInfoMapper.newsDataSize(category);
 		
-		ArrayList<CrawlingDTO> selectVeterinaryFields = new ArrayList<CrawlingDTO>();
+		return newsDataSize;
+	}
+
+
+	@Override
+	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int endIndex) throws Exception {
+
+		ArrayList<CrawlingDTO> postsPerPage = new ArrayList<CrawlingDTO>();
 		
-		selectVeterinaryFields = newsInfoMapper.selectVeterinaryField();
-		
-		return selectVeterinaryFields;
+		postsPerPage = newsInfoMapper.postsPerPage(category, startIndex, endIndex);
+				
+		return postsPerPage;
 	}
 
 }

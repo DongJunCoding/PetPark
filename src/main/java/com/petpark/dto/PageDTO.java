@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class PageDTO {
 
-	private static final int postPerPage = 20; // 한 페이지에 보일 게시글 수
+	private static final int postPerPage = 10; // 한 페이지에 보일 게시글 수
+	private static final int blockPerPage = 5; // 페이지 번호 개수 보이기 ( ex : 1 2 3 4 5 )
 	
 	private int totalPost; // 전체 게시글
 	private int totalPages; // 전체 페이지
@@ -18,8 +19,21 @@ public class PageDTO {
 		this.currentPage = currentPage;
 				
 		totalPages = (totalPost - 1) / postPerPage + 1; 
-		startPage = currentPage - (currentPage - 1) % postPerPage;
-		endPage = currentPage - (currentPage - 1) % postPerPage + postPerPage + 1;
+		startPage = currentPage - (currentPage - 1) % blockPerPage;
+		endPage = currentPage - (currentPage - 1) % blockPerPage + blockPerPage - 1;
+		
+		if(endPage > totalPages) {
+			endPage = totalPages;
+		}
 		
 	}
+	
+	public int getPostPerPage() {
+		return postPerPage;
+	}
+	
+	public int getBlockPerPage() {
+		return blockPerPage;
+	}
+	
 }
