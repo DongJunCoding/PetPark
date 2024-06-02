@@ -66,20 +66,18 @@ public class NewsController {
 				
 		// 페이징 설정을 위해 해당 카테고리의 뉴스 데이터 size를 가져옴
 		int newsSize = newsServiceImpl.newsDataSize(category);		
-				
+		
+		// PageDTO 생성자에 해당 뉴스 데이터 size와 현재 페이지를 넘겨주어 PageDTO에 페이지 설정을 한다.
 		PageDTO page = new PageDTO(newsSize, currentPage);		
 		
 		// DB 에서 페이지 번호에 따라 가져올 데이터의 범위를 지정하기 위한 변수
 		int startIndex = (currentPage - 1) * page.getPostPerPage();		
-		int endIndex = page.getPostPerPage();
+		int countIndex = page.getPostPerPage();
 			
 		// 해당 범위의 뉴스 데이터 가져옴
-		ArrayList<CrawlingDTO> postsPerPage = new ArrayList<CrawlingDTO>();
-				
-		postsPerPage = newsServiceImpl.postsPerPage(category, startIndex, endIndex);
-			
-		System.out.println("postsPerPage : " + postsPerPage.size());
-		
+		ArrayList<CrawlingDTO> postsPerPage = new ArrayList<CrawlingDTO>();				
+		postsPerPage = newsServiceImpl.postsPerPage(category, startIndex, countIndex);
+					
 		/* 
 		 * AJAX 요청은 비동기적으로 데이터를 주고받기 때문에, 여러 데이터를 한 번에 받아오는 것이 효율적인데, 
 		 * Map<String,Object>를 사용하면 한 번의 요청으로 필요한 모든 데이터를 받을 수 있다.

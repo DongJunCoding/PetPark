@@ -39,11 +39,11 @@ public class NewsServiceImpl implements NewsService {
 
 
 	@Override
-	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int endIndex) throws Exception {
+	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int countIndex) throws Exception {
 
 		ArrayList<CrawlingDTO> postsPerPage = new ArrayList<CrawlingDTO>();
 		
-		postsPerPage = newsInfoMapper.postsPerPage(category, startIndex, endIndex);
+		postsPerPage = newsInfoMapper.postsPerPage(category, startIndex, countIndex);
 				
 		return postsPerPage;
 	}

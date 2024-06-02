@@ -58,15 +58,15 @@ for(CrawlingDTO news : recentNews) {
 	// 페이징 + 페이지별 뉴스 데이터 가져오기 ( 카테고리별 )
 	function page(pageNum, category) {
 		$.ajax({
-			type:'GET',
-			url:'/newsList.do',
-			async:true,	
-			dataType:'json',
-			data: {
+			type:'GET', // 타입 ( GET, POST, PUT 등... )
+			url:'/newsList.do', // 요청할 URL 서버
+			async:true,	 // 비동기화 여부 ( default : true ) / true : 비동기 , false : 동기
+			dataType:'json', // 데이터 타입 ( HTML, XML, JSON, TEXT 등 .. )
+			data: { // 보낼 데이터 설정
 				'currentPage' : pageNum,
 				'category' : category
 			},
-			success: function(page) {
+			success: function(page) { // 결과 성공 콜백함수
 				
 				let postsPerPages = page.postsPerPage;
 				
@@ -86,8 +86,7 @@ for(CrawlingDTO news : recentNews) {
 	            
 				// 해당 페이지와 카테고리별 데이터를 가져온다.
 	            document.getElementById(category + "TableBody").innerHTML = newsSB.toString();
-	            
-				
+	            				
 				// 페이징
 				let pagination = page.page;
 				
@@ -95,37 +94,42 @@ for(CrawlingDTO news : recentNews) {
 				
                 pageSB.append("<a href='#' class='bt' onclick='page("+1+",\""+category+"\")'>첫 페이지</a>");
                 
+                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
 				if(pagination.startPage > 1) {	
 					pageSB.append("<a href='#' class='bt' onclick='page("+(pageNum - 1)+",\""+category+"\")'>이전 페이지</a>");
 				} else {
                 	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
 					
 				}
-                    
+                
+                // 페이지가 5개씩 보이게 설정하였으며 시작페이지부터 끝페이지(5페이지)가 뜨도록 반복문을 통해 처리
 				for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
-
+					
+					// 매개변수로 받은 현재페이지번호(pageNum)와 i의 값이 같으면 class='num on'을 통해 현재 페이지 색깔 넣어줌  
                     if(pageNum == i) {                    	
                     	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
-                    } else {
+                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
                     	pageSB.append("<a href='#' class='num' onclick='page("+i+",\""+category+"\")'>" + i + "</a>");                                     	
                     }   
 
 				}
-                    		
+                
+                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
 				if(pagination.endPage < pagination.totalPages) {					
                 	pageSB.append("<a href='#' class='bt' onclick='page("+(pageNum + 1)+",\""+category+"\")'>다음 페이지</a>");
 				} else {
 					pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
 				}
 				
+                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
                 pageSB.append("<a href='#' class='bt' onclick='page("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
 				
 				document.getElementById(category + "Paging").innerHTML = pageSB.toString();
 	            
-				$("#"+ category +"_board-size").text(pagination.totalPost+"개의 게시글");
+				$("#"+ category +"_board-size").text('Total : '+pagination.totalPost).css('color','orange').css('float','right');
 				
 			},
-			error: function(error) {
+			error: function(error) { // 결과 에러 콜백함수
 				console.log("AJAX 요청 실패");
 			}
 		});

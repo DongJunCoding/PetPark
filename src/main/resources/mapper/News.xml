@@ -19,6 +19,6 @@
         	
         	<!-- 페이지별 보일 데이터(List) -->
         	<select id="postsPerPage" resultType="com.petpark.dto.CrawlingDTO">
-        		select newsId, subject, writer, main_image, date, view_count from news where categories=#{category} order by date desc limit #{startIndex}, #{endIndex};
+        		select newsId, subject, writer, main_image, date, view_count from news where categories=#{category} order by date desc limit #{startIndex}, #{countIndex};
         	</select>
         </mapper>

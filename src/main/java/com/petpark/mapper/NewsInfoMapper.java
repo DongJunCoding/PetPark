@@ -19,5 +19,5 @@ public interface NewsInfoMapper {
 	public int newsDataSize(String category) throws Exception;
 	
 	/* 페이지당 보일 뉴스 데이터 */
-	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int endIndex) throws Exception;
+	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int countIndex) throws Exception;
 }
