@@ -71,7 +71,7 @@ for(CrawlingDTO news : recentNews) {
 				let postsPerPages = page.postsPerPage;
 				
 				let newsSB = new StringBuilder();
-				
+								
 				postsPerPages.forEach(postsPerPage => {
 	                newsSB.append("<tr>");
 	                newsSB.append("<td>" + postsPerPage.newsId + "</td>");

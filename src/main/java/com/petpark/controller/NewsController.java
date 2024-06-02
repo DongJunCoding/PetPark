@@ -70,11 +70,15 @@ public class NewsController {
 		PageDTO page = new PageDTO(newsSize, currentPage);		
 		
 		// DB 에서 페이지 번호에 따라 가져올 데이터의 범위를 지정하기 위한 변수
-		int startIndex = (currentPage - 1) * page.getPostPerPage();
-		int endIndex = startIndex + page.getPostPerPage();
-				
+		int startIndex = (currentPage - 1) * page.getPostPerPage();		
+		int endIndex = page.getPostPerPage();
+			
 		// 해당 범위의 뉴스 데이터 가져옴
-		ArrayList<CrawlingDTO> postsPerPage = newsServiceImpl.postsPerPage(category, startIndex, endIndex);
+		ArrayList<CrawlingDTO> postsPerPage = new ArrayList<CrawlingDTO>();
+				
+		postsPerPage = newsServiceImpl.postsPerPage(category, startIndex, endIndex);
+			
+		System.out.println("postsPerPage : " + postsPerPage.size());
 		
 		/* 
 		 * AJAX 요청은 비동기적으로 데이터를 주고받기 때문에, 여러 데이터를 한 번에 받아오는 것이 효율적인데, 
@@ -82,7 +86,7 @@ public class NewsController {
 		 * 
 		 * */
 		Map<String, Object> response = new HashMap<>();
-		
+				
 		response.put("page", page);
 		response.put("postsPerPage", postsPerPage);
 				
