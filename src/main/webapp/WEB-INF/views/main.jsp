@@ -56,7 +56,7 @@ for(CrawlingDTO news : recentNews) {
 	<script type="text/javascript">
 	
 	// 페이징 + 페이지별 뉴스 데이터 가져오기 ( 카테고리별 )
-	function page(pageNum, category) {
+	function page(pageNum, category, searchInput) {
 		$.ajax({
 			type:'GET', // 타입 ( GET, POST, PUT 등... )
 			url:'/newsList.do', // 요청할 URL 서버
@@ -64,7 +64,8 @@ for(CrawlingDTO news : recentNews) {
 			dataType:'json', // 데이터 타입 ( HTML, XML, JSON, TEXT 등 .. )
 			data: { // 보낼 데이터 설정
 				'currentPage' : pageNum,
-				'category' : category
+				'category' : category,
+				'searchInput' : searchInput
 			},
 			success: function(page) { // 결과 성공 콜백함수
 				
@@ -92,37 +93,76 @@ for(CrawlingDTO news : recentNews) {
 				
 				let pageSB = new StringBuilder();
 				
-                pageSB.append("<a href='#' class='bt' onclick='page("+1+",\""+category+"\")'>첫 페이지</a>");
-                
-                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
-				if(pagination.startPage > 1) {	
-					pageSB.append("<a href='#' class='bt' onclick='page("+(pageNum - 1)+",\""+category+"\")'>이전 페이지</a>");
-				} else {
-                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
-					
-				}
-                
-                // 페이지가 5개씩 보이게 설정하였으며 시작페이지부터 끝페이지(5페이지)가 뜨도록 반복문을 통해 처리
-				for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
-					
-					// 매개변수로 받은 현재페이지번호(pageNum)와 i의 값이 같으면 class='num on'을 통해 현재 페이지 색깔 넣어줌  
-                    if(pageNum == i) {                    	
-                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
-                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
-                    	pageSB.append("<a href='#' class='num' onclick='page("+i+",\""+category+"\")'>" + i + "</a>");                                     	
-                    }   
-
-				}
-                
-                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
-				if(pagination.endPage < pagination.totalPages) {					
-                	pageSB.append("<a href='#' class='bt' onclick='page("+(pageNum + 1)+",\""+category+"\")'>다음 페이지</a>");
-				} else {
-					pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
-				}
 				
-                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
-                pageSB.append("<a href='#' class='bt' onclick='page("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
+				if(searchInput != null) {
+					
+					pageSB.append("<a href='#' class='bt' onclick='page("+1+",\""+category+"\",\"" + searchInput + "\")'>첫 페이지</a>");
+	                
+	                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
+					if(pagination.startPage > 1) {	
+						pageSB.append("<a href='#' class='bt' onclick='page("+(pagination.startPage - 5)+",\""+category+"\",\"" + searchInput + "\")'>이전 페이지</a>");
+					} else {
+	                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
+						
+					}
+	                
+	                // 페이지가 5개씩 보이게 설정하였으며 시작페이지부터 끝페이지(5페이지)가 뜨도록 반복문을 통해 처리
+					for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
+						
+						// 매개변수로 받은 현재페이지번호(pageNum)와 i의 값이 같으면 class='num on'을 통해 현재 페이지 색깔 넣어줌  
+	                    if(pageNum == i) {                    	
+	                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
+	                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
+	                    	pageSB.append("<a href='#' class='num' onclick='page("+i+",\""+category+"\",\"" + searchInput + "\")'>" + i + "</a>");                                     	
+	                    }   
+
+					}
+	                
+	                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
+					if(pagination.endPage < pagination.totalPages) {					
+	                	pageSB.append("<a href='#' class='bt' onclick='page("+(pagination.startPage + 5)+",\""+category+"\",\"" + searchInput + "\")'>다음 페이지</a>");
+					} else {
+						pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
+					}
+					
+	                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
+	                pageSB.append("<a href='#' class='bt' onclick='page("+pagination.totalPages+",\""+category+"\",\"" + searchInput + "\")'>마지막 페이지</a>");
+					
+				} else {
+					
+	                pageSB.append("<a href='#' class='bt' onclick='page("+1+",\""+category+"\")'>첫 페이지</a>");
+	                
+	                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
+					if(pagination.startPage > 1) {	
+						pageSB.append("<a href='#' class='bt' onclick='page("+(pagination.startPage - 5)+",\""+category+"\")'>이전 페이지</a>");
+					} else {
+	                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
+						
+					}
+	                
+	                // 페이지가 5개씩 보이게 설정하였으며 시작페이지부터 끝페이지(5페이지)가 뜨도록 반복문을 통해 처리
+					for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
+						
+						// 매개변수로 받은 현재페이지번호(pageNum)와 i의 값이 같으면 class='num on'을 통해 현재 페이지 색깔 넣어줌  
+	                    if(pageNum == i) {                    	
+	                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
+	                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
+	                    	pageSB.append("<a href='#' class='num' onclick='page("+i+",\""+category+"\")'>" + i + "</a>");                                     	
+	                    }   
+	
+					}
+	                
+	                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
+					if(pagination.endPage < pagination.totalPages) {					
+	                	pageSB.append("<a href='#' class='bt' onclick='page("+(pagination.startPage + 5)+",\""+category+"\")'>다음 페이지</a>");
+					} else {
+						pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
+					}
+					
+	                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
+	                pageSB.append("<a href='#' class='bt' onclick='page("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
+                
+				}
 				
 				document.getElementById(category + "Paging").innerHTML = pageSB.toString();
 	            
@@ -149,6 +189,22 @@ for(CrawlingDTO news : recentNews) {
 	        return this._stringArray.join("");
 	    }
 	}
+	
+	
+	// 검색한 데이터
+	function search(pageNum, category) {
+		let searchInput = document.getElementById(category + "-input").value;
+		page(pageNum, category, searchInput);
+	}
+	
+	// 검색창에 검색어 입력 후 엔터를 눌렀을 때 새로고침 방지
+    function handleKeyDown(event, category) {
+        if (event.key === "Enter") { // 엔터 키를 눌렀을 때
+            event.preventDefault(); // 폼의 기본 동작인 페이지 새로고침을 막습니다.
+            let searchInput = document.getElementById(category + '-input').value;
+            search(1, category, searchInput); // 검색 함수를 호출합니다.
+        }
+    }
 	
 	</script>
 </head>
@@ -192,15 +248,6 @@ for(CrawlingDTO news : recentNews) {
             <!-- Tab panes -->
             <div class="tab-content">
                 <div id="home" class="container tab-pane active"><br>     
-                    <form action="#" method="post">
-                        <img src="setting/image/logo.png" class="searchlogo">
-                        <div class="search">
-                            <input class="searchinput" type="text" placeholder="통합검색" />
-                            <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                        </div>
-                    </form>
-                    
-                    
                     <!-- Carousel -->
                     <div id="demo" class="carousel slide" data-bs-ride="carousel">
                         
@@ -311,14 +358,16 @@ for(CrawlingDTO news : recentNews) {
                     </ul>    
 
                     <div id="industry" class="container tab-pane fade"><br>
-                        <form action="#" method="post">
-                            <img src="setting/image/logo.png" class="searchlogo">
-                            <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                            </div>
+						<form>
+	                        <img src="setting/image/logo.png" class="searchlogo">
+	                        <div class="search">
+								<input class="searchinput" type="text" id="industry-input" placeholder="검색" onkeydown="handleKeyDown(event, 'industry')">
+        						<img class="searchimage" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'industry')">
+	                        </div>
                         </form>
+
                         <div class="board_list_wrap">
+                        	<strong class="category-name">산업</strong>
                         	<span id="industry_board-size"></span>
                             <table class="board_list">
                                 <thead>
@@ -341,14 +390,15 @@ for(CrawlingDTO news : recentNews) {
                     </div>
                 
                     <div id="policy" class="container tab-pane fade"><br>
-                        <form action="#" method="post">
+                        <form>
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+	                            <input class="searchinput" type="text" id="policy-input" placeholder="검색" onkeydown="handleKeyDown(event, 'policy')"/>
+	                            <img class="searchimage" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'policy')">
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">정책</strong>
                         	<span id="policy_board-size"></span>
                             <table class="board_list">
                                 <thead>
@@ -371,14 +421,15 @@ for(CrawlingDTO news : recentNews) {
                     </div>
 
                     <div id="society" class="container tab-pane fade"><br>
-                        <form action="#" method="post">
+                        <form>
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+	                            <input class="searchinput" type="text" id="society-input" placeholder="검색" onkeydown="handleKeyDown(event, 'society')"/>
+	                            <img class="searchimage" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'society')">
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">사회</strong>
                         	<span id="society_board-size"></span>
                             <table class="board_list">
                                 <thead>
@@ -404,11 +455,12 @@ for(CrawlingDTO news : recentNews) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+	                            <input class="searchinput" type="text" id="culture-input" placeholder="검색" onkeydown="handleKeyDown(event, 'culture')"/>
+	                            <img class="searchimage" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'culture')">
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">문화</strong>
                         	<span id="culture_board-size"></span>
                             <table class="board_list">
                                 <thead>
@@ -434,11 +486,12 @@ for(CrawlingDTO news : recentNews) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+	                            <input class="searchinput" type="text" id="welfare-input" placeholder="검색" onkeydown="handleKeyDown(event, 'welfare')"/>
+	                            <img class="searchimage" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'welfare')">
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">동물복지</strong>
                         	<span id="welfare_board-size"></span>
                             <table class="board_list">
                                 <thead>
@@ -464,12 +517,13 @@ for(CrawlingDTO news : recentNews) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+	                            <input class="searchinput" type="text" id="veterinary_field-input" placeholder="검색" onkeydown="handleKeyDown(event, 'veterinary_field')"/>
+	                            <img class="searchimage" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'veterinary_field')">
                             </div>
                         </form>
                         <div class="board_list_wrap">
-                        <span id="veterinary_field_board-size"></span>
+                        	<strong class="category-name">수의계</strong>
+                        	<span id="veterinary_field_board-size"></span>
                             <table class="board_list">
                                 <thead>
                                     <tr>

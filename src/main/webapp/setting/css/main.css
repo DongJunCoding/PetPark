@@ -87,8 +87,6 @@ ul {
 
 
 
-
-
 /* 홈화면 Carousel 설정 */
 .carousel-inner img{
   height: 400px;
@@ -189,6 +187,9 @@ a {
 	color:orange;
 }
 
+.category-name{
+	font-size:25px;
+}
 
 /* paging 버튼 설정 */
 .board_list_wrap .paging {
@@ -224,6 +225,7 @@ a {
   background: green;
   color: #fff;
 }
+
 
 
 /* Kakao Map API 설정 */
@@ -296,6 +298,7 @@ form {
   right: 12px;
   margin: 0;
   padding-top: 30px;
+  cursor:pointer;
 }
 
 .searchlogo {

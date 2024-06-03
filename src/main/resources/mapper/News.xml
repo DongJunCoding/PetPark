@@ -8,17 +8,37 @@
         		select newsId, subject, writer, content, date, view_count from news where newsId=#{newsId}
         	</select>
         	
+        	
+        	<!-- 조회수 증가 -->
         	<update id="viewCount">
         		update news set view_count = view_count + 1 where newsId=#{newsId}
         	</update>
         	
-        	<!-- 뉴스 데이터 개수 -->
+        	
+        	
+        	<!-- 뉴스 데이터 개수 (카테고리별 전체) -->
         	<select id="newsDataSize" resultType="int">
         		select count(categories) from news where categories = #{category};
         	</select>
-        	
-        	<!-- 페이지별 보일 데이터(List) -->
+        	      	
+        	<!-- 페이지별 보일 데이터(List / 카테고리별 전체) -->
         	<select id="postsPerPage" resultType="com.petpark.dto.CrawlingDTO">
-        		select newsId, subject, writer, main_image, date, view_count from news where categories=#{category} order by date desc limit #{startIndex}, #{countIndex};
+        		select newsId, subject, writer, main_image, date, view_count from news 
+        		where categories=#{category} order by date desc limit #{startIndex}, #{countIndex};
         	</select>
+        	
+        	
+        	
+        	<!-- 검색한 뉴스 데이터 개수 -->
+        	<select id="searchNewsDataSize" resultType="int">
+        		select count(subject) from news where categories = #{category} and subject like concat('%', #{searchInput}, '%');
+        	</select>
+        	
+        	<!-- 검색한 뉴스 데이터 -->
+        	<select id="searchPostsPerPage" resultType="com.petpark.dto.CrawlingDTO">
+        		select newsId, subject, writer, main_image, date, view_count from news 
+        		where categories = #{category} and subject like concat('%', #{searchInput}, '%') 
+        		order by date desc limit #{startIndex}, #{countIndex};
+        	</select>
+        	
         </mapper>
