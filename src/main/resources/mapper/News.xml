@@ -7,8 +7,7 @@
         	<select id="newsView" resultType="com.petpark.dto.CrawlingDTO">
         		select newsId, subject, writer, content, date, view_count from news where newsId=#{newsId}
         	</select>
-        	
-        	
+        	       	
         	<!-- 조회수 증가 -->
         	<update id="viewCount">
         		update news set view_count = view_count + 1 where newsId=#{newsId}

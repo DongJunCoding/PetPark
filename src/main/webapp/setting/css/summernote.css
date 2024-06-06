@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.setting-summernote {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* Adjust as needed */
+
+}
+
