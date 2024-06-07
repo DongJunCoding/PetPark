@@ -10,7 +10,7 @@ ArrayList<CrawlingDTO> recentNews = new ArrayList<CrawlingDTO>();
 
 recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
 
-String newsId = "";
+String news_id = "";
 String subject = "";
 String writer = "";
 String date = "";
@@ -21,16 +21,16 @@ StringBuilder newsSB = new StringBuilder();
 
 for(CrawlingDTO news : recentNews) {
 	
-	newsId = news.getNewsId();
+	news_id = news.getNews_id();
 	subject = news.getSubject();
 	writer = news.getWriter();
 	date = news.getDate();
 	viewCount = news.getView_count();
 	
 	newsSB.append("<tr>");
-	newsSB.append("<td>" + newsId + "</td>");
+	newsSB.append("<td>" + news_id + "</td>");
 	newsSB.append("<td class='tit'>");
-	newsSB.append("<a href='/newsView.do?newsId=" + newsId + "'>" + subject + "</a>");
+	newsSB.append("<a href='/newsView.do?news_id=" + news_id + "'>" + subject + "</a>");
 	newsSB.append("</td>");
 	newsSB.append("<td>" + writer + "</td>");
 	newsSB.append("<td>" + date + "</td>");
@@ -75,9 +75,9 @@ for(CrawlingDTO news : recentNews) {
 								
 				postsPerPages.forEach(postsPerPage => {
 	                newsSB.append("<tr>");
-	                newsSB.append("<td>" + postsPerPage.newsId + "</td>");
+	                newsSB.append("<td>" + postsPerPage.news_id + "</td>");
 	                newsSB.append("<td class='tit'>");
-	                newsSB.append("<a href='/newsView.do?newsId=" + postsPerPage.newsId + "'><img class='board_list_image' src='" + postsPerPage.main_image + "'>" + postsPerPage.subject + "</a>");
+	                newsSB.append("<a href='/newsView.do?news_id=" + postsPerPage.news_id + "'><img class='board_list_image' src='" + postsPerPage.main_image + "'>" + postsPerPage.subject + "</a>");
 	                newsSB.append("</td>");
 	                newsSB.append("<td>" + postsPerPage.writer + "</td>");
 	                newsSB.append("<td>" + postsPerPage.date + "</td>");
@@ -573,6 +573,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">전체</strong>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -587,7 +588,7 @@ for(CrawlingDTO news : recentNews) {
                                     <tr>
                                         <td>1</td>
                                         <td class="tit">
-                                            <a href="#"><img class="board_list_image" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">전체 게시판 글</a>
+                                            <a href="#">전체 게시판 글</a>
                                         </td>
                                         <td>이동준</td>
                                         <td>2024-03-23</td>
@@ -617,6 +618,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">자유게시판</strong>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -631,7 +633,7 @@ for(CrawlingDTO news : recentNews) {
                                     <tr>
                                         <td>1</td>
                                         <td class="tit">
-                                            <a href="#"><img class="board_list_image" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">자유게시판 글</a>
+                                            <a href="#">자유게시판 글</a>
                                         </td>
                                         <td>이동준</td>
                                         <td>2024-03-23</td>
@@ -661,6 +663,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">나눔게시판</strong>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -675,7 +678,7 @@ for(CrawlingDTO news : recentNews) {
                                     <tr>
                                         <td>1</td>
                                         <td class="tit">
-                                            <a href="#"><img class="board_list_image" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">나눔게시판 글</a>
+                                            <a href="#">나눔게시판 글</a>
                                         </td>
                                         <td>이동준</td>
                                         <td>2024-03-23</td>
@@ -704,6 +707,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">Q&A게시판</strong>
                             <table class="board_list">
                                 <thead>
                                     <tr>
@@ -748,6 +752,7 @@ for(CrawlingDTO news : recentNews) {
                             </div>
                         </form>
                         <div class="board_list_wrap">
+                        	<strong class="category-name">공지사항</strong>
                             <table class="board_list">
                                 <thead>
                                     <tr>

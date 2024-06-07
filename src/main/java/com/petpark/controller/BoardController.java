@@ -1,26 +1,46 @@
 package com.petpark.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.petpark.service.MainPageServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 public class BoardController {
-
-	@Autowired
-	private MainPageServiceImpl mainPageServiceImpl;
 	
+	// 게시판 글쓰기 페이지
 	@GetMapping("/boardWrite.do")
-	public ModelAndView board(HttpServletRequest req) throws Exception {
+	public ModelAndView boardWritePage(HttpServletRequest req) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
 
 		mv.setViewName("board_write");
+		
+		return mv;
+	}
+	
+	// 게시판 글작성 완료시 데이터 넘어온 후 처리
+	@PostMapping("boardWriteOk.do")
+	public int boardWrite(HttpServletRequest req) throws Exception {
+		
+		String nickname = req.getParameter("nickname");
+		String content = req.getParameter("content");
+		
+		System.out.println("nickname : " + nickname);
+		System.out.println("content : " + content);
+		
+		return 0;		
+	}
+	
+	// 게시판 view 페이지
+	@GetMapping("/boardView.do")
+	public ModelAndView boardView() throws Exception {
+				
+		ModelAndView mv = new ModelAndView();
+				
+		mv.setViewName("board_view");
 		return mv;
 	}
 }

@@ -16,16 +16,16 @@ public interface NewsInfoMapper {
 	public void viewCount(String newsId);
 	
 	/* 수의계 뉴스 데이터 개수 */
-	public int newsDataSize(String category) throws Exception;
+	public int newsDataSize(String category);
 	
 	/* 검색한 수의계 뉴스 데이터 개수 */
-	public int searchNewsDataSize(String category, String searchInput) throws Exception;
+	public int searchNewsDataSize(String category, String searchInput);
 		
 	/* 페이지당 보일 뉴스 데이터 */
-	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int countIndex) throws Exception;
+	public ArrayList<CrawlingDTO> postsPerPage(String category, int startIndex, int countIndex);
 	
 	/* 검색한 페이지당 보일 뉴스 데이터 */
-	public ArrayList<CrawlingDTO> searchPostsPerPage(String category, String searchInput, int startIndex, int countIndex) throws Exception;
+	public ArrayList<CrawlingDTO> searchPostsPerPage(String category, String searchInput, int startIndex, int countIndex);
 	
 	
 }

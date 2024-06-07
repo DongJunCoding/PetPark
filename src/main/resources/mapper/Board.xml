@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+        <mapper namespace="com.petpark.mapper.BoardMapper">
+        	<!-- 글쓰기 데이터 저장 -->
+        	<insert id="boardWrite" parameterType="com.petpark.dto.BoardDTO">
+        		insert into board values(0, #{categories}, #{subject}, #{writer}, #{content}, #{date}, 0)
+        	</insert>
+        	
+        	<!-- 게시판 view 페이지 데이터 -->
+        	<select id="boardView" resultType="com.petpark.dto.BoardDTO">
+        		select board_id, subject, writer, content, date, view_count from board where board_id=#{board_Id};
+        	</select>
+        	       	
+        	<!-- 조회수 증가 -->
+        	<update id="viewCount">
+        		update board set view_count = view_count + 1 where board_id=#{board_id};
+        	</update>
+        	
+        	
+        	
+        	<!-- 뉴스 데이터 개수 (카테고리별 전체) -->
+        	<select id="boardDataSize" resultType="int">
+        		select count(categories) from board where categories = #{category};
+        	</select>
+        	      	
+        	<!-- 페이지별 보일 데이터(List / 카테고리별 전체 / 검색어 없을 때) -->
+        	<select id="postsPerPage" resultType="com.petpark.dto.BoardDTO">
+        		select board_id, subject, writer, date, view_count from board 
+        		where categories=#{category} order by date desc limit #{startIndex}, #{countIndex};
+        	</select>
+        	
+        	
+        	
+        	<!-- 검색한 뉴스 데이터 개수 -->
+        	<select id="searchBoardDataSize" resultType="int">
+        		select count(subject) from board where categories = #{category} and subject like concat('%', #{searchInput}, '%');
+        	</select>
+        	
+        	<!-- 검색한 뉴스 데이터 -->
+        	<select id="searchPostsPerPage" resultType="com.petpark.dto.BoardDTO">
+        		select board_id, subject, writer, date, view_count from board 
+        		where categories = #{category} and subject like concat('%', #{searchInput}, '%') 
+        		order by date desc limit #{startIndex}, #{countIndex};
+        	</select>
+        	
+        </mapper>

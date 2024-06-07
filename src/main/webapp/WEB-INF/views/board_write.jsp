@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetPark</title> 
-    
+     
     <!-- Bootstrap 5.3.3 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     
@@ -44,21 +44,34 @@
         </div> 
     </header>
     
+    <br><br>
     <!-- main 영역 -->
-    <main>
-        <div class="summernote setting-summernote">summernote 1</div>
+    <main>  	
+    	<form action="boardWriteOk.do" method="POST">
+	        <div class="summernote-container">        
+	        	<div class="author-field">
+		        작성자: <input type="text" name="nickname" value="닉네임" readonly />
+		    	</div>        
+			    <textarea class="summernote" name="content">summernote 1</textarea>		    
+				<button type="submit" class="submit-button">글쓰기</button>
+			</div>		
+		</form>
 
         <script>
-            $(document).ready(function() {
-                $('.summernote').summernote({
-					height:500,
-					width:500
-                });
-            });
+	        $(document).ready(function() {
+	            $('.summernote').summernote({
+	                height: 300, // 높이를 필요에 따라 조정합니다.
+	                minHeight: 300, // 최소 높이
+	                maxHeight: null, // 최대 높이 제한 없음
+	                focus: true // 페이지 로딩 시 summernote에 포커스를 줍니다.
+	            });
+	        });
         </script>
     </main>
     
-    <!-- footer 영역 -->
+    <br>
+    
+    <!-- footer 영역 -->     
     <footer>
         <div class="container">
             <hr>

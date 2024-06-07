@@ -1,11 +1,61 @@
 @charset "UTF-8";
 
-.setting-summernote {
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh; /* Adjust as needed */
-
+.summernote-container {
+    position: relative; /* 부모 요소를 상대적으로 설정합니다. */
+    display: flex;
+    flex-direction: column; /* 수직으로 정렬하기 위해 컬럼 방향으로 설정합니다. */
+    align-items: flex-start; /* 왼쪽 정렬합니다. */
+    min-height: 30vh;
+    margin-bottom: 20px;
+    width: 67.5%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+/* 기본 Summernote 스타일링 */
+.note-editor {
+    width: 100%;
+}
+
+.note-toolbar {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-bottom: none;
+}
+
+.note-editable {
+    min-height: 300px; /* 최소 높이 설정 */
+    border: 1px solid #e9ecef;
+    border-top: none;
+    padding: 15px;
+}
+
+.author-field {
+    position: absolute; /* 절대적인 위치 설정 */
+    top: 0; /* 위에서 0px 떨어진 위치 */
+    left: 0; /* 왼쪽에서 0px 떨어진 위치 */
+    margin-top: -30px; /* 작성자 입력 필드를 조금 위로 올립니다. */
+    margin-left: 15px; /* Summernote와의 거리를 조정합니다. */
+    z-index: 9999; /* 다른 요소 위에 위치하도록 설정합니다. */
+}
+
+input[type="text"] {
+	border: none;
+	outline: none;	
+}
+
+.submit-button {
+    position: absolute; /* 버튼을 절대적으로 설정합니다. */
+    top: 100%; /* Summernote 아래에 배치합니다. */
+    right: 0; /* 부모 요소의 오른쪽에 배치합니다. */
+    margin-top: 10px; /* Summernote와의 간격을 조절합니다. */
+    border:none;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 100px;
+    font-size: 15px;
+}
+
+.submit-button:hover {
+	background-color:yellowgreen;
+}

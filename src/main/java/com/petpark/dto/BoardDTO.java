@@ -3,13 +3,12 @@ package com.petpark.dto;
 import lombok.Data;
 
 @Data
-public class CrawlingDTO {
+public class BoardDTO {
 
-	private String news_id;
+	private String board_id;
 	private String categories;
 	private String subject;
 	private String writer;
-	private String main_image;
 	private String content;
 	private String date;
 	private int view_count;

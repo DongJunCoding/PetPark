@@ -35,7 +35,7 @@ public class NewsServiceImpl implements NewsService {
 
 	// 카테고리별 뉴스 데이터의 개수를 가져온다.
 	@Override
-	public int newsDataSize(String category) throws Exception {
+	public int newsDataSize(String category) {
 						
 		int newsDataSize = newsInfoMapper.newsDataSize(category);
 		
@@ -44,7 +44,7 @@ public class NewsServiceImpl implements NewsService {
 	
 	// 카테고리별 뉴스 데이터의 개수를 가져온다. ( 뉴스 리스트 검색시 )
 	@Override
-	public int searchNewsDataSize(String category, String searchInput) throws Exception {
+	public int searchNewsDataSize(String category, String searchInput) {
 
 		int newsDataSize = newsInfoMapper.searchNewsDataSize(category, searchInput);
 		
@@ -53,7 +53,7 @@ public class NewsServiceImpl implements NewsService {
 	
 	// 뉴스 데이터와 페이징처리 후 Controller로 반환
 	@Override
-	public Map<String, Object> postsPerPage(String category, int currentPage, int newsSize, String searchInput) throws Exception {
+	public Map<String, Object> postsPerPage(String category, int currentPage, int newsSize, String searchInput) {
 		
 		// 뉴스 리스트 검색을 한다면
 		if(searchInput != null) {

@@ -50,7 +50,6 @@ header {
     margin: 0 auto; /* 가운데 정렬 */
     overflow-y: visible; /* 세로 스크롤바가 필요한 경우만 표시 */
     padding: 10px; /* 내용과 컨테이너 간의 간격 설정 */
-
 }
 
 .comment_list {
@@ -61,7 +60,6 @@ header {
 #replyId {
 	float:left;
 }
-
 
   /* 댓글 스타일 */
   .comment {

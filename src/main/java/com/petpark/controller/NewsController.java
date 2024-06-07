@@ -24,7 +24,7 @@ public class NewsController {
 		
 		CrawlingDTO newsView = new CrawlingDTO();
 		
-		String newsId = req.getParameter("newsId");
+		String newsId = req.getParameter("news_id");
 		
 		newsView = newsServiceImpl.newsView(newsId);
 				
@@ -43,7 +43,7 @@ public class NewsController {
 	 * 
 	 * */
 	@GetMapping("/newsList.do")
-	public Map<String, Object> newsList(HttpServletRequest req) throws Exception {
+	public Map<String, Object> newsList(HttpServletRequest req) {
 	
 		// 뉴스별 카테고리를 눌렀을 때 초기값 1페이지로 설정 ( AJAX로 받아올 때 이미 1을 받아오기는 한다. )
 		int currentPage = 1;
@@ -67,15 +67,7 @@ public class NewsController {
 			currentPage = Integer.parseInt(currentPageStr);
 			
 		}
-				
-		System.out.println("=================================");
-		System.out.println("currentPage : " + currentPage);
-		System.out.println();
-		System.out.println("category : " + category);
-		System.out.println();
-		System.out.println("searchInput : " + searchInput);
-		System.out.println("=================================");
-			
+							
 		// 뉴스 리스트 검색을 한다면
 		if(searchInput != null) {
 			// 페이징 설정을 위해 해당 카테고리의 뉴스 데이터 size를 가져옴

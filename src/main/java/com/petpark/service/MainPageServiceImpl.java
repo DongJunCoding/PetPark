@@ -20,7 +20,7 @@ public class MainPageServiceImpl implements MainPageService {
 	private MainPageMapper mainPageMapper;
 
 	@Override
-	public ArrayList<CrawlingDTO> selectRecentNews() throws Exception { // 뉴스 최신 10개 데이터
+	public ArrayList<CrawlingDTO> selectRecentNews() { // 뉴스 최신 10개 데이터
 
 		return mainPageMapper.selectRecentNews();
 	}
