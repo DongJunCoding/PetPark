@@ -32,6 +32,29 @@
     <!-- Summernote JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
     <script src="setting/js/summernote-ko-KR.js"></script>
+    
+    <script>
+    	window.onload = function() {
+    		document.getElementById('submit-button').onclick = function() {
+    			
+    			let select = document.getElementById('select-category');
+    			    			
+    			if(select.value.trim() == '선택해주세요') {
+    				alert('카테고리를 선택해주세요');
+    				return false;
+    			}
+    			
+    			let content = document.getElementById("content");
+    			
+    			if(content.value.trim() == '') {
+    				alert('내용을 입력해주세요');
+    				return false;
+    			}
+    			
+    		};
+			
+    	};
+    </script>
 
 	
 </head>
@@ -50,10 +73,17 @@
     	<form action="boardWriteOk.do" method="POST">
 	        <div class="summernote-container">        
 	        	<div class="author-field">
-		        작성자: <input type="text" name="nickname" value="닉네임" readonly />
+		        <label>작성자: </label><input type="text" name="nickname" value="닉네임" readonly />
+		        <label>카테고리: </label>
+		        <select id="select-category" name="category">		        	
+		        	<option id="select-choice" disabled selected>선택해주세요</option>
+		        	<option value="free_board">자유게시판</option>
+		        	<option value="share_board">나눔게시판</option>
+		        	<option value="qna_board">Q&A게시판</option>
+		        </select>
 		    	</div>        
-			    <textarea class="summernote" name="content">summernote 1</textarea>		    
-				<button type="submit" class="submit-button">글쓰기</button>
+			    <textarea class="summernote" name="content" id="content"></textarea>		    
+				<button type="submit" id="submit-button" class="submit-button">글쓰기</button>
 			</div>		
 		</form>
 

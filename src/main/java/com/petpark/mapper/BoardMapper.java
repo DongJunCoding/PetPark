@@ -10,7 +10,7 @@ import com.petpark.dto.BoardDTO;
 public interface BoardMapper {
 	
 	// 글쓰기 데이터 저장
-	public int boardWrite(String categories, String subject, String writer, String content, String date);
+	public int boardWrite(String categories, String subject, String writer, String content);
 	
 	// 게시판 글 개수
 	public int boardDatraSize(String category);

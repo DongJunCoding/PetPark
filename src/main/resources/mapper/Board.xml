@@ -5,7 +5,7 @@
         <mapper namespace="com.petpark.mapper.BoardMapper">
         	<!-- 글쓰기 데이터 저장 -->
         	<insert id="boardWrite" parameterType="com.petpark.dto.BoardDTO">
-        		insert into board values(0, #{categories}, #{subject}, #{writer}, #{content}, #{date}, 0)
+        		insert into board values(0, #{categories}, #{subject}, #{writer}, #{content}, now(), 0)
         	</insert>
         	
         	<!-- 게시판 view 페이지 데이터 -->

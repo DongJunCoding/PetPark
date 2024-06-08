@@ -2,13 +2,16 @@ package com.petpark.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.petpark.dto.BoardDTO;
 
+@Service
 public class BoardServiceImpl implements BoardService {
 
 	// 게시판 글 쓰기
 	@Override
-	public int boardWrite(String categories, String subject, String writer, String content, String date) {
+	public int boardWrite(String categories, String subject, String writer, String content) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
