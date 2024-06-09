@@ -13,7 +13,7 @@ public interface BoardMapper {
 	public int boardWrite(String categories, String subject, String writer, String content);
 	
 	// 게시판 글 개수
-	public int boardDatraSize(String category);
+	public int boardDataSize(String category);
 	
 	// 게시판 리스트 ( 페이지별 보일 데이터 / 카테고리별 / 검색어 없을 때)
 	public ArrayList<BoardDTO> postsPerPage(String category, int startIndex, int countIndex);	

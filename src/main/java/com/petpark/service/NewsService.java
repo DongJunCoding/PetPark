@@ -16,6 +16,6 @@ public interface NewsService {
 	public int searchNewsDataSize(String category, String searchInput);
 	
 	/* 페이지당 보일 뉴스 데이터 */
-	public Map<String, Object> postsPerPage(String category, int startIndex, int countIndex, String searchInput);
+	public Map<String, Object> postsPerPage(String category, int currentPage, int newsSize, String searchInput);
 	
 }

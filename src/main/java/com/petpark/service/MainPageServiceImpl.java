@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.petpark.dto.BoardDTO;
 import com.petpark.dto.CrawlingDTO;
 import com.petpark.mapper.MainPageMapper;
 
@@ -24,5 +25,13 @@ public class MainPageServiceImpl implements MainPageService {
 
 		return mainPageMapper.selectRecentNews();
 	}
+
+	@Override
+	public ArrayList<BoardDTO> selectRecentBoard() {
+
+		return mainPageMapper.selectRecentBoard();
+	}
+
+
 
 }

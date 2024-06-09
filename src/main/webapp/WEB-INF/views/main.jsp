@@ -1,3 +1,4 @@
+<%@page import="com.petpark.dto.BoardDTO"%>
 <%@page import="com.petpark.dto.PageDTO"%>
 <%@page import="java.io.Console"%>
 <%@page import="com.petpark.dto.CrawlingDTO"%>
@@ -10,7 +11,11 @@ ArrayList<CrawlingDTO> recentNews = new ArrayList<CrawlingDTO>();
 
 recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
 
-String news_id = "";
+ArrayList<BoardDTO> recentBoard = new ArrayList<BoardDTO>();
+
+recentBoard = (ArrayList<BoardDTO>)request.getAttribute("boards");
+
+String id = "";
 String subject = "";
 String writer = "";
 String date = "";
@@ -21,16 +26,38 @@ StringBuilder newsSB = new StringBuilder();
 
 for(CrawlingDTO news : recentNews) {
 	
-	news_id = news.getNews_id();
+	id = news.getNews_id();
 	subject = news.getSubject();
 	writer = news.getWriter();
 	date = news.getDate();
 	viewCount = news.getView_count();
 	
 	newsSB.append("<tr>");
-	newsSB.append("<td>" + news_id + "</td>");
+	newsSB.append("<td>" + id + "</td>");
 	newsSB.append("<td class='tit'>");
-	newsSB.append("<a href='/newsView.do?news_id=" + news_id + "'>" + subject + "</a>");
+	newsSB.append("<a href='/newsView.do?news_id=" + id + "'>" + subject + "</a>");
+	newsSB.append("</td>");
+	newsSB.append("<td>" + writer + "</td>");
+	newsSB.append("<td>" + date + "</td>");
+	newsSB.append("<td>" + viewCount + "</td>");
+	newsSB.append("<tr>");
+	
+}
+
+StringBuilder boardSB = new StringBuilder();
+
+for(BoardDTO board : recentBoard) {
+	
+	id = board.getBoard_id();
+	subject = board.getSubject();
+	writer = board.getWriter();
+	date = board.getDate();
+	viewCount = board.getView_count();
+	
+	newsSB.append("<tr>");
+	newsSB.append("<td>" + id + "</td>");
+	newsSB.append("<td class='tit'>");
+	newsSB.append("<a href='/boardView.do?board_id=" + id + "'>" + subject + "</a>");
 	newsSB.append("</td>");
 	newsSB.append("<td>" + writer + "</td>");
 	newsSB.append("<td>" + date + "</td>");
@@ -317,15 +344,7 @@ for(CrawlingDTO news : recentNews) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="tit">
-                                                <a href="#">반려동물 사진들 !</a>
-                                            </td>
-                                            <td>이동준</td>
-                                            <td>2024-03-23</td>
-                                            <td>216</td>
-                                        </tr>                                          
+										<%=boardSB %>                                      
                                     </tbody>
                                 </table>
                             </div> 
@@ -596,6 +615,7 @@ for(CrawlingDTO news : recentNews) {
                                     </tr>                             
                                 </tbody>
                             </table>
+                            <a href="/boardWrite.do">글쓰기</a>
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>
                                 <a href="#" class="bt">이전 페이지</a>
@@ -649,7 +669,6 @@ for(CrawlingDTO news : recentNews) {
                                 <a href="#" class="num">3</a>
                                 <a href="#" class="bt">다음 페이지</a>
                                 <a href="#" class="bt">마지막 페이지</a>
-
                             </div>
                         </div> 
                     </div>
