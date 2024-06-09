@@ -54,15 +54,15 @@ for(BoardDTO board : recentBoard) {
 	date = board.getDate();
 	viewCount = board.getView_count();
 	
-	newsSB.append("<tr>");
-	newsSB.append("<td>" + id + "</td>");
-	newsSB.append("<td class='tit'>");
-	newsSB.append("<a href='/boardView.do?board_id=" + id + "'>" + subject + "</a>");
-	newsSB.append("</td>");
-	newsSB.append("<td>" + writer + "</td>");
-	newsSB.append("<td>" + date + "</td>");
-	newsSB.append("<td>" + viewCount + "</td>");
-	newsSB.append("<tr>");
+	boardSB.append("<tr>");
+	boardSB.append("<td>" + id + "</td>");
+	boardSB.append("<td class='tit'>");
+	boardSB.append("<a href='/boardView.do?board_id=" + id + "'>" + subject + "</a>");
+	boardSB.append("</td>");
+	boardSB.append("<td>" + writer + "</td>");
+	boardSB.append("<td>" + date + "</td>");
+	boardSB.append("<td>" + viewCount + "</td>");
+	boardSB.append("<tr>");
 	
 }
 

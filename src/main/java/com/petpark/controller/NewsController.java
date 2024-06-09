@@ -31,8 +31,7 @@ public class NewsController {
 				
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("newsView", newsView);
-		
+		mv.addObject("newsView", newsView);		
 		mv.setViewName("news_view");
 		
 		return mv;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.petpark.dto.BoardDTO;
 import com.petpark.service.BoardServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -98,11 +99,27 @@ public class BoardController {
 
 	// 게시판 view 페이지
 	@GetMapping("/boardView.do")
-	public ModelAndView boardView() {
-
+	public ModelAndView boardView(HttpServletRequest req) {
+		
+		BoardDTO boardView = new BoardDTO();
+		
+		String boardId = req.getParameter("board_id");
+		
+		boardView = boardServiceImpl.boardView(boardId);
+		
+//		String boardContent = boardView.getContent();
+//		
+//		int boardLength = boardContent.length();
+//		
+//		System.out.println("boardLength : " + boardLength);
+//		System.out.println("DataSize : " + boardLength * 2);
+		
+		
 		ModelAndView mv = new ModelAndView();
 
+		mv.addObject("boardView", boardView);
 		mv.setViewName("board_view");
+		
 		return mv;
 	}
 }

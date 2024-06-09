@@ -22,11 +22,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int boardWrite(String categories, String subject, String writer, String content) {
 
-		// Mybatis의 insert문과 연결되어있는 Mapper클래스의 메소드 호출하여 매개변수 값(글쓰기 데이터)을 넘겨주고, 반환값으로 성공
-		// or 실패 여부 확인
+		// Mybatis의 insert문과 연결되어있는 Mapper클래스의 메소드 호출하여 매개변수 값(글쓰기 데이터)을 넘겨주고, 반환값으로 성공 or 실패 여부 확인
 		int result = boardMapper.boardWrite(categories, subject, writer, content);
-
-		System.out.println("result : " + result);
 
 		return result;
 	}
@@ -90,8 +87,12 @@ public class BoardServiceImpl implements BoardService {
 	// 게시판 게시글 view 페이지
 	@Override
 	public BoardDTO boardView(String board_id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		BoardDTO boardView = new BoardDTO();
+		
+		boardView = boardMapper.boardView(board_id);
+		
+		return 	boardView;
 	}
 
 	// 게시글 조회수 증가(이건 view로 들어갈거임)

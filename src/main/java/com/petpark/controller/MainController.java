@@ -30,7 +30,7 @@ public class MainController {
 		
 		ArrayList<CrawlingDTO> news = mainPageServiceImpl.selectRecentNews(); // 뉴스 데이터 최신 10개
 		ArrayList<BoardDTO> boards = mainPageServiceImpl.selectRecentBoard();
-
+		
 		ModelAndView mv = new ModelAndView(); 
 		mv.addObject("news", news);
 		mv.addObject("boards", boards);

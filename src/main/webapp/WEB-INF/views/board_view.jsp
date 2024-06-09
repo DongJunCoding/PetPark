@@ -1,15 +1,16 @@
+<%@page import="com.petpark.dto.BoardDTO"%>
 <%@page import="com.petpark.dto.CrawlingDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
-	CrawlingDTO newsView = (CrawlingDTO)request.getAttribute("newsView");
+	BoardDTO boardView = (BoardDTO)request.getAttribute("boardView");
 	
-	String subject = newsView.getSubject();
-	String writer = newsView.getWriter();
-	String date = newsView.getDate();
-	String content = newsView.getContent();
+	String subject = boardView.getSubject();
+	String writer = boardView.getWriter();
+	String date = boardView.getDate();
+	String content = boardView.getContent();
 	
 %>
 <!DOCTYPE html>
