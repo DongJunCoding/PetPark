@@ -31,8 +31,20 @@ public class BoardServiceImpl implements BoardService {
 	// 게시판 카테고리별 데이터 개수
 	@Override
 	public int boardDataSize(String category) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		// 게시판 전체 category일때
+		if(category.equals("all_board")) {
+			
+			// 데이터 전체 개수는 매개변수가 필요 없음
+			int boardDataSizeAll = boardMapper.boardDataSizeAll();
+			
+			return boardDataSizeAll;
+			
+		}
+				
+		int boardDataSize = boardMapper.boardDataSize(category);
+		
+		return boardDataSize;
 	}
 
 	// 게시판 페이지당 데이터
@@ -50,7 +62,14 @@ public class BoardServiceImpl implements BoardService {
 
 			// 해당 범위와 검색어에 대한 뉴스 데이터 가져옴
 			ArrayList<BoardDTO> postsPerPage = new ArrayList<BoardDTO>();
-			postsPerPage = boardMapper.searchPostsPerPage(category, searchInput, startIndex, countIndex);
+			
+			// category가 전체 게시판일 때
+			if(category.equals("all_board")) {
+				// true면 커뮤니티 게시판 데이터 리스트 전체를 가져온다.
+				postsPerPage = boardMapper.searchPostsPerPageAll(searchInput, startIndex, countIndex);
+			} else {				
+				postsPerPage = boardMapper.searchPostsPerPage(category, searchInput, startIndex, countIndex);
+			}
 
 			/*
 			 * AJAX 요청은 비동기적으로 데이터를 주고받기 때문에, 여러 데이터를 한 번에 받아오는 것이 효율적인데,
@@ -73,7 +92,13 @@ public class BoardServiceImpl implements BoardService {
 		int countIndex = page.getPostPerPage();
 
 		ArrayList<BoardDTO> postsPerPage = new ArrayList<BoardDTO>();
-		postsPerPage = boardMapper.postsPerPage(category, startIndex, countIndex);
+		
+		if(category.equals("all_board")) {
+			postsPerPage = boardMapper.postsPerPageAll(startIndex, countIndex);
+		} else {
+			postsPerPage = boardMapper.postsPerPage(category, startIndex, countIndex);			
+		}
+		
 
 		Map<String, Object> response = new HashMap<String, Object>();
 
@@ -92,28 +117,22 @@ public class BoardServiceImpl implements BoardService {
 		
 		boardView = boardMapper.boardView(board_id);
 		
+		boardMapper.viewCount(board_id);
+			
 		return 	boardView;
-	}
-
-	// 게시글 조회수 증가(이건 view로 들어갈거임)
-	@Override
-	public void viewCount(String board_id) {
-		// TODO Auto-generated method stub
-
 	}
 
 	// 검색한 게시판 게시글 데이터 개수
 	@Override
 	public int searchBoardDataSize(String category, String searchInput) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	// 검색한 게시글 데이터
-	@Override
-	public ArrayList<BoardDTO> searchPostsPerPage(String category, String searchInput, int startIndex, int countIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(category.equals("all_board")) {			
+			int searchBoardDataSizeAll = boardMapper.searchBoardDataSizeAll(searchInput);
+			return searchBoardDataSizeAll;			
+		} else {			
+			int searchBoardDataSize = boardMapper.searchBoardDataSize(category, searchInput);			
+			return searchBoardDataSize;			
+		}
 	}
 
 }

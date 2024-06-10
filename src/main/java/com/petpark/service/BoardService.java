@@ -1,6 +1,5 @@
 package com.petpark.service;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import com.petpark.dto.BoardDTO;
@@ -19,12 +18,6 @@ public interface BoardService {
 	// 게시판 view 페이지 데이터
 	public BoardDTO boardView(String board_id);
 	
-	// 게시판 조회수 증가
-	public void viewCount(String board_id);
-	
 	// 검색한 게시판 데이터 개수
 	public int searchBoardDataSize(String category, String searchInput);
-	
-	// 검색한 게시판 데이터 리스트
-	public ArrayList<BoardDTO> searchPostsPerPage(String category, String searchInput, int startIndex, int countIndex);
 }

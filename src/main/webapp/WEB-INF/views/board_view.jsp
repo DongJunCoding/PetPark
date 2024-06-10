@@ -40,12 +40,13 @@
     <!-- main 영역 -->
     <main>
 	    <div class="board_view_div">
-	        <h1><%=subject %></h1>
-	        <br>
-	        <p><%=writer %></p>
-	        <p id="board_view_p_date"><%=date %></p>
-	        <hr id="board_view_hr">
-	        
+	    	<div class="board_view_top">
+		        <h1><%=subject %></h1>
+		        <br>
+		        <p><%=writer %></p>
+		        <p id="board_view_p_date"><%=date %></p>
+		        <hr id="board_view_hr">
+	        </div>
 	    	<div class="board_content">
 				<!-- 실제 게시글 내용 -->
 		        <span>

@@ -40,9 +40,9 @@ public class BoardController {
 		String subject = req.getParameter("subject");
 		String writer = req.getParameter("nickname");
 		String content = req.getParameter("content");
-
-		int result = boardServiceImpl.boardWrite(category, subject, writer, content);
 		
+		int result = boardServiceImpl.boardWrite(category, subject, writer, content);
+	
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("result", result);
@@ -67,6 +67,7 @@ public class BoardController {
 		// 카테고리별로 뉴스 데이터가 필요하여 카테고리를 가져옴
 		String category = req.getParameter("category");
 		
+		
 		// 뉴스 데이터 개수
 		int boardSize = 0;
 				
@@ -78,16 +79,24 @@ public class BoardController {
 			
 		}
 							
+		System.out.println();
+		System.out.println("currentPage : " + currentPage);
+		System.out.println("searchInput : " + searchInput);
+		System.out.println("category : " + category);
+		
+	
 		// 뉴스 리스트 검색을 한다면
-		if(searchInput != null) {
+		if(searchInput != null) {			
 			// 페이징 설정을 위해 해당 카테고리의 뉴스 데이터 size를 가져옴
-			boardSize = boardServiceImpl.searchBoardDataSize(category, searchInput);	
-		} else if (searchInput == null){
+			boardSize = boardServiceImpl.searchBoardDataSize(category, searchInput);				
+		} else if (searchInput == null){		
 			// 페이징 설정을 위해 해당 카테고리의 뉴스 데이터 size를 가져옴
 			boardSize = boardServiceImpl.boardDataSize(category);	
 		}
 		
-		
+		System.out.println("boardSize : " + boardSize);
+		System.out.println();
+				
 		// 데이터들을 json형태로 받아오기 위해 Map 생성
 		Map<String, Object> response = new HashMap<String, Object>();
 		

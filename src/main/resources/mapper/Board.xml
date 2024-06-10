@@ -18,7 +18,10 @@
         		update board set view_count = view_count + 1 where board_id=#{board_id};
         	</update>
         	
-        	
+        	<!-- 전체 게시판 데이터 개수 ( 전체 데이터 ) -->
+        	<select id="boardDataSizeAll" resultType="int">
+        		select count(*) from board;
+        	</select>
         	
         	<!-- 뉴스 데이터 개수 (카테고리별 전체) -->
         	<select id="boardDataSize" resultType="int">
@@ -31,8 +34,11 @@
         		where categories=#{category} order by date desc limit #{startIndex}, #{countIndex};
         	</select>
         	
-        	
-        	
+        	<!-- 페이지별 보일 데이터(List / 전체 게시판 ( 데이터 전체 ) / 검색어 없을 때) -->
+        	<select id="postsPerPageAll" resultType="com.petpark.dto.BoardDTO">
+        		select board_id, subject, writer, date, view_count from board order by date desc limit #{startIndex}, #{countIndex};
+        	</select>
+        	       	
         	<!-- 검색한 뉴스 데이터 개수 -->
         	<select id="searchBoardDataSize" resultType="int">
         		select count(subject) from board where categories = #{category} and subject like concat('%', #{searchInput}, '%');
@@ -42,6 +48,18 @@
         	<select id="searchPostsPerPage" resultType="com.petpark.dto.BoardDTO">
         		select board_id, subject, writer, date, view_count from board 
         		where categories = #{category} and subject like concat('%', #{searchInput}, '%') 
+        		order by date desc limit #{startIndex}, #{countIndex};
+        	</select>
+        	
+        	<!-- 검색한 뉴스 데이터 개수 -->
+        	<select id="searchBoardDataSizeAll" resultType="int">
+        		select count(subject) from board where subject like concat('%', #{searchInput}, '%');
+        	</select>
+        	
+        	<!-- 전체 게시판 검색한 뉴스 데이터 -->
+        	<select id="searchPostsPerPageAll" resultType="com.petpark.dto.BoardDTO">
+        		select board_id, subject, writer, date, view_count from board 
+        		where subject like concat('%', #{searchInput}, '%') 
         		order by date desc limit #{startIndex}, #{countIndex};
         	</select>
         	

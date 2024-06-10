@@ -15,8 +15,14 @@ public interface BoardMapper {
 	// 게시판 글 개수
 	public int boardDataSize(String category);
 	
+	// 게시판 전체 게시글 개수
+	public int boardDataSizeAll();
+	
 	// 게시판 리스트 ( 페이지별 보일 데이터 / 카테고리별 / 검색어 없을 때)
 	public ArrayList<BoardDTO> postsPerPage(String category, int startIndex, int countIndex);	
+	
+	// 게시판 리스트 ( 커뮤니티 전체 게시판 / 검색어 없을 때)
+	public ArrayList<BoardDTO> postsPerPageAll(int startIndex, int countIndex);		
 	
 	// 게시판 view 페이지 데이터
 	public BoardDTO boardView(String board_id);
@@ -29,6 +35,12 @@ public interface BoardMapper {
 	
 	// 검색한 게시판 데이터 리스트
 	public ArrayList<BoardDTO> searchPostsPerPage(String category, String searchInput, int startIndex, int countIndex);
+		
+	// 검색한 전체 게시판 데이터 개수 
+	public int searchBoardDataSizeAll(String searchInput);
+		
+	// 검색한 전체 게시판 데이터 리스트
+	public ArrayList<BoardDTO> searchPostsPerPageAll(String searchInput, int startIndex, int countIndex);
 	
 	
 }

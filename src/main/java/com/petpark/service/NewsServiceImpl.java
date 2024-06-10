@@ -51,6 +51,7 @@ public class NewsServiceImpl implements NewsService {
 		return newsDataSize;
 	}
 	
+	
 	// 뉴스 데이터와 페이징처리 후 Controller로 반환
 	@Override
 	public Map<String, Object> postsPerPage(String category, int currentPage, int newsSize, String searchInput) {

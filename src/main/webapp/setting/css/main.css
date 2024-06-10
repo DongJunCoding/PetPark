@@ -226,6 +226,12 @@ a {
   color: #fff;
 }
 
+.button-write {
+	float:right;
+	padding: 5px;
+	font-size:20px;
+}
+
 
 
 /* Kakao Map API 설정 */

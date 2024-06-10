@@ -25,12 +25,15 @@ public class PageDTO {
 		if(endPage > totalPages) {
 			endPage = totalPages;
 		}
-
+		
+		
 		System.out.println("totalPost : " + totalPost);
 		System.out.println("totalPages : " + totalPages);
 		System.out.println("currentPage : " + currentPage);
 		System.out.println("startPage : " + startPage);
 		System.out.println("endPage : " + endPage);
+		System.out.println("==========================");
+		System.out.println();
 	
 	}
 	
