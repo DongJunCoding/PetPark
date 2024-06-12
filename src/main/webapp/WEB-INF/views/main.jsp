@@ -780,6 +780,7 @@ for(BoardDTO board : recentBoard) {
                              
                                 </tbody>
                             </table>
+                            <a href="/boardWrite.do" class="button-write">글쓰기</a>
                             <div class="paging" id="free_boardPaging">
 
                             </div>
@@ -811,6 +812,7 @@ for(BoardDTO board : recentBoard) {
                            
                                 </tbody>
                             </table>
+                            <a href="/boardWrite.do" class="button-write">글쓰기</a>
                             <div class="paging" id="share_boardPaging">
 
                             </div>
@@ -842,6 +844,7 @@ for(BoardDTO board : recentBoard) {
                           
                                 </tbody>
                             </table>
+                            <a href="/boardWrite.do" class="button-write">글쓰기</a>
                             <div class="paging" id="qna_boardPaging">
 
                             </div>
@@ -873,6 +876,7 @@ for(BoardDTO board : recentBoard) {
                            
                                 </tbody>
                             </table>
+                            <a href="/boardWrite.do" class="button-write">글쓰기</a>
                             <div class="paging" id="notice_boardPaging">
 
                             </div>

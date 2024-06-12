@@ -56,8 +56,24 @@
 		        <br>
 		        <hr>
 		        <br>
-	        
-		        <div class="card mb-2 comment">
+	        			
+				<div class="comment_list">
+					<h2>댓글</h2>
+					<div class="comment" id="comment1">
+					    <span class="author">작성자명</span>
+						<p>댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<div class="actions">
+							<span class="edit-btn">수정</span> | <span class="delete-btn">삭제</span>
+						</div>
+						    <span class="reply-btn">답글달기</span>
+						<div class="reply-form" style="display: none;">
+						    <textarea class="reply-input" placeholder="답글 내용을 입력하세요"></textarea><br>
+						    <button class="reply-submit">답글 작성</button>
+					    </div>
+					</div>		
+				</div>
+				
+				<div class="card mb-2 comment">
 					<div class="card-header bg-light">
 						<i class="fa fa-comment fa"></i> 댓글 쓰기
 					</div>
@@ -77,23 +93,7 @@
 							</li>
 						</ul>
 					</div>
-				</div>
-				
-				<div class="comment_list">
-					<h2>댓글</h2>
-					<div class="comment" id="comment1">
-					    <span class="author">작성자명</span>
-						<p>댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-						<div class="actions">
-							<span class="edit-btn">수정</span> | <span class="delete-btn">삭제</span>
-						</div>
-						    <span class="reply-btn">답글달기</span>
-						<div class="reply-form" style="display: none;">
-						    <textarea class="reply-input" placeholder="답글 내용을 입력하세요"></textarea><br>
-						    <button class="reply-submit">답글 작성</button>
-					    </div>
-					</div>		
-				</div>
+				</div>				
 	        </div>
 		</div>
     </main>
