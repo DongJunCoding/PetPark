@@ -9,12 +9,12 @@
         	</insert>
         	
         	<!-- 게시판 view 페이지 데이터 -->
-        	<select id="boardView" resultType="com.petpark.dto.BoardDTO">
+        	<select id="boardView" parameterType="String" resultType="com.petpark.dto.BoardDTO">
         		select board_id, subject, writer, content, date, view_count from board where board_id=#{board_Id};
         	</select>
         	       	
         	<!-- 조회수 증가 -->
-        	<update id="viewCount">
+        	<update id="viewCount" parameterType="String">
         		update board set view_count = view_count + 1 where board_id=#{board_id};
         	</update>
         	
@@ -24,7 +24,7 @@
         	</select>
         	
         	<!-- 뉴스 데이터 개수 (카테고리별 전체) -->
-        	<select id="boardDataSize" resultType="int">
+        	<select id="boardDataSize" parameterType="String" resultType="int">
         		select count(categories) from board where categories = #{category};
         	</select>
         	      	
@@ -62,5 +62,10 @@
         		where subject like concat('%', #{searchInput}, '%') 
         		order by date desc limit #{startIndex}, #{countIndex};
         	</select>
+        	
+        	<!-- 게시글 삭제 -->
+        	<delete id="boardDelete" parameterType="String">
+        		delete from board where board_id=#{board_id}
+        	</delete>
         	
         </mapper>

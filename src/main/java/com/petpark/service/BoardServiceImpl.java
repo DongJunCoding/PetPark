@@ -135,4 +135,14 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	// 게시글 삭제
+	@Override
+	public int boardDelete(String board_id) {
+		
+		int result = boardMapper.boardDelete(board_id);
+		
+		return result;
+		
+	}
+
 }

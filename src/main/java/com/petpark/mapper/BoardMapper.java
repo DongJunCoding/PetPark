@@ -42,5 +42,8 @@ public interface BoardMapper {
 	// 검색한 전체 게시판 데이터 리스트
 	public ArrayList<BoardDTO> searchPostsPerPageAll(String searchInput, int startIndex, int countIndex);
 	
+	// 게시글 삭제
+	public int boardDelete(String board_id);
+	
 	
 }

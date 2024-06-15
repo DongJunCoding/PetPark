@@ -20,4 +20,7 @@ public interface BoardService {
 	
 	// 검색한 게시판 데이터 개수
 	public int searchBoardDataSize(String category, String searchInput);
+	
+	// 게시글 삭제
+	public int boardDelete(String board_id);
 }

@@ -131,4 +131,24 @@ public class BoardController {
 		
 		return mv;
 	}
+	
+	// 게시글 삭제
+	@GetMapping("/boardDelete.do")
+	public String boardDelete(HttpServletRequest req) {
+		
+		String boardId = req.getParameter("board_id");
+		
+		System.out.println("board_id : " + boardId);
+		
+		int result = boardServiceImpl.boardDelete(boardId);
+		
+		System.out.println("result : " + result);
+//
+//		ModelAndView mv = new ModelAndView();
+//		
+//		mv.addObject("result", result);
+//		mv.setViewName("board_delete_ok");
+		
+		return "/petpark.do";
+	}
 }

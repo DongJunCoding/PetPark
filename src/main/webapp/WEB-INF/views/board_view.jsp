@@ -7,6 +7,7 @@
 <%
 	BoardDTO boardView = (BoardDTO)request.getAttribute("boardView");
 	
+	String boardId = boardView.getBoard_id();
 	String subject = boardView.getSubject();
 	String writer = boardView.getWriter();
 	String date = boardView.getDate();
@@ -53,17 +54,22 @@
 		        	<%=content %>
 		        </span>
      	        
-		        <br>
+		        <br><br>
+		        <div>
+		        	<button class="board-button-reply">답글달기</button>
+		        	<button class="board-button"><a href="boardDelete.do?board_id=<%=boardId%>">삭제</a></button>
+		        	<button class="board-button" onclick="history.back()">목록</button>
+		        </div>
 		        <hr>
 		        <br>
 	        			
 				<div class="comment_list">
 					<h2>댓글</h2>
-					<div class="comment" id="comment1">
+					<div class="comment">
 					    <span class="author">작성자명</span>
 						<p>댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 						<div class="actions">
-							<span class="edit-btn">수정</span> | <span class="delete-btn">삭제</span>
+							<a class="edit-btn">수정</a> | <a class="delete-btn">삭제</a>
 						</div>
 						    <span class="reply-btn">답글달기</span>
 						<div class="reply-form" style="display: none;">

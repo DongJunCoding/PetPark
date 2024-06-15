@@ -62,8 +62,41 @@ header {
     text-align:center;
 }
 
+
+
+
+
+/* 답글쓰기, 목록, 삭제 버튼 디자인 */
+.board-button {
+	margin: 5px;
+	float:right;
+	border-radius: 100px;
+    border:none;
+    padding: 5px 10px;
+}
+
+.board-button:hover {
+	background-color:yellowgreen;
+}
+
+.board-button-reply {
+	margin: 5px;
+	float:center;
+	border-radius: 100px;
+    border:none;
+    padding: 5px 10px;
+}
+
+.board-button-reply:hover {
+	background-color:yellowgreen;
+}
+
+
+
+
+
 .comment {
-	text-align:center;
+	text-align:left;
 }
 
 .comment_list {
@@ -94,6 +127,12 @@ header {
     top: 5px;
     right: 0;
   }
+  
+  a {
+  text-decoration: none;
+  color:inherit;
+  cursor:pointer;
+  }
 
   /* 답글달기 버튼 스타일 */
   .reply-btn {
@@ -107,6 +146,7 @@ header {
   .reply-form {
     margin-top: 10px;
   }
+  
 /* footer 설정 */
 .site-footer hr{
   border-top-color:#bbb;
