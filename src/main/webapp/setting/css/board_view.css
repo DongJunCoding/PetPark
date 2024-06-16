@@ -133,6 +133,18 @@ header {
   color:inherit;
   cursor:pointer;
   }
+  
+  #board-delete-btn,
+  #board-list-btn,
+  #board-modify-btn {
+    text-decoration: none;
+  	margin: 5px;
+	float:right;
+	border-radius: 100px;
+    border:none;
+    padding: 5px 10px;
+  
+  }
 
   /* 답글달기 버튼 스타일 */
   .reply-btn {

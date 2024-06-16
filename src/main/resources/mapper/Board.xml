@@ -10,7 +10,7 @@
         	
         	<!-- 게시판 view 페이지 데이터 -->
         	<select id="boardView" parameterType="String" resultType="com.petpark.dto.BoardDTO">
-        		select board_id, subject, writer, content, date, view_count from board where board_id=#{board_Id};
+        		select board_id, categories, subject, writer, content, date, view_count from board where board_id=#{board_Id};
         	</select>
         	       	
         	<!-- 조회수 증가 -->
@@ -65,7 +65,12 @@
         	
         	<!-- 게시글 삭제 -->
         	<delete id="boardDelete" parameterType="String">
-        		delete from board where board_id=#{board_id}
+        		delete from board where board_id=#{board_id};
         	</delete>
+        	
+        	<!-- 게시글 수정 -->
+        	<update id="boardModify" parameterType="com.petpark.dto.BoardDTO">
+        		update board set categories=#{category}, subject=#{subject}, content=#{content} where board_id=#{board_id} and writer=#{writer}
+        	</update>
         	
         </mapper>

@@ -45,5 +45,8 @@ public interface BoardMapper {
 	// 게시글 삭제
 	public int boardDelete(String board_id);
 	
+	// 게시글 수정
+	public int boardModify(String board_id, String category, String subject, String writer, String content);
+	
 	
 }

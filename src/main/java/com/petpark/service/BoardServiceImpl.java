@@ -145,4 +145,13 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
+	// 게시글 수정
+	@Override
+	public int boardModify(String board_id, String category, String subject, String writer, String content) {
+		
+		int result = boardMapper.boardModify(board_id, category, subject, writer, content);
+
+		return result;
+	}
+
 }

@@ -134,21 +134,59 @@ public class BoardController {
 	
 	// 게시글 삭제
 	@GetMapping("/boardDelete.do")
-	public String boardDelete(HttpServletRequest req) {
+	public ModelAndView boardDelete(HttpServletRequest req) {
+		
+		// 삭제할 게시글의 id값을 가져온다.
+		String boardId = req.getParameter("board_id");
+		
+		// 가져온 id값을 service의 delete 메서드에 보내주어 삭제 처리를 한다.
+		int result = boardServiceImpl.boardDelete(boardId);
+	
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("result", result);
+		mv.setViewName("board_delete_ok");
+		
+		// 완료 후 메인페이지로 이동
+		return mv;
+	}
+	
+	// 게시글 수정 페이지
+	@GetMapping("/boardModify.do")
+	public ModelAndView boardModify(HttpServletRequest req) {
 		
 		String boardId = req.getParameter("board_id");
 		
-		System.out.println("board_id : " + boardId);
+		BoardDTO board = new BoardDTO();
 		
-		int result = boardServiceImpl.boardDelete(boardId);
+		board = boardServiceImpl.boardView(boardId);
 		
-		System.out.println("result : " + result);
-//
-//		ModelAndView mv = new ModelAndView();
-//		
-//		mv.addObject("result", result);
-//		mv.setViewName("board_delete_ok");
+		ModelAndView mv = new ModelAndView();
 		
-		return "/petpark.do";
+		mv.addObject("board", board);
+		mv.setViewName("board_write_modify");
+		
+		return mv;
+	}
+	
+	// 게시글 수정 완료
+	@PostMapping("boardModifyOk.do")
+	public ModelAndView boardModifyOk(HttpServletRequest req) {
+		
+		// 수정페이지의 데이터들을 가져온다
+		String boardId = req.getParameter("board_id");
+		String category = req.getParameter("category");
+		String subject = req.getParameter("subject");
+		String writer = req.getParameter("nickname");
+		String content = req.getParameter("content");
+
+		// 수정된 값들을 service로 보내 수정 작업을 하며 결과값을 result로 받아온다 ( 0:실패 or 1:성공)
+		int result = boardServiceImpl.boardModify(boardId, category, subject, writer, content);
+				
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("result", result);
+		mv.setViewName("board_modify_ok");
+		
+		return mv;
 	}
 }

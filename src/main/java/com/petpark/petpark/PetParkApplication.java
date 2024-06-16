@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.petpark.controller", "com.petpark.service","com.petpark.dto","com.petpark.mapper"})
+@ComponentScan(basePackages = {"com.petpark.controller", "com.petpark.service", "com.petpark.dto", "com.petpark.mapper"})
 @MapperScan("com.petpark.mapper")
 public class PetParkApplication {
 

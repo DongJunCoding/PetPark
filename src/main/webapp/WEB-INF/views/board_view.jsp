@@ -8,6 +8,7 @@
 	BoardDTO boardView = (BoardDTO)request.getAttribute("boardView");
 	
 	String boardId = boardView.getBoard_id();
+	String category = boardView.getCategories();
 	String subject = boardView.getSubject();
 	String writer = boardView.getWriter();
 	String date = boardView.getDate();
@@ -46,9 +47,20 @@
 		        <br>
 		        <p><%=writer %></p>
 		        <p id="board_view_p_date"><%=date %></p>
-		        <hr id="board_view_hr">
+		        
+		        <%if(category.equals("free_board")) {  %>
+		        <strong>자유게시판</strong>
+		        <%} else if(category.equals("share_board")) {%>
+		        <strong>나눔게시판</strong>
+		        <%} else if(category.equals("qna_board")) {%>
+		        <strong>Q & A게시판</strong>
+		        <%} else if(category.equals("notice_board")) {%>
+		        <strong>공지사항</strong>
+		        <%}%>
+		        
 	        </div>
 	    	<div class="board_content">
+		        <hr>
 				<!-- 실제 게시글 내용 -->
 		        <span>
 		        	<%=content %>
@@ -57,8 +69,9 @@
 		        <br><br>
 		        <div>
 		        	<button class="board-button-reply">답글달기</button>
-		        	<button class="board-button"><a href="boardDelete.do?board_id=<%=boardId%>">삭제</a></button>
-		        	<button class="board-button" onclick="history.back()">목록</button>
+		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=boardId%>">수정</a>
+		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=boardId%>">삭제</a>
+		        	<a id="board-list-btn" onclick="history.back()">목록</a>
 		        </div>
 		        <hr>
 		        <br>
