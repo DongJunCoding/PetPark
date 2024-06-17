@@ -1,5 +1,6 @@
 package com.petpark.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.petpark.dto.BoardDTO;
+import com.petpark.dto.CommentDTO;
 import com.petpark.service.BoardServiceImpl;
+import com.petpark.service.CommentServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -20,6 +23,9 @@ public class BoardController {
 
 	@Autowired
 	private BoardServiceImpl boardServiceImpl;
+	
+	@Autowired
+	private CommentServiceImpl commentServiceImpl;
 
 	// 게시판 글쓰기 페이지
 	@GetMapping("/boardWrite.do")
@@ -115,22 +121,59 @@ public class BoardController {
 		String boardId = req.getParameter("board_id");
 		
 		boardView = boardServiceImpl.boardView(boardId);
+				
+		// 해당 게시글의 댓글
+		ArrayList<CommentDTO> boardComment = new ArrayList<CommentDTO>();
 		
-//		String boardContent = boardView.getContent();
-//		
-//		int boardLength = boardContent.length();
-//		
-//		System.out.println("boardLength : " + boardLength);
-//		System.out.println("DataSize : " + boardLength * 2);
-		
-		
+		boardComment = commentServiceImpl.selectBoardComment(boardId);
+				
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("boardView", boardView);
+		mv.addObject("boardComment", boardComment);
 		mv.setViewName("board_view");
 		
 		return mv;
 	}
+	
+	
+	// 게시판 댓글 쓰기
+	@PostMapping("/commentWrite.do")
+	public ModelAndView commentWrite (HttpServletRequest req) {
+		
+		String boardNo = req.getParameter("board-no");
+		String writer = req.getParameter("comment-writer");
+		String content = req.getParameter("comment-content");
+		
+		int result = commentServiceImpl.boardCommentWrite(boardNo, writer, content);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("boardNo", boardNo);
+		mv.addObject("result", result);
+		mv.setViewName("board_comment_write_ok");
+		
+		return mv;
+	}
+	
+	// 게시판 댓글 삭제
+	@GetMapping("/deleteComment.do")
+	public ModelAndView deleteComment(HttpServletRequest req) {
+		
+		String commentId = req.getParameter("comment_id");
+		String boardNo = req.getParameter("board_no");
+		
+		int result = commentServiceImpl.deleteBoardComment(commentId, boardNo);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("result", result);
+		mv.addObject("boardNo", boardNo);
+		mv.setViewName("board_comment_write_ok");
+		
+		return mv;
+	}
+	
 	
 	// 게시글 삭제
 	@GetMapping("/boardDelete.do")

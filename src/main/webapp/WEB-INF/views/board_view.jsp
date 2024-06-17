@@ -1,3 +1,5 @@
+<%@page import="com.petpark.controller.BoardController"%>
+<%@page import="com.petpark.dto.CommentDTO"%>
 <%@page import="com.petpark.dto.BoardDTO"%>
 <%@page import="com.petpark.dto.CrawlingDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,6 +16,40 @@
 	String date = boardView.getDate();
 	String content = boardView.getContent();
 	
+	ArrayList<CommentDTO> boardComments = (ArrayList<CommentDTO>)request.getAttribute("boardComment");
+	
+	String commentId = "";
+	String boardNo = "";
+	String commentWriter = "";
+	String commentContent = "";
+	String commentDate = "";
+	
+	StringBuilder commentSB = new StringBuilder();
+	
+	if(boardComments != null) {
+				
+		for(CommentDTO boardComment : boardComments) {
+			
+			commentId = boardComment.getComment_id();
+			boardNo = boardComment.getBoard_no();
+			commentWriter = boardComment.getWriter();
+			commentContent = boardComment.getContent();
+			commentDate = boardComment.getDate();
+			
+			commentSB.append("<span class='author'>" + commentWriter + "</span>");
+			commentSB.append("<p>" + commentContent + "</p>");
+			commentSB.append("<div class='actions'>");
+			commentSB.append("<a class='edit-btn'>수정</a> | <a href='/deleteComment.do?comment_id=" + commentId +"&board_no="+boardNo+"' class='delete-btn'>삭제</a>");
+			commentSB.append("</div>");
+			commentSB.append("<span class='reply-btn'>답글달기</span>");
+			commentSB.append("<div class='reply-form' style='display: none;'>");
+			commentSB.append("<textarea class='reply-input' placeholder='답글 내용을 입력하세요'></textarea><br>");
+			commentSB.append("<button class='reply-submit'>답글 작성</button>");
+			commentSB.append("</div>");
+			commentSB.append("<hr>");
+		}
+		
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +65,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="setting/css/board_view.css">
+        
+    <script>
+		function toggleEditForm(commentId) {
+		   var editForm = document.getElementById('editForm_' + commentId);
+		   editForm.style.display = (editForm.style.display === 'none') ? 'block' : 'none';
+		}
+	</script>  
 </head>
 
 <body>
@@ -78,18 +121,14 @@
 	        			
 				<div class="comment_list">
 					<h2>댓글</h2>
+					<br>
 					<div class="comment">
-					    <span class="author">작성자명</span>
-						<p>댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-						<div class="actions">
-							<a class="edit-btn">수정</a> | <a class="delete-btn">삭제</a>
-						</div>
-						    <span class="reply-btn">답글달기</span>
-						<div class="reply-form" style="display: none;">
-						    <textarea class="reply-input" placeholder="답글 내용을 입력하세요"></textarea><br>
-						    <button class="reply-submit">답글 작성</button>
-					    </div>
-					</div>		
+					<%if(boardComments != null) { %>
+					    <%=commentSB %>
+					<%} else {%>
+							<span>댓글을 작성해주세요 !</span>
+					<%} %>	
+					</div>	
 				</div>
 				
 				<div class="card mb-2 comment">
@@ -100,14 +139,15 @@
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item">
 						    	<!-- 댓글 form -->
-								<form action="#" method="post">
+								<form action="commentWrite.do" method="POST">
+									<input type="hidden" name="board-no" value="<%=boardId %>" />
 									<div class="form-inline mb-2">
 										<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-										<input type="text" class="form-control ml-2" placeholder="Enter yourId" id="replyId">
+										<input type="text" class="form-control ml-2" name="comment-writer" id="replyId" value="댓글닉네임" readonly>
 										<label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
 									</div>
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-									<button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">댓글 달기</button>
+									<textarea class="form-control" name="comment-content" id="exampleFormControlTextarea1" rows="3"></textarea>
+									<button type="submit" class="btn btn-dark mt-3" id="comment-btn">댓글 달기</button>
 								</form>
 							</li>
 						</ul>

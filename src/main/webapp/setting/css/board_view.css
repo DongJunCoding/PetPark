@@ -123,7 +123,7 @@ header {
 
   /* 수정, 삭제 버튼 스타일 */
   .actions {
-    position: absolute;
+  	float:right;
     top: 5px;
     right: 0;
   }
