@@ -37,22 +37,54 @@
     	window.onload = function() {
     		document.getElementById('submit-button').onclick = function() {
     			
-    			let select = document.getElementById('select-category');
+    			// 선택한 카테고리
+    			let select = document.getElementById('select-category').value;
     			    			
-    			if(select.value.trim() == '선택해주세요') {
+    			if(select.trim() == '선택해주세요') {
     				alert('카테고리를 선택해주세요');
     				return false;
     			}
     			
-    			let content = document.getElementById("content");
+    			// 입력한 제목
+        		let subject = document.getElementById("subject").value;
     			
-    			if(content.value.trim() == '') {
+        		if(subject.trim() == '') {
+    				alert('제목을 입력해주세요.');
+    				return false;
+    			}
+    			
+        		// 입력한 내용 (summernote)
+    			let contentValue = $('.summernote').summernote('code');
+    			
+    			if(contentValue.trim() == '') {
     				alert('내용을 입력해주세요');
     				return false;
     			}
     			
+    			// 닉네임
+        		let nickname = document.getElementById("nickname").value;
+        		
+    			$.ajax({
+    				type: 'POST',
+    				url: '/boardWriteOk.do',
+    				async: true,
+    				data: {
+    					'category': select,
+    					'subject': subject,
+    					'nickname': nickname,
+    					'content': contentValue
+    				},
+    				success: function(result) {
+    					alert('게시글이 업로드 되었습니다.');
+    					history.back();
+						return false;
+    				},
+    				error: function(error) {
+    					alert('게시글 업로드 실패');
+    					return false;
+    				}
+    			});
     		};
-			
     	};
     </script>
 
@@ -70,7 +102,6 @@
     <br><br>
     <!-- main 영역 -->
     <main>  	
-    	<form action="boardWriteOk.do" method="POST">
 	        <div class="summernote-container">        
 	        	<div class="author-field">
 		        <label>작성자: </label><input type="text" name="nickname" id="nickname" value="닉네임" readonly />
@@ -86,9 +117,8 @@
 		    	</div>     
 		    	<br>
 			    <textarea class="summernote" name="content" id="content"></textarea>		    
-				<button type="submit" id="submit-button" class="submit-button">작성완료</button>
+				<button type="button" id="submit-button" class="submit-button">작성완료</button>
 			</div>		
-		</form>
 
         <script>
 	        $(document).ready(function() {

@@ -50,7 +50,7 @@
 .submit-button {
     position: absolute; /* 버튼을 절대적으로 설정합니다. */
     top: 100%; /* Summernote 아래에 배치합니다. */
-    left: 50%; /* 부모 요소의 오른쪽에 배치합니다. */
+    left: 46%; /* 부모 요소의 오른쪽에 배치합니다. */
     margin-top: 10px; /* Summernote와의 간격을 조절합니다. */
     border:none;
     margin-left: 10px;

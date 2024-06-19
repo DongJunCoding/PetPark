@@ -8,10 +8,10 @@
 
 	out.println("<script type='text/javascript'>");
 	if (result == 1) {
-		out.println("alert('댓글 삭제 완료');");	
+		out.println("alert('댓글 작성 완료');");	
 		out.println("location.href='/boardView.do?board_id=" + boardNo +"';");		
 	} else {
-		out.println("alert('댓글 삭제 실패');");
+		out.println("alert('댓글 작성 실패');");
 		out.println("history.back();");
 	}
 	out.println("</script>");

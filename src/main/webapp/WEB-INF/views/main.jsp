@@ -196,7 +196,7 @@ for(BoardDTO board : recentBoard) {
 				document.getElementById(category + "Paging").innerHTML = pageSB.toString();
 	            
 				$("#"+ category +"_board-size").text('Total : '+pagination.totalPost).css('color','orange').css('float','right');
-				
+
 			},
 			error: function(error) { // 결과 에러 콜백함수
 				console.log("AJAX 요청 실패");
@@ -705,24 +705,25 @@ for(BoardDTO board : recentBoard) {
                 </div>
 
                 <div id="board" class="container tab-pane fade"><br>
-                    <ul class="nav" role="tablist">
-                        <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#all_board" onclick="boardPage(1, 'all_board')">전체</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#free_board" onclick="boardPage(1, 'free_board')">자유게시판</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#share_board"onclick="boardPage(1, 'share_board')">나눔</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#qna_board" onclick="boardPage(1, 'qna_board')">Q & A</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#notice_board" onclick="boardPage(1, 'notice_board')">공지</a>
-                        </li>
-                    </ul>  
-
+					<ul class="nav" role="tablist">
+					    <li class="nav-item">
+					        <a class="board-nav-link" data-bs-toggle="tab" href="#all_board" onclick="boardPage(1, 'all_board')">전체</a>
+					    </li>
+					    <li class="nav-item">
+					        <a class="board-nav-link" data-bs-toggle="tab" href="#free_board" onclick="boardPage(1, 'free_board')">자유게시판</a>
+					    </li>
+					    <li class="nav-item">
+					        <a class="board-nav-link" data-bs-toggle="tab" href="#share_board" onclick="boardPage(1, 'share_board')">나눔</a>
+					    </li>
+					    <li class="nav-item">
+					        <a class="board-nav-link" data-bs-toggle="tab" href="#qna_board" onclick="boardPage(1, 'qna_board')">Q & A</a>
+					    </li>
+					    <li class="nav-item">
+					        <a class="board-nav-link" data-bs-toggle="tab" href="#notice_board" onclick="boardPage(1, 'notice_board')">공지</a>
+					    </li>
+					</ul>  
+					
+					<div id="main-content">
                     <div id="all_board" class="container tab-pane fade"><br>
                         <form>
                             <img src="setting/image/logo.png" class="searchlogo">
@@ -882,6 +883,7 @@ for(BoardDTO board : recentBoard) {
                             </div>
                         </div> 
                     </div>
+                </div>
                 </div>
                 
                 <!-- 동물병원 & 용품점 메뉴 -->
