@@ -39,13 +39,31 @@
 			commentSB.append("<span class='author'>" + commentWriter + "</span>");
 			commentSB.append("<p>" + commentContent + "</p>");
 			commentSB.append("<div class='actions'>");
-			commentSB.append("<a class='edit-btn'>수정</a> | <a href='/deleteComment.do?comment_id=" + commentId +"&board_no="+boardNo+"' class='delete-btn'>삭제</a>");
+			commentSB.append("<a class='edit-btn' onclick='commentModify("+commentId+")'>수정</a> | <a href='/deleteComment.do?comment_id=" + commentId +"&board_no="+boardNo+"' class='delete-btn'>삭제</a>");
 			commentSB.append("</div>");
-			commentSB.append("<span class='reply-btn'>답글달기</span>");
-			commentSB.append("<div class='reply-form' style='display: none;'>");
+			commentSB.append("<span class='reply-btn' onclick='commentReply("+commentId+")'>답글달기</span>");
+			commentSB.append("<br>");
+			
+			// 답글 달기창(미완)
+			commentSB.append("<div id='editForm_"+commentId+"' class='reply-form' style='display: none;'>");
 			commentSB.append("<textarea class='reply-input' placeholder='답글 내용을 입력하세요'></textarea><br>");
 			commentSB.append("<button class='reply-submit'>답글 작성</button>");
 			commentSB.append("</div>");
+			
+			// 댓글 수정창
+			commentSB.append("<div id='commentModify_"+commentId+"' style='display: none;'>");			
+			commentSB.append("<form action='modifyComment.do' method='POST'>");
+			commentSB.append("<input type='hidden' name='board-no' value='"+boardId+"' />");
+			commentSB.append("<input type='hidden' name='comment-id' value='"+commentId+"' />");
+			commentSB.append("<div class='form-inline mb-2'>");
+			commentSB.append("<input type='text' name='comment-writer' id='replyId' value='댓글닉네임' readonly>"); // 로그인 구현시 수정
+			commentSB.append("<label for='replyPassword' class='ml-4'><i class='fa fa-unlock-alt fa-2x'></i></label>");
+			commentSB.append("</div>");
+			commentSB.append("<textarea class='form-control' name='comment-content' id='exampleFormControlTextarea1' rows='3'>"+commentContent+"</textarea>");
+			commentSB.append("<button type='submit' class='btn btn-dark mt-3' id='comment-btn'>댓글 수정</button>");
+			commentSB.append("</form>");		
+			commentSB.append("</div>");
+			
 			commentSB.append("<hr>");
 		}
 		
@@ -67,10 +85,18 @@
     <link rel="stylesheet" href="setting/css/board_view.css">
         
     <script>
-		function toggleEditForm(commentId) {
-		   var editForm = document.getElementById('editForm_' + commentId);
+		function commentReply(commentId) {
+		   let editForm = document.getElementById('editForm_' + commentId);
+		   console.log(editForm);
 		   editForm.style.display = (editForm.style.display === 'none') ? 'block' : 'none';
 		}
+		
+		function commentModify(commentId) {
+			let editForm = document.getElementById('commentModify_' + commentId);
+			console.log(editForm);
+			editForm.style.display = (editForm.style.display === 'none') ? 'block' : 'none';
+		}
+			
 	</script>  
 </head>
 
@@ -114,7 +140,7 @@
 		        	<button class="board-button-reply">답글달기</button>
 		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=boardId%>">수정</a>
 		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=boardId%>">삭제</a>
-		        	<a id="board-list-btn" onclick="history.back()">목록</a>
+		        	<a id="board-list-btn" href="/petpark.do#board">목록</a>
 		        </div>
 		        <hr>
 		        <br>
@@ -131,6 +157,7 @@
 					</div>	
 				</div>
 				
+				
 				<div class="card mb-2 comment">
 					<div class="card-header bg-light">
 						<i class="fa fa-comment fa"></i> 댓글 쓰기
@@ -142,8 +169,7 @@
 								<form action="commentWrite.do" method="POST">
 									<input type="hidden" name="board-no" value="<%=boardId %>" />
 									<div class="form-inline mb-2">
-										<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-										<input type="text" class="form-control ml-2" name="comment-writer" id="replyId" value="댓글닉네임" readonly>
+										<input type="text" class="form-control" name="comment-writer" id="replyId" value="댓글닉네임" readonly>
 										<label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
 									</div>
 									<textarea class="form-control" name="comment-content" id="exampleFormControlTextarea1" rows="3"></textarea>

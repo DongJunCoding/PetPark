@@ -136,45 +136,6 @@ public class BoardController {
 		return mv;
 	}
 	
-	
-	// 게시판 댓글 쓰기
-	@PostMapping("/commentWrite.do")
-	public ModelAndView commentWrite (HttpServletRequest req) {
-		
-		String boardNo = req.getParameter("board-no");
-		String writer = req.getParameter("comment-writer");
-		String content = req.getParameter("comment-content");
-		
-		int result = commentServiceImpl.boardCommentWrite(boardNo, writer, content);
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("boardNo", boardNo);
-		mv.addObject("result", result);
-		mv.setViewName("board_comment_write_ok");
-		
-		return mv;
-	}
-	
-	// 게시판 댓글 삭제
-	@GetMapping("/deleteComment.do")
-	public ModelAndView deleteComment(HttpServletRequest req) {
-		
-		String commentId = req.getParameter("comment_id");
-		String boardNo = req.getParameter("board_no");
-		
-		int result = commentServiceImpl.deleteBoardComment(commentId, boardNo);
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("result", result);
-		mv.addObject("boardNo", boardNo);
-		mv.setViewName("board_comment_write_ok");
-		
-		return mv;
-	}
-	
-	
 	// 게시글 삭제
 	@GetMapping("/boardDelete.do")
 	public ModelAndView boardDelete(HttpServletRequest req) {
@@ -230,6 +191,61 @@ public class BoardController {
 		mv.addObject("result", result);
 		mv.setViewName("board_modify_ok");
 		
+		return mv;
+	}
+	
+	// 게시판 댓글 쓰기
+	@PostMapping("/commentWrite.do")
+	public ModelAndView commentWrite (HttpServletRequest req) {
+		
+		String boardNo = req.getParameter("board-no");
+		String writer = req.getParameter("comment-writer");
+		String content = req.getParameter("comment-content");
+		
+		int result = commentServiceImpl.boardCommentWrite(boardNo, writer, content);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("boardNo", boardNo);
+		mv.addObject("result", result);
+		mv.setViewName("board_comment_write_ok");
+		
+		return mv;
+	}
+	
+	// 게시판 댓글 삭제
+	@GetMapping("/deleteComment.do")
+	public ModelAndView deleteComment(HttpServletRequest req) {
+		
+		String commentId = req.getParameter("comment_id");
+		String boardNo = req.getParameter("board_no");
+		
+		int result = commentServiceImpl.deleteBoardComment(commentId, boardNo);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("result", result);
+		mv.addObject("boardNo", boardNo);
+		mv.setViewName("board_comment_write_ok");
+		
+		return mv;
+	}
+	
+	// 게시판 댓글 수정
+	@PostMapping("/modifyComment.do")
+	public ModelAndView modifyComment(HttpServletRequest req) {
+		
+		String content = req.getParameter("comment-content");
+		String board_no = req.getParameter("board-no");
+		String comment_id = req.getParameter("comment-id");
+		
+		int result = commentServiceImpl.modifyBoardComment(content, board_no, comment_id);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("result", result);
+		mv.addObject("boardNo", board_no);
+		mv.setViewName("board_comment_modify_ok");
 		return mv;
 	}
 }

@@ -15,4 +15,7 @@ public interface CommentService {
 	// 게시판 댓글 삭제
 	public int deleteBoardComment(String comment_id, String board_no);
 	
+	// 게시판 댓글 수정
+	public int modifyBoardComment(String content, String board_no, String comment_id);
+	
 }

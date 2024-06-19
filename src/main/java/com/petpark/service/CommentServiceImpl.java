@@ -40,4 +40,12 @@ public class CommentServiceImpl implements CommentService {
 		return result;
 	}
 
+	@Override
+	public int modifyBoardComment(String content, String board_no, String comment_id) {
+		
+		int result = commentMapper.modifyBoardComment(content, board_no, comment_id);
+		
+		return result;
+	}
+
 }

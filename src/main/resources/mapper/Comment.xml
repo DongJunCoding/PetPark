@@ -19,4 +19,8 @@
         		delete from comment where comment_id=#{comment_id} and board_no=#{board_no}
         	</delete>
         	
+        	<!-- 댓글 수정 -->
+        	<update id="modifyBoardComment">
+        		update comment set content=#{content} where board_no=#{board_no} and comment_id=#{comment_id};
+        	</update>
         </mapper>

@@ -373,6 +373,45 @@ for(BoardDTO board : recentBoard) {
         }
     }
 	
+	
+    function changeHash(tabId) {
+        window.location.hash = tabId; // URL의 해시(#)를 클릭한 탭의 ID로 변경
+    }
+    
+    window.onload = function() {
+        // 페이지 로드 시 URL 해시(#) 확인하여 해당 탭 활성화
+        var hash = window.location.hash;
+        if (hash) {
+            // URL에 해시(#)가 있는 경우
+            // 해당 탭 활성화
+            $('.nav-tabs a[href="' + hash + '"]').tab('show');
+
+            // 해당 탭의 내용 보이기
+            $(hash).addClass('active');
+        } else {
+            // URL에 해시(#)가 없는 경우
+            // 기본 탭 활성화
+            $('.nav-tabs a:first').tab('show');
+
+            // 기본 탭의 내용 보이기
+            $('#all_board').addClass('active');
+        }
+    };
+
+    // 탭 클릭 시 처리
+    $('.nav-tabs a').on('click', function (e) {
+        e.preventDefault();
+        var tabId = $(this).attr('href');
+
+        // 다른 탭 내용 숨기기
+        $('.tab-pane').removeClass('active');
+
+        // 클릭한 탭 내용 보이기
+        $(tabId).addClass('active');
+
+        // URL 업데이트
+        history.pushState(null, null, tabId);
+    });
 	</script>
 </head>
 <body>
@@ -396,19 +435,19 @@ for(BoardDTO board : recentBoard) {
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#home">홈</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#home" onclick="changeHash('home')">홈</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#news">뉴스 & 소식</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#news" onclick="changeHash('news')">뉴스 & 소식</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#board">커뮤니티</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#board" onclick="changeHash('board')">커뮤니티</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#location">병원 & 용품점</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#location" onclick="changeHash('location')">병원 & 용품점</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#shopping">쇼핑</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#shopping" onclick="changeHash('shopping')">쇼핑</a>
                 </li>
             </ul>
             
@@ -707,7 +746,7 @@ for(BoardDTO board : recentBoard) {
                 <div id="board" class="container tab-pane fade"><br>
 					<ul class="nav" role="tablist">
 					    <li class="nav-item">
-					        <a class="board-nav-link" data-bs-toggle="tab" href="#all_board" onclick="boardPage(1, 'all_board')">전체</a>
+					        <a class="board-nav-link active" data-bs-toggle="tab" href="#all_board" onclick="boardPage(1, 'all_board')">전체</a>
 					    </li>
 					    <li class="nav-item">
 					        <a class="board-nav-link" data-bs-toggle="tab" href="#free_board" onclick="boardPage(1, 'free_board')">자유게시판</a>
@@ -723,7 +762,7 @@ for(BoardDTO board : recentBoard) {
 					    </li>
 					</ul>  
 					
-					<div id="main-content">
+
                     <div id="all_board" class="container tab-pane fade"><br>
                         <form>
                             <img src="setting/image/logo.png" class="searchlogo">
@@ -884,7 +923,7 @@ for(BoardDTO board : recentBoard) {
                         </div> 
                     </div>
                 </div>
-                </div>
+
                 
                 <!-- 동물병원 & 용품점 메뉴 -->
                 <div id="location" class="container tab-pane fade"><br>
