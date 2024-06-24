@@ -25,7 +25,7 @@ public class MainController {
 	private MainPageServiceImpl mainPageServiceImpl;
 	
 	@Value("${kakao-javaScript-API-KEY}")
-	private String kakaoMapAPI;
+	private String kakaoAPI_KEY;
 
 	@RequestMapping("/petpark.do")
 	public ModelAndView main(HttpServletRequest req) throws Exception {
@@ -36,6 +36,7 @@ public class MainController {
 		ArrayList<BoardDTO> boards = mainPageServiceImpl.selectRecentBoard();
 		
 		ModelAndView mv = new ModelAndView(); 
+		mv.addObject("kakaoAPI_KEY", kakaoAPI_KEY);
 		mv.addObject("news", news);
 		mv.addObject("boards", boards);
 		mv.setViewName("main");
