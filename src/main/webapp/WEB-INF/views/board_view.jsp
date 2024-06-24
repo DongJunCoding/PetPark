@@ -37,6 +37,7 @@
 			commentDate = boardComment.getDate();
 			
 			commentSB.append("<span class='author'>" + commentWriter + "</span>");
+			commentSB.append("<span>"+commentDate+"</span>");
 			commentSB.append("<p>" + commentContent + "</p>");
 			commentSB.append("<div class='actions'>");
 			commentSB.append("<a class='edit-btn' onclick='commentModify("+commentId+")'>수정</a> | <a href='/deleteComment.do?comment_id=" + commentId +"&board_no="+boardNo+"' class='delete-btn'>삭제</a>");

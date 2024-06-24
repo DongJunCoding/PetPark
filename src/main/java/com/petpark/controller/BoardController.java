@@ -226,7 +226,7 @@ public class BoardController {
 		
 		mv.addObject("result", result);
 		mv.addObject("boardNo", boardNo);
-		mv.setViewName("board_comment_write_ok");
+		mv.setViewName("board_comment_delete_ok");
 		
 		return mv;
 	}

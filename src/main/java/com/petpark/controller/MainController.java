@@ -3,6 +3,7 @@ package com.petpark.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +23,9 @@ public class MainController {
 	
 	@Autowired
 	private MainPageServiceImpl mainPageServiceImpl;
+	
+	@Value("${kakao-javaScript-API-KEY}")
+	private String kakaoMapAPI;
 
 	@RequestMapping("/petpark.do")
 	public ModelAndView main(HttpServletRequest req) throws Exception {
