@@ -12,7 +12,6 @@
     margin-right: auto;
 }
 
-
 /* 기본 Summernote 스타일링 */
 .note-editor {
     width: 100%;
@@ -63,6 +62,44 @@
 	background-color:yellowgreen;
 }
 
-#select-category {
+#select-category, #select-status {
 	border:none;
 }
+
+
+/* Shopping Write CSS */
+.shopping-write-image {
+	width:500px;
+	height:600px;
+    border-radius:50px;
+}
+
+.d-flex {
+	margin-left: 100px;
+}
+
+.left-text,
+.right-text {
+  padding: 0 20px; /* 좌우 여백 설정 */
+}
+
+.right-text {
+	margin-top : 80px;
+}
+
+.product-setting {
+	font-weight: bolder;
+	font-size:18px;
+	display: inline-block;
+    width: 100px; /* 원하는 너비로 설정 */
+    height:50px;
+    text-align: right;
+    padding: 10px;
+    margin-bottom:30px;
+}
+
+.product-input {
+	border:none;
+	width:200px;
+}
+

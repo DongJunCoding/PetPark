@@ -32,7 +32,7 @@ public class NewsController {
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("newsView", newsView);		
-		mv.setViewName("news_view");
+		mv.setViewName("news/news_view");
 		
 		return mv;
 	}

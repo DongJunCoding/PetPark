@@ -1193,70 +1193,84 @@ for(BoardDTO board : recentBoard) {
                         </li>
                     </ul> 
 
-                    <div id="all_shopping" class="container tab-pane fade"><br>
-                        <form action="#" method="post">
-                            <img src="setting/image/logo.png" class="searchlogo">
-                            <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                            </div>
-                        </form>
-                        <table class="shopping_list_table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>                                                                     
-                            </tr>
-                        </table>
-                        <div class="board_list_wrap">
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
-                            </div>
-                        </div>
-                    </div>
-
+					<div id="all_shopping" class="container tab-pane fade"><br>
+					    <form action="#" method="post">
+					        <img src="setting/image/logo.png" class="searchlogo">
+					        <div class="search">
+					            <input class="searchinput" type="text" placeholder="검색" />
+					            <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+					        </div>
+					    </form>
+					
+					    <div class="shopping_list_table">
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <!-- 필요한 만큼 shopping_item 추가 -->
+					    </div>
+					
+					    <div class="board_list_wrap">
+					        <div class="paging">
+					            <a href="#" class="bt">첫 페이지</a>
+					            <a href="#" class="bt">이전 페이지</a>
+					            <a href="#" class="num on">1</a>
+					            <a href="#" class="num">2</a>
+					            <a href="#" class="num">3</a>
+					            <a href="#" class="bt">다음 페이지</a>
+					            <a href="#" class="bt">마지막 페이지</a>
+					        </div>
+					    </div>
+					</div>
+					
                     <div id="food_shopping" class="container tab-pane fade"><br>                     
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
@@ -1265,62 +1279,61 @@ for(BoardDTO board : recentBoard) {
                                 <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
                             </div>
                         </form>
-                        <table class="shopping_list_table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>                                         
-                            </tr>
-                        </table>
+                        <div class="shopping_list_table">
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <!-- 필요한 만큼 shopping_item 추가 -->
+					    </div>
                         <div class="board_list_wrap">
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>
@@ -1342,62 +1355,61 @@ for(BoardDTO board : recentBoard) {
                                 <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
                             </div>
                         </form>
-                        <table class="shopping_list_table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>                                         
-                            </tr>
-                        </table>
+                        <div class="shopping_list_table">
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <!-- 필요한 만큼 shopping_item 추가 -->
+					    </div>
                         <div class="board_list_wrap">
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>
@@ -1419,62 +1431,61 @@ for(BoardDTO board : recentBoard) {
                                 <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
                             </div>
                         </form>
-                        <table class="shopping_list_table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>                                         
-                            </tr>
-                        </table>
+                        <div class="shopping_list_table">
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <!-- 필요한 만큼 shopping_item 추가 -->
+					    </div>
                         <div class="board_list_wrap">
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>
@@ -1496,63 +1507,61 @@ for(BoardDTO board : recentBoard) {
                                 <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
                             </div>
                         </form>
-                        <table class="shopping_list_table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>                                         
-                            </tr>
-                            
-                        </table>
+                        <div class="shopping_list_table">
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <!-- 필요한 만큼 shopping_item 추가 -->
+					    </div>
                         <div class="board_list_wrap">
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>
@@ -1574,62 +1583,61 @@ for(BoardDTO board : recentBoard) {
                                 <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
                             </div>
                         </form>
-                        <table class="shopping_list_table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품명</td><br>
-                                        </tr>
-                                        <tr>
-                                            <td>가격</td>
-                                        </tr>
-                                    </table>
-                                </td>                                         
-                            </tr>
-                        </table>
+                        <div class="shopping_list_table">
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <div class="shopping_item">
+					            <table>
+					                <tr>
+					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
+					                </tr>
+					                <tr>
+					                    <td>상품명</td>
+					                </tr>
+					                <tr>
+					                    <td>가격</td>
+					                </tr>
+					            </table>
+					        </div>
+					        <!-- 필요한 만큼 shopping_item 추가 -->
+					    </div>
                         <div class="board_list_wrap">
                             <div class="paging">
                                 <a href="#" class="bt">첫 페이지</a>

@@ -102,23 +102,23 @@
     <br><br>
     <!-- main 영역 -->
     <main>  	
-	        <div class="summernote-container">        
-	        	<div class="author-field">
-		        <label>작성자: </label><input type="text" name="nickname" id="nickname" value="닉네임" readonly />
-		        <label>카테고리: </label>
-		        <select id="select-category" name="category">		        	
-		        	<option id="select-choice" disabled selected>선택해주세요</option>
-		        	<option value="free_board">자유게시판</option>
-		        	<option value="share_board">나눔게시판</option>
-		        	<option value="qna_board">Q&A게시판</option>
-		        </select>
-		        <br>
-		    	<label>제목: </label>&nbsp;<input type="text" name="subject" id="subject" />   
-		    	</div>     
-		    	<br>
-			    <textarea class="summernote" name="content" id="content"></textarea>		    
-				<button type="button" id="submit-button" class="submit-button">작성완료</button>
-			</div>		
+        <div class="summernote-container">        
+        	<div class="author-field">
+	        <strong>작성자: </strong><input type="text" name="nickname" id="nickname" value="닉네임" readonly />
+	        <strong>카테고리: </strong>
+	        <select id="select-category" name="category">		        	
+	        	<option id="select-choice" disabled selected>선택해주세요</option>
+	        	<option value="free_board">자유게시판</option>
+	        	<option value="share_board">나눔게시판</option>
+	        	<option value="qna_board">Q&A게시판</option>
+	        </select>
+	        <br>
+	    	<strong>제목: </strong>&nbsp;<input type="text" name="subject" id="subject" placeholder="제목을 입력해주세요." />   
+	    	</div>     
+	    	<br>
+		    <textarea class="summernote" name="content" id="content"></textarea>		    
+			<button type="button" id="submit-button" class="submit-button">작성완료</button>
+		</div>		
 
         <script>
 	        $(document).ready(function() {

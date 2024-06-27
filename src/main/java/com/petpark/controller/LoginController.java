@@ -11,7 +11,7 @@ public class LoginController {
 	public ModelAndView login() {
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("login");
+		mv.setViewName("user/login");
 		
 		return mv;
 	}
@@ -19,7 +19,7 @@ public class LoginController {
 	@GetMapping("signup.do")
 	public ModelAndView signup() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("signup");
+		mv.setViewName("user/signup");
 		return mv;
 	}
 }

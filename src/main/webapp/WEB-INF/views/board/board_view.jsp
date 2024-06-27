@@ -37,6 +37,7 @@
 			commentDate = boardComment.getDate();
 			
 			commentSB.append("<span class='author'>" + commentWriter + "</span>");
+			commentSB.append("&nbsp;&nbsp;&nbsp;&nbsp;");
 			commentSB.append("<span>"+commentDate+"</span>");
 			commentSB.append("<p>" + commentContent + "</p>");
 			commentSB.append("<div class='actions'>");

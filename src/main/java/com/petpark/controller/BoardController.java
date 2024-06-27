@@ -33,7 +33,7 @@ public class BoardController {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("board_write");
+		mv.setViewName("board/board_write");
 
 		return mv;
 	}
@@ -52,7 +52,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("result", result);
-		mv.setViewName("board_write_ok");
+		mv.setViewName("board/board_write_ok");
 		return mv;
 	}
 	
@@ -131,7 +131,7 @@ public class BoardController {
 
 		mv.addObject("boardView", boardView);
 		mv.addObject("boardComment", boardComment);
-		mv.setViewName("board_view");
+		mv.setViewName("board/board_view");
 		
 		return mv;
 	}
@@ -148,7 +148,7 @@ public class BoardController {
 	
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("result", result);
-		mv.setViewName("board_delete_ok");
+		mv.setViewName("board/board_delete_ok");
 		
 		// 완료 후 메인페이지로 이동
 		return mv;
@@ -167,7 +167,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("board", board);
-		mv.setViewName("board_write_modify");
+		mv.setViewName("board/board_write_modify");
 		
 		return mv;
 	}
@@ -189,7 +189,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("result", result);
-		mv.setViewName("board_modify_ok");
+		mv.setViewName("board/board_modify_ok");
 		
 		return mv;
 	}
@@ -208,7 +208,7 @@ public class BoardController {
 		
 		mv.addObject("boardNo", boardNo);
 		mv.addObject("result", result);
-		mv.setViewName("board_comment_write_ok");
+		mv.setViewName("board/board_comment_write_ok");
 		
 		return mv;
 	}
@@ -226,7 +226,7 @@ public class BoardController {
 		
 		mv.addObject("result", result);
 		mv.addObject("boardNo", boardNo);
-		mv.setViewName("board_comment_delete_ok");
+		mv.setViewName("board/board_comment_delete_ok");
 		
 		return mv;
 	}
@@ -245,7 +245,7 @@ public class BoardController {
 		
 		mv.addObject("result", result);
 		mv.addObject("boardNo", board_no);
-		mv.setViewName("board_comment_modify_ok");
+		mv.setViewName("board/board_comment_modify_ok");
 		return mv;
 	}
 }
