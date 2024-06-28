@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+        <mapper namespace="com.petpark.mapper.ShoppingMapper">
+        	<insert id="insertProduct">
+        		insert into shopping values(0, 
+        		#{product_image}, 
+        		#{product_name}, 
+        		#{product_kind}, 
+        		#{product_price}, 
+        		#{product_count}, 
+        		#{product_status}, 
+        		#{product_content}, 
+        		now(), 0);
+        	</insert>
+        	
+        	<select id="selectProductAll" resultType="com.petpark.dto.ShoppingDTO">
+        		select * from shopping
+        	</select>
+        </mapper>

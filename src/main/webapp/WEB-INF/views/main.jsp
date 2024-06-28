@@ -1,3 +1,4 @@
+<%@page import="com.petpark.dto.ShoppingDTO"%>
 <%@page import="com.petpark.dto.BoardDTO"%>
 <%@page import="com.petpark.dto.PageDTO"%>
 <%@page import="java.io.Console"%>
@@ -8,12 +9,13 @@
     
 <%
 ArrayList<CrawlingDTO> recentNews = new ArrayList<CrawlingDTO>();
-
 recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
 
 ArrayList<BoardDTO> recentBoard = new ArrayList<BoardDTO>();
-
 recentBoard = (ArrayList<BoardDTO>)request.getAttribute("boards");
+
+ArrayList<ShoppingDTO> shoppingList = new ArrayList<ShoppingDTO>();
+shoppingList = (ArrayList<ShoppingDTO>)request.getAttribute("shoppingList");
 
 String kakaoAPI_KEY = (String)request.getAttribute("kakaoAPI_KEY");
 
@@ -338,6 +340,131 @@ for(BoardDTO board : recentBoard) {
 	}
 	
 	/* ====================== 커뮤니티 AJAX 끝 ======================= */
+	
+	
+	/* ====================== 쇼핑 AJAX 시작 ====================== */
+	
+	// 페이징 + 페이지별 뉴스 데이터 가져오기 ( 카테고리별 )
+	function boardPage(pageNum, category, searchInput) {
+		$.ajax({
+			type:'GET', // 타입 ( GET, POST, PUT 등... )
+			url:'/boardList.do', // 요청할 URL 서버
+			async:true,	 // 비동기화 여부 ( default : true ) / true : 비동기 , false : 동기
+			dataType:'json', // 데이터 타입 ( HTML, XML, JSON, TEXT 등 .. )
+			data: { // 보낼 데이터 설정
+				'currentPage' : pageNum,
+				'category' : category,
+				'searchInput' : searchInput
+			},
+			success: function(page) { // 결과 성공 콜백함수
+				
+				let postsPerPages = page.postsPerPage;
+				
+				let boardSB = new StringBuilder();
+								
+				postsPerPages.forEach(postsPerPage => {
+					boardSB.append("<tr>");
+					boardSB.append("<td>" + postsPerPage.board_id + "</td>");
+					boardSB.append("<td class='tit'>");
+					boardSB.append("<a href='/boardView.do?board_id=" + postsPerPage.board_id + "'>" + postsPerPage.subject + "</a>");
+					boardSB.append("</td>");
+					boardSB.append("<td>" + postsPerPage.writer + "</td>");
+					boardSB.append("<td>" + postsPerPage.date + "</td>");
+					boardSB.append("<td>" + postsPerPage.view_count + "</td>");
+					boardSB.append("</tr>");
+	            });
+	            
+				// 해당 페이지와 카테고리별 데이터를 가져온다.
+	            document.getElementById(category + "TableBody").innerHTML = boardSB.toString();
+	            				
+				// 페이징
+				let pagination = page.page;
+				
+				let pageSB = new StringBuilder();
+				
+				
+				if(searchInput != null) {
+					
+					pageSB.append("<a href='#' class='bt' onclick='boardPage("+1+",\""+category+"\",\"" + searchInput + "\")'>첫 페이지</a>");
+	                
+	                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
+					if(pagination.startPage > 1) {	
+						pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage - 5)+",\""+category+"\",\"" + searchInput + "\")'>이전 페이지</a>");
+					} else {
+	                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
+						
+					}
+	                
+	                // 페이지가 5개씩 보이게 설정하였으며 시작페이지부터 끝페이지(5페이지)가 뜨도록 반복문을 통해 처리
+					for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
+						
+						// 매개변수로 받은 현재페이지번호(pageNum)와 i의 값이 같으면 class='num on'을 통해 현재 페이지 색깔 넣어줌  
+	                    if(pageNum == i) {                    	
+	                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
+	                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
+	                    	pageSB.append("<a href='#' class='num' onclick='boardPage("+i+",\""+category+"\",\"" + searchInput + "\")'>" + i + "</a>");                                     	
+	                    }   
+
+					}
+	                
+	                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
+					if(pagination.endPage < pagination.totalPages) {					
+	                	pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage + 5)+",\""+category+"\",\"" + searchInput + "\")'>다음 페이지</a>");
+					} else {
+						pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
+					}
+					
+	                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
+	                pageSB.append("<a href='#' class='bt' onclick='boardPage("+pagination.totalPages+",\""+category+"\",\"" + searchInput + "\")'>마지막 페이지</a>");
+					
+				} else {
+					
+	                pageSB.append("<a href='#' class='bt' onclick='boardPage("+1+",\""+category+"\")'>첫 페이지</a>");
+	                
+	                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
+					if(pagination.startPage > 1) {	
+						pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage - 5)+",\""+category+"\")'>이전 페이지</a>");
+					} else {
+	                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
+						
+					}
+	                
+	                // 페이지가 5개씩 보이게 설정하였으며 시작페이지부터 끝페이지(5페이지)가 뜨도록 반복문을 통해 처리
+					for(let i = pagination.startPage; i <= pagination.endPage; i++) {			
+						
+						// 매개변수로 받은 현재페이지번호(pageNum)와 i의 값이 같으면 class='num on'을 통해 현재 페이지 색깔 넣어줌  
+	                    if(pageNum == i) {                    	
+	                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
+	                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
+	                    	pageSB.append("<a href='#' class='num' onclick='boardPage("+i+",\""+category+"\")'>" + i + "</a>");                                     	
+	                    }   
+	
+					}
+	                
+	                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
+					if(pagination.endPage < pagination.totalPages) {					
+	                	pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage + 5)+",\""+category+"\")'>다음 페이지</a>");
+					} else {
+						pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
+					}
+					
+	                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
+	                pageSB.append("<a href='#' class='bt' onclick='boardPage("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
+                
+				}
+				
+				document.getElementById(category + "Paging").innerHTML = pageSB.toString();
+	            
+				$("#"+ category +"-size").text('Total : '+pagination.totalPost).css('color','orange').css('float','right');
+				
+			},
+			error: function(error) { // 결과 에러 콜백함수
+				console.log("AJAX 요청 실패");
+			}
+		});
+	}
+	
+	/* ====================== 쇼핑 AJAX 끝 ======================= */
 		
 	// StringBuilder 유틸리티
 	class StringBuilder {
