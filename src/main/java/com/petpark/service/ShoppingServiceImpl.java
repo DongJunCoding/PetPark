@@ -24,31 +24,60 @@ public class ShoppingServiceImpl implements ShoppingService {
 	}
 
 	@Override
-	public ArrayList<ShoppingDTO> selectProductKind() {
+	public ShoppingDTO shoppingView(String shoppingId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<ShoppingDTO> selectProductAll() {
-
-		ArrayList<ShoppingDTO> ShoppingList = new ArrayList<ShoppingDTO>();
-		
-		ShoppingList = shoppingMapper.selectProductAll();
-		
-		return ShoppingList;
-	}
-
-	@Override
-	public ShoppingDTO selectProduct(String productId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int deleteProduct(String productId) {
+	public int shoppingDataSizeAll() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int shoppingDataSize(String productKind) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<ShoppingDTO> postsPerPage(String productKind, int startIndex, int countInedex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<ShoppingDTO> postsPerPageAll(int startIndex, int countIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int searchShoppingDataSize(String shoppingKind, String searchInput) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<ShoppingDTO> searchPostsPerPage(String shoppingKind, String searchInput, int startIndex,
+			int countIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int searchShoppingDataSizeAll(String searchInput) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<ShoppingDTO> searchPostsPerPageAll(String searchInput, int startIndex, int countIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

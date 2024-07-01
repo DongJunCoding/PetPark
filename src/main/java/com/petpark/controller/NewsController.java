@@ -40,7 +40,6 @@ public class NewsController {
 	/* 
 	 * AJAX를 사용하여 페이징 처리와 페이지에 따른 데이터를 보여주기 위해 JSON형태로 값을 반환 
 	 * json으로 데이터를 컨트롤하기 위해 Map 사용
-	 * 
 	 * */
 	@ResponseBody
 	@GetMapping("/newsList.do")

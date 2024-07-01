@@ -117,37 +117,37 @@
     <br><br>
     <!-- main 영역 -->
     <main>  	
-        <div class="summernote-container">         	
-            <form action="/shoppingWrite.do" method="POST" enctype="multipart/form-data">
+        <form action="/shoppingWrite.do" method="POST" enctype="multipart/form-data">
+	        <div class="summernote-container">         	
 		    	<div class="d-flex mt-3">
 	            	<div class="left-text flex-grow-1 text-end">
 						<img class="shopping-write-image" id="preview" src="setting/image/코코1.jpg">		
 	                </div>
 	                <div class="right-text flex-grow-1">
-		                	<span class="product-setting">이미지 : </span>&nbsp;<input type="file" name="product-image" id="image-upload" value="" class="board_view_input" style="height:25px;" onchange="previewImage(event)" />    
-		                	<br>
-		                	<span class="product-setting">상품명 : </span>&nbsp;<input type="text" class="product-input" name="subject" id="product-name" placeholder="등록하실 상품명을 입력해주세요." />    
-		                	<br>           	
-					        <span class="product-setting">상품종류 : </span>
-					        <select id="select-category" name="category">		        	
-					        	<option id="select-choice" disabled selected>선택해주세요</option>
-					        	<option value="food">밥</option>
-					        	<option value="snack">간식</option>
-					        	<option value="toy">장난감</option>
-					        	<option value="clothes">의류</option>
-					        	<option value="furniture">가구</option>
-					        </select>	
-					        <br>
-					        <span class="product-setting">가격 : </span><input type="number" class="product-input" name="product-price" id="price" placeholder="상품의 가격을 입력해주세요." />
-					        <br>
-					        <span class="product-setting">수량 : </span><input type="number" class="product-input" name="product-count" id="count" placeholder="상품의 수량을 입력해주세요." />	  
-					        <br>
-					        <span class="product-setting">판매상태 : </span>
-					        <select id="select-status" name="status">		        	
-					        	<option id="select-choice" disabled selected>선택해주세요</option>
-					        	<option value="true">판매중</option>
-					        	<option value="false">품절</option>
-					        </select>	
+	                	<span class="product-setting">이미지 : </span>&nbsp;<input type="file" name="product-image" id="image-upload" value="" class="board_view_input" style="height:25px;" onchange="previewImage(event)" />    
+	                	<br>
+	                	<span class="product-setting">상품명 : </span>&nbsp;<input type="text" class="product-input" name="subject" id="product-name" placeholder="등록하실 상품명을 입력해주세요." />    
+	                	<br>           	
+				        <span class="product-setting">상품종류 : </span>
+				        <select id="select-category" name="category">		        	
+				        	<option id="select-choice" disabled selected>선택해주세요</option>
+				        	<option value="food">밥</option>
+				        	<option value="snack">간식</option>
+				        	<option value="toy">장난감</option>
+				        	<option value="clothes">의류</option>
+				        	<option value="furniture">가구</option>
+				        </select>	
+				        <br>
+				        <span class="product-setting">가격 : </span><input type="number" class="product-input" name="product-price" id="price" placeholder="상품의 가격을 입력해주세요." />
+				        <br>
+				        <span class="product-setting">수량 : </span><input type="number" class="product-input" name="product-count" id="count" placeholder="상품의 수량을 입력해주세요." />	  
+				        <br>
+				        <span class="product-setting">판매상태 : </span>
+				        <select id="select-status" name="status">		        	
+				        	<option id="select-choice" disabled selected>선택해주세요</option>
+				        	<option value="true">판매중</option>
+				        	<option value="false">품절</option>
+				        </select>	
 	                </div>
 	            </div>
 		    	<br><br>
@@ -156,8 +156,8 @@
 		    	</div>
 			    <textarea class="summernote" name="content" id="content"></textarea>		    
 				<button type="submit" id="submit-button" class="submit-button">상품등록</button>
-			</form>    	        		   	                        
-		</div>		
+			</div>		
+		</form>    	        		   	                        
 
         <script>
 	        $(document).ready(function() {

@@ -31,8 +31,6 @@ public class NewsServiceImpl implements NewsService {
 		
 	}
 
-
-
 	// 카테고리별 뉴스 데이터의 개수를 가져온다.
 	@Override
 	public int newsDataSize(String category) {

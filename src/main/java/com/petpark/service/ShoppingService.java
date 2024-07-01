@@ -10,16 +10,30 @@ public interface ShoppingService {
 	public int insertProduct(String productImage, String productName, String productKind, 
 			int productPrice, int productCount, boolean productStatus, String productContent);
 	
-	// 쇼핑 상품 정보 전체 가져오기
-	public ArrayList<ShoppingDTO> selectProductAll();
+	// 쇼핑 데이터 보기
+	public ShoppingDTO shoppingView(String shoppingId);
 	
-	// 카테고리별 쇼핑 상품 리스트
-	public ArrayList<ShoppingDTO> selectProductKind();
+	// 전체 데이터 개수
+	public int shoppingDataSizeAll();
 	
-	// 클릭한 상품 보기
-	public ShoppingDTO selectProduct(String productId);
-	
-	// 상품 삭제
-	public int deleteProduct(String productId);
+	// 상품 종류별 각 데이터의 총 개수
+	public int shoppingDataSize(String productKind);
 
+	// 페이지별 데이터 List ( 검색어가 없고, 각 선택한 카테고리별 전체 )
+	public ArrayList<ShoppingDTO> postsPerPage(String productKind, int startIndex, int countInedex);
+	
+	// 쇼핑 전체 카테고리 데이터 List (검색어 없음)
+	public ArrayList<ShoppingDTO> postsPerPageAll(int startIndex, int countIndex);
+	
+	// 검색한 데이터 개수
+	public int searchShoppingDataSize(String shoppingKind, String searchInput);
+	
+	// 검색한 데이터 list
+	public ArrayList<ShoppingDTO> searchPostsPerPage(String shoppingKind, String searchInput, int startIndex, int countIndex);
+	
+	// 검색한 데이터 전체 카테고리 개수
+	public int searchShoppingDataSizeAll(String searchInput);
+	
+	// 쇼핑 전체 카테고리에서 검색한 데이터
+	public ArrayList<ShoppingDTO> searchPostsPerPageAll(String searchInput, int startIndex, int countIndex);
 }
