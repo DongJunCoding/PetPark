@@ -19,6 +19,11 @@
         		select * from shopping where shopping_id=#{shoppingId}
         	</select>
         	
+        	<!-- 조회수 증가 -->
+        	<update id="viewCount" parameterType="String">
+        		update shopping set count = count + 1 where shopping_id=#{shopping_id};
+        	</update>
+        	
         	<!-- 전체 게시판 데이터 개수 ( 전체 데이터 ) -->
         	<select id="shoppingDataSizeAll" resultType="int">
         		select count(*) from shopping;
@@ -31,24 +36,24 @@
         	      	
         	<!-- 페이지별 보일 데이터(List / 카테고리별 전체 / 검색어 없을 때) -->
         	<select id="postsPerPage" resultType="com.petpark.dto.ShoppingDTO">
-        		select shopping_id, product_image, product_name, date, count from shopping 
+        		select shopping_id, product_image, product_name, product_price, product_count, product_status, date, count from shopping 
         		where product_kind=#{productKind} order by date desc limit #{startIndex}, #{countIndex};
         	</select>
         	
         	<!-- 페이지별 보일 데이터(List / 전체 게시판 ( 데이터 전체 ) / 검색어 없을 때) -->
         	<select id="postsPerPageAll" resultType="com.petpark.dto.ShoppingDTO">
-        		select product_id, product_image, product_name, date, count from shopping order by date desc limit #{startIndex}, #{countIndex};
+        		select shopping_id, product_image, product_name, product_price, product_count, product_status, date, count from shopping order by date desc limit #{startIndex}, #{countIndex};
         	</select>
         	       	
         	<!-- 검색한 뉴스 데이터 개수 -->
         	<select id="searchShoppingDataSize" resultType="int">
-        		select count(product_name) from shopping where shopping_kind = #{shoppingKind} and shopping_name like concat('%', #{searchInput}, '%');
+        		select count(product_name) from shopping where product_kind = #{productKind} and product_name like concat('%', #{searchInput}, '%');
         	</select>
         	
         	<!-- 검색한 뉴스 데이터 -->
         	<select id="searchPostsPerPage" resultType="com.petpark.dto.ShoppingDTO">
-        		select product_id, product_image, product_name, date, count from shopping 
-        		where shopping_kind = #{shoppingKind} and product_name like concat('%', #{searchInput}, '%') 
+        		select shopping_id, product_image, product_name, product_price, product_count, product_status, date, count from shopping 
+        		where product_kind = #{productKind} and product_name like concat('%', #{searchInput}, '%') 
         		order by date desc limit #{startIndex}, #{countIndex};
         	</select>
         	
@@ -59,7 +64,7 @@
         	
         	<!-- 전체 게시판 검색한 뉴스 데이터 -->
         	<select id="searchPostsPerPageAll" resultType="com.petpark.dto.ShoppingDTO">
-        		select product_id, product_image, product_name, date, count from shopping 
+        		select shopping_id, product_image, product_name, product_price, product_count, product_status, date, count from shopping 
         		where product_name like concat('%', #{searchInput}, '%') 
         		order by date desc limit #{startIndex}, #{countIndex};
         	</select>

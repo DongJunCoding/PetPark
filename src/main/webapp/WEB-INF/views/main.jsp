@@ -14,9 +14,6 @@ recentNews = (ArrayList<CrawlingDTO>)request.getAttribute("news");
 ArrayList<BoardDTO> recentBoard = new ArrayList<BoardDTO>();
 recentBoard = (ArrayList<BoardDTO>)request.getAttribute("boards");
 
-ArrayList<ShoppingDTO> shoppingList = new ArrayList<ShoppingDTO>();
-shoppingList = (ArrayList<ShoppingDTO>)request.getAttribute("shoppingList");
-
 String kakaoAPI_KEY = (String)request.getAttribute("kakaoAPI_KEY");
 
 String id = "";
@@ -83,7 +80,6 @@ for(BoardDTO board : recentBoard) {
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>				   
     <link rel="stylesheet" href="setting/css/main.css">	
     
-  
 	<script type="text/javascript">
 	
 	/* ====================== 뉴스 & 소식 AJAX 시작 ====================== */
@@ -342,13 +338,16 @@ for(BoardDTO board : recentBoard) {
 	/* ====================== 커뮤니티 AJAX 끝 ======================= */
 	
 	
+	
+	
+	
 	/* ====================== 쇼핑 AJAX 시작 ====================== */
 	
 	// 페이징 + 페이지별 뉴스 데이터 가져오기 ( 카테고리별 )
-	function boardPage(pageNum, category, searchInput) {
+	function shoppingPage(pageNum, category, searchInput) {
 		$.ajax({
 			type:'GET', // 타입 ( GET, POST, PUT 등... )
-			url:'/boardList.do', // 요청할 URL 서버
+			url:'/shoppingList.do', // 요청할 URL 서버
 			async:true,	 // 비동기화 여부 ( default : true ) / true : 비동기 , false : 동기
 			dataType:'json', // 데이터 타입 ( HTML, XML, JSON, TEXT 등 .. )
 			data: { // 보낼 데이터 설정
@@ -357,25 +356,56 @@ for(BoardDTO board : recentBoard) {
 				'searchInput' : searchInput
 			},
 			success: function(page) { // 결과 성공 콜백함수
-				
+							
 				let postsPerPages = page.postsPerPage;
 				
-				let boardSB = new StringBuilder();
-								
+				let shoppingSB = new StringBuilder();
+				
 				postsPerPages.forEach(postsPerPage => {
-					boardSB.append("<tr>");
-					boardSB.append("<td>" + postsPerPage.board_id + "</td>");
-					boardSB.append("<td class='tit'>");
-					boardSB.append("<a href='/boardView.do?board_id=" + postsPerPage.board_id + "'>" + postsPerPage.subject + "</a>");
-					boardSB.append("</td>");
-					boardSB.append("<td>" + postsPerPage.writer + "</td>");
-					boardSB.append("<td>" + postsPerPage.date + "</td>");
-					boardSB.append("<td>" + postsPerPage.view_count + "</td>");
-					boardSB.append("</tr>");
+					shoppingSB.append("<div class='shopping_item'>");
+					
+					shoppingSB.append("<table>");
+					
+					shoppingSB.append("<tr>");
+					shoppingSB.append("<td>상품번호 : " + postsPerPage.shopping_id + "</td>");
+					shoppingSB.append("</tr>");
+					
+					shoppingSB.append("<tr>");
+					shoppingSB.append("<td>");
+					shoppingSB.append("<a href='/shoppingView.do?shopping_id="+postsPerPage.shopping_id+"'>");					
+					shoppingSB.append("<img class='shopping_list_image' src='setting/shopping_image/" + postsPerPage.product_image + "'>");
+					shoppingSB.append("</a>");
+					shoppingSB.append("</td>");
+					shoppingSB.append("</tr>");
+					
+					shoppingSB.append("<tr>");
+					shoppingSB.append("<td>상품명 : ");
+					shoppingSB.append("<a href='/shoppingView.do?shopping_id="+postsPerPage.shopping_id+"'</a>" + postsPerPage.product_name);
+					shoppingSB.append("</td>");
+					shoppingSB.append("</tr>");
+					
+					shoppingSB.append("<tr>");
+					shoppingSB.append("<td>가격 : " + postsPerPage.product_price + "</td>");
+					shoppingSB.append("</tr>");	
+					
+					shoppingSB.append("<tr>");
+					shoppingSB.append("<td>");
+					if(postsPerPage.product_status === true) {
+					shoppingSB.append("판매상태 : <strong>판매중 ("+postsPerPage.product_count+"개)</strong>");			
+					} else if(postsPerPage.product_status === false) {
+						shoppingSB.append("판매상태 : <strong>품절</strong>");		
+					}
+					shoppingSB.append("</td>");
+					shoppingSB.append("</tr>");
+					
+					shoppingSB.append("</table>");	
+					
+					shoppingSB.append("</div>");			
+
 	            });
 	            
 				// 해당 페이지와 카테고리별 데이터를 가져온다.
-	            document.getElementById(category + "TableBody").innerHTML = boardSB.toString();
+	            document.getElementById(category + "TableBody").innerHTML = shoppingSB.toString();
 	            				
 				// 페이징
 				let pagination = page.page;
@@ -385,11 +415,11 @@ for(BoardDTO board : recentBoard) {
 				
 				if(searchInput != null) {
 					
-					pageSB.append("<a href='#' class='bt' onclick='boardPage("+1+",\""+category+"\",\"" + searchInput + "\")'>첫 페이지</a>");
+					pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+1+",\""+category+"\",\"" + searchInput + "\")'>첫 페이지</a>");
 	                
 	                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
 					if(pagination.startPage > 1) {	
-						pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage - 5)+",\""+category+"\",\"" + searchInput + "\")'>이전 페이지</a>");
+						pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+(pagination.startPage - 5)+",\""+category+"\",\"" + searchInput + "\")'>이전 페이지</a>");
 					} else {
 	                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
 						
@@ -402,28 +432,28 @@ for(BoardDTO board : recentBoard) {
 	                    if(pageNum == i) {                    	
 	                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
 	                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
-	                    	pageSB.append("<a href='#' class='num' onclick='boardPage("+i+",\""+category+"\",\"" + searchInput + "\")'>" + i + "</a>");                                     	
+	                    	pageSB.append("<a href='#' class='num' onclick='shoppingPage("+i+",\""+category+"\",\"" + searchInput + "\")'>" + i + "</a>");                                     	
 	                    }   
 
 					}
 	                
 	                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
 					if(pagination.endPage < pagination.totalPages) {					
-	                	pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage + 5)+",\""+category+"\",\"" + searchInput + "\")'>다음 페이지</a>");
+	                	pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+(pagination.startPage + 5)+",\""+category+"\",\"" + searchInput + "\")'>다음 페이지</a>");
 					} else {
 						pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
 					}
 					
 	                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
-	                pageSB.append("<a href='#' class='bt' onclick='boardPage("+pagination.totalPages+",\""+category+"\",\"" + searchInput + "\")'>마지막 페이지</a>");
+	                pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+pagination.totalPages+",\""+category+"\",\"" + searchInput + "\")'>마지막 페이지</a>");
 					
 				} else {
 					
-	                pageSB.append("<a href='#' class='bt' onclick='boardPage("+1+",\""+category+"\")'>첫 페이지</a>");
+	                pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+1+",\""+category+"\")'>첫 페이지</a>");
 	                
 	                // 시작 페이지가 1보다 클 경우에는 이전 페이지가 실행이 되지만 그러지 않을 경우에는 반응하지 않게 설정
 					if(pagination.startPage > 1) {	
-						pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage - 5)+",\""+category+"\")'>이전 페이지</a>");
+						pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+(pagination.startPage - 5)+",\""+category+"\")'>이전 페이지</a>");
 					} else {
 	                	pageSB.append("<a href='#' class='bt disabled'>이전 페이지</a>");     
 						
@@ -436,26 +466,25 @@ for(BoardDTO board : recentBoard) {
 	                    if(pageNum == i) {                    	
 	                    	pageSB.append("<a href='#' class='num on'>" + i + "</a>");                    	
 	                    } else { // 현재페이지가 아닌 번호에는 클릭시 카테고리와 페이지 번호를 page함수로 다시 전달하여 페이지 이동이 가능하도록 처리 
-	                    	pageSB.append("<a href='#' class='num' onclick='boardPage("+i+",\""+category+"\")'>" + i + "</a>");                                     	
+	                    	pageSB.append("<a href='#' class='num' onclick='shoppingPage("+i+",\""+category+"\")'>" + i + "</a>");                                     	
 	                    }   
 	
 					}
 	                
 	                // 끝페이지가 전체 페이지보다 작다면 다음 페이지 버튼이 작동하도록 처리 아닐경우 무반응
 					if(pagination.endPage < pagination.totalPages) {					
-	                	pageSB.append("<a href='#' class='bt' onclick='boardPage("+(pagination.startPage + 5)+",\""+category+"\")'>다음 페이지</a>");
+	                	pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+(pagination.startPage + 5)+",\""+category+"\")'>다음 페이지</a>");
 					} else {
 						pageSB.append("<a href='#' class='bt disabled'>다음 페이지</a>");
 					}
 					
 	                // 마지막 페이지로가기는 전체 페이지의 수를 넣어 마지막페이지로 가도록 처리 
-	                pageSB.append("<a href='#' class='bt' onclick='boardPage("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
+	                pageSB.append("<a href='#' class='bt' onclick='shoppingPage("+pagination.totalPages+",\""+category+"\")'>마지막 페이지</a>");
                 
 				}
 				
 				document.getElementById(category + "Paging").innerHTML = pageSB.toString();
-	            
-				$("#"+ category +"-size").text('Total : '+pagination.totalPost).css('color','orange').css('float','right');
+
 				
 			},
 			error: function(error) { // 결과 에러 콜백함수
@@ -490,7 +519,10 @@ for(BoardDTO board : recentBoard) {
 		} else if (category === 'all_board' || category === 'free_board' || category === 'share_board' || category === 'qna_board' || category === 'notice_board') {
 			let searchInput = document.getElementById(category + "-input").value;
 			boardPage(pageNum, category, searchInput);
-		}
+		} else if (category === 'all_product' || category === 'food' || category === 'snack' || category === 'toy' || category === 'clothes' || category === 'furniture') {
+			let searchInput = document.getElementById(category + "-input").value;
+			shoppingPage(pageNum, category, searchInput);
+		} 
 	}
 	
 	
@@ -1301,22 +1333,22 @@ for(BoardDTO board : recentBoard) {
                 <div id="shopping" class="container tab-pane fade"><br>
                     <ul class="nav" role="tablist">
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#all_shopping">전체</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#all_shopping" onclick="shoppingPage(1, 'all_product')">전체</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#food_shopping">밥</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#food_shopping" onclick="shoppingPage(1, 'food')">밥</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#snack_shopping">간식</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#snack_shopping" onclick="shoppingPage(1, 'snack')">간식</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#toy_shopping">장난감</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#toy_shopping" onclick="shoppingPage(1, 'toy')">장난감</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#clothes_shopping">의류</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#clothes_shopping" onclick="shoppingPage(1, 'clothes')">의류</a>
                         </li>
                         <li class="nav-item">
-                            <a class="board-nav-link" data-bs-toggle="tab" href="#furniture_shopping">가구</a>
+                            <a class="board-nav-link" data-bs-toggle="tab" href="#furniture_shopping" onclick="shoppingPage(1, 'furniture')">가구</a>
                         </li>
                     </ul> 
 
@@ -1324,153 +1356,38 @@ for(BoardDTO board : recentBoard) {
 					    <form action="#" method="post">
 					        <img src="setting/image/logo.png" class="searchlogo">
 					        <div class="search">
-					            <input class="searchinput" type="text" placeholder="검색" />
-					            <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+					            <input class="searchinput" type="text" placeholder="검색" id="all_product-input" onkeydown="handleKeyDown(event, 'all_product')">
+					            <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1,'all_product')">
 					        </div>
 					    </form>
 					
-					    <div class="shopping_list_table">
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <!-- 필요한 만큼 shopping_item 추가 -->
-					    </div>
-					
-					    <div class="board_list_wrap">
-					        <div class="paging">
-					            <a href="#" class="bt">첫 페이지</a>
-					            <a href="#" class="bt">이전 페이지</a>
-					            <a href="#" class="num on">1</a>
-					            <a href="#" class="num">2</a>
-					            <a href="#" class="num">3</a>
-					            <a href="#" class="bt">다음 페이지</a>
-					            <a href="#" class="bt">마지막 페이지</a>
-					        </div>
-					    </div>
+						<div class="shopping_list_table" id="all_productTableBody">
+
+			            </div>
+			            
+			            <div class="board_list_wrap">
+		                    <div class="paging" id="all_productPaging">
+		
+		                    </div>   
+                        </div>			
 					</div>
-					
+				
                     <div id="food_shopping" class="container tab-pane fade"><br>                     
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                                <input class="searchinput" type="text" placeholder="검색" id="food-input" onkeydown="handleKeyDown(event, 'food')"/>
+                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1, 'food')">
                             </div>
                         </form>
-                        <div class="shopping_list_table">
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <!-- 필요한 만큼 shopping_item 추가 -->
-					    </div>
-                        <div class="board_list_wrap">
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
-                            </div>
+						<div class="shopping_list_table" id="foodTableBody">
+
+			            </div>
+			            
+			            <div class="board_list_wrap">
+		                    <div class="paging" id="foodPaging">
+		
+		                    </div>   
                         </div>
                     </div>
 
@@ -1478,75 +1395,19 @@ for(BoardDTO board : recentBoard) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                                <input class="searchinput" type="text" placeholder="검색" id="snack-input" onkeydown="handleKeyDown(event, 'snack')"/>
+                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1, 'snack')">
                             </div>
                         </form>
-                        <div class="shopping_list_table">
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <!-- 필요한 만큼 shopping_item 추가 -->
-					    </div>
-                        <div class="board_list_wrap">
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
-                            </div>
+                        
+                        <div class="shopping_list_table" id="snackTableBody">
+
+			            </div>
+			            
+			            <div class="board_list_wrap">
+		                    <div class="paging" id="snackPaging">
+		
+		                    </div>   
                         </div>
                     </div>
 
@@ -1554,75 +1415,18 @@ for(BoardDTO board : recentBoard) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                                <input class="searchinput" type="text" placeholder="검색" id="toy-input" onkeydown="handleKeyDown(event, 'toy')"/>
+                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1, 'toy')">
                             </div>
                         </form>
-                        <div class="shopping_list_table">
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <!-- 필요한 만큼 shopping_item 추가 -->
-					    </div>
-                        <div class="board_list_wrap">
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
-                            </div>
+                        <div class="shopping_list_table" id="toyTableBody">
+
+			            </div>
+			            
+			            <div class="board_list_wrap">
+		                    <div class="paging" id="toyPaging">
+		
+		                    </div>   
                         </div>
                     </div>
 
@@ -1630,75 +1434,18 @@ for(BoardDTO board : recentBoard) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                                <input class="searchinput" type="text" placeholder="검색" id="clothes-input" onkeydown="handleKeyDown(event, 'clothes')"/>
+                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1, 'clothes')">
                             </div>
                         </form>
-                        <div class="shopping_list_table">
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <!-- 필요한 만큼 shopping_item 추가 -->
-					    </div>
-                        <div class="board_list_wrap">
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
-                            </div>
+                        <div class="shopping_list_table" id="clothesTableBody">
+
+			            </div>
+			            
+			            <div class="board_list_wrap">
+		                    <div class="paging" id="clothesPaging">
+		
+		                    </div>   
                         </div>
                     </div>
 
@@ -1706,75 +1453,18 @@ for(BoardDTO board : recentBoard) {
                         <form action="#" method="post">
                             <img src="setting/image/logo.png" class="searchlogo">
                             <div class="search">
-                                <input class="searchinput" type="text" placeholder="검색" />
-                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                                <input class="searchinput" type="text" placeholder="검색" id="furniture-input" onkeydown="handleKeyDown(event, 'furniture')"/>
+                                <img class="searchimage" type="submit" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="search(1, 'furniture')">
                             </div>
                         </form>
-                        <div class="shopping_list_table">
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <div class="shopping_item">
-					            <table>
-					                <tr>
-					                    <td><img class="shopping_list_image" src="setting/image/코코2.jpg"></td>
-					                </tr>
-					                <tr>
-					                    <td>상품명</td>
-					                </tr>
-					                <tr>
-					                    <td>가격</td>
-					                </tr>
-					            </table>
-					        </div>
-					        <!-- 필요한 만큼 shopping_item 추가 -->
-					    </div>
-                        <div class="board_list_wrap">
-                            <div class="paging">
-                                <a href="#" class="bt">첫 페이지</a>
-                                <a href="#" class="bt">이전 페이지</a>
-                                <a href="#" class="num on">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="bt">다음 페이지</a>
-                                <a href="#" class="bt">마지막 페이지</a>
-                            </div>
+                        <div class="shopping_list_table" id="furnitureTableBody">
+
+			            </div>
+			            
+			            <div class="board_list_wrap">
+		                    <div class="paging" id="furniturePaging">
+		
+		                    </div>   
                         </div>
                     </div>
                 </div>    

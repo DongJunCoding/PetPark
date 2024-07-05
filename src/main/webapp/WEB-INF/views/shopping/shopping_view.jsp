@@ -1,21 +1,22 @@
-<%@page import="com.petpark.controller.BoardController"%>
-<%@page import="com.petpark.dto.CommentDTO"%>
-<%@page import="com.petpark.dto.BoardDTO"%>
-<%@page import="com.petpark.dto.CrawlingDTO"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="com.petpark.dto.ShoppingDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
-	BoardDTO boardView = (BoardDTO)request.getAttribute("boardView");
+	ShoppingDTO shoppingView = (ShoppingDTO)request.getAttribute("shoppingView");
 	
-	String boardId = boardView.getBoard_id();
-	String category = boardView.getCategories();
-	String subject = boardView.getSubject();
-	String writer = boardView.getWriter();
-	String date = boardView.getDate();
-	String content = boardView.getContent();
+	String shoppingId = shoppingView.getShopping_id();
+	String category = shoppingView.getProduct_kind();
+	String image = shoppingView.getProduct_image();
+	String subject = shoppingView.getProduct_name();
+	int price = shoppingView.getProduct_price();
+	int productCount = shoppingView.getProduct_count();
+	boolean status = shoppingView.isProduct_status();
+	String content = shoppingView.getProduct_content();
+	String date = shoppingView.getDate();
+	int count = shoppingView.getCount();
 	
+	/*
 	ArrayList<CommentDTO> boardComments = (ArrayList<CommentDTO>)request.getAttribute("boardComment");
 	
 	String commentId = "";
@@ -67,9 +68,11 @@
 			commentSB.append("</div>");
 			
 			commentSB.append("<hr>");
-		}
-		
-	}
+		}		
+	}	
+	*/
+	
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,6 +88,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="setting/css/board_view.css">
+    <link rel="stylesheet" href="setting/css/summernote.css">
         
     <script>
 		function commentReply(commentId) {
@@ -116,71 +120,65 @@
 	    	<div class="board_view_top">
 		        <h1><%=subject %></h1>
 		        <br>
-		        <p><%=writer %></p>
 		        <p id="board_view_p_date"><%=date %></p>
 		        
-		        <%if(category.equals("free_board")) {  %>
-		        <strong>자유게시판</strong>
-		        <%} else if(category.equals("share_board")) {%>
-		        <strong>나눔게시판</strong>
-		        <%} else if(category.equals("qna_board")) {%>
-		        <strong>Q & A게시판</strong>
-		        <%} else if(category.equals("notice_board")) {%>
-		        <strong>공지사항</strong>
+		        <%if(category.equals("food")) {  %>
+		        <strong>밥</strong>
+		        <%} else if(category.equals("snack")) {%>
+		        <strong>간식</strong>
+		        <%} else if(category.equals("toy")) {%>
+		        <strong>장난감</strong>
+		        <%} else if(category.equals("clothes")) {%>
+		        <strong>의류</strong>
+		      	<%} else if(category.equals("furniture")) {%>
+		        <strong>가구</strong>
 		        <%}%>
 		        
 	        </div>
 	    	<div class="board_content">
 		        <hr>
 				<!-- 실제 게시글 내용 -->
-		        <span>
-		        	<%=content %>
-		        </span>
+		        <div class="d-flex mt-3">
+	            	<div class="left-text flex-grow-1 text-end">
+						<img class="shopping-write-image" id="preview" src="setting/image/코코1.jpg">		
+	                </div>
+	                <div class="right-text flex-grow-1">	                
+	                	<span class="product-setting">상품명 : <%=subject %> </span>    
+	                	<br>           	
+				        <span class="product-setting">상품종류 : <%=category %></span>				        
+				        <br>
+				        <span class="product-setting">가격 : <%=price %></span>
+				        <br>
+				        <span class="product-setting">수량 : <%=productCount %></span>
+				        <br>
+				        <span class="product-setting">판매상태 : <%=status %></span>
+	                </div>
+	            </div>
+		    	<br><br>
+		    	<div>
+		    		<h3>상세내용</h3>
+		    		<br><br>
+		    		
+		    		<span>
+		    			<%=content %>
+		    		</span>
+		    	</div>
      	        
 		        <br><br>
 		        <div>
-		        	<button class="board-button-reply">답글달기</button>
-		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=boardId%>">수정</a>
-		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=boardId%>">삭제</a>
+		        	 <!-- <button class="board-button-reply">답글달기</button> -->
+		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=shoppingId%>">수정</a>
+		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=shoppingId%>">삭제</a>
 		        	<a id="board-list-btn" href="/petpark.do#board">목록</a>
 		        </div>
 		        <hr>
 		        <br>
-	        			
-				<div class="comment_list">
-					<h2>댓글</h2>
-					<br>
-					<div class="comment">
-					<%if(boardComments != null) { %>
-					    <%=commentSB %>
-					<%} else {%>
-							<span>댓글을 작성해주세요 !</span>
-					<%} %>	
-					</div>	
-				</div>
-				
-				
-				<div class="card mb-2 comment">
-					<div class="card-header bg-light">
-						<i class="fa fa-comment fa"></i> 댓글 쓰기
-					</div>
-					<div class="card-body">
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">
-						    	<!-- 댓글 form -->
-								<form action="commentWrite.do" method="POST">
-									<input type="hidden" name="board-no" value="<%=boardId %>" />
-									<div class="form-inline mb-2">
-										<input type="text" class="form-control" name="comment-writer" id="replyId" value="댓글닉네임" readonly>
-										<label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
-									</div>
-									<textarea class="form-control" name="comment-content" id="exampleFormControlTextarea1" rows="3"></textarea>
-									<button type="submit" class="btn btn-dark mt-3" id="comment-btn">댓글 달기</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-				</div>				
+	        	
+	        	<!-- 
+	        	
+	        	댓글이 필요하면 게시판 View에 가서 가져오기
+	        	
+	        	 -->	
 	        </div>
 		</div>
     </main>

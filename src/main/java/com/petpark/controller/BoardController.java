@@ -107,7 +107,7 @@ public class BoardController {
 		Map<String, Object> response = new HashMap<String, Object>();
 		
 		response = boardServiceImpl.postsPerPage(category, currentPage, boardSize, searchInput);
-		
+			
 		return response;
 	}
 	
