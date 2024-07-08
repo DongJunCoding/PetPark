@@ -86,10 +86,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <link rel="stylesheet" href="setting/css/board_view.css">
     <link rel="stylesheet" href="setting/css/summernote.css">
-        
+    
+    <!--  
     <script>
 		function commentReply(commentId) {
 		   let editForm = document.getElementById('editForm_' + commentId);
@@ -104,6 +108,28 @@
 		}
 			
 	</script>  
+	-->
+	
+	<script>
+		function price(price, count) {
+			$.ajax({
+				type:'GET', // 타입 ( GET, POST, PUT 등... )
+				url:'/price.do', // 요청할 URL 서버
+				async:true,	 // 비동기화 여부 ( default : true ) / true : 비동기 , false : 동기
+				dataType:'json', // 데이터 타입 ( HTML, XML, JSON, TEXT 등 .. )
+				data: { // 보낼 데이터 설정
+					'price' : price,
+					'count' : count
+				},
+				success: function(price) {
+					console.log(price);
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});		
+		}
+	</script>
 </head>
 
 <body>
@@ -142,16 +168,19 @@
 	            	<div class="left-text flex-grow-1 text-end">
 						<img class="shopping-write-image" id="preview" src="setting/image/코코1.jpg">		
 	                </div>
-	                <div class="right-text flex-grow-1">	                
-	                	<span class="product-setting">상품명 : <%=subject %> </span>    
+	                <div class="right-text flex-grow-1">
+	                	<span class="product-setting">상품명 : </span>&nbsp;<input type="text" class="product-input" name="subject" id="product-name" placeholder="<%=subject %>" />    
 	                	<br>           	
-				        <span class="product-setting">상품종류 : <%=category %></span>				        
+				        <span class="product-setting">수량 : </span><input type="number" class="product-input" name="select-count" id="count" placeholder="상품의 수량을 입력해주세요." />	  
 				        <br>
-				        <span class="product-setting">가격 : <%=price %></span>
+				        <span class="product-setting">가격 : </span>&nbsp;<span id="money"><%=price %></span><span>원</span>
 				        <br>
-				        <span class="product-setting">수량 : <%=productCount %></span>
-				        <br>
-				        <span class="product-setting">판매상태 : <%=status %></span>
+				        <span class="product-setting">판매상태 : </span>
+				        <%if(status == true) { %>
+				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="<%=status %>" /> 
+				        <%} else if(status == false) {%>
+				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="<%=status %>" /> 
+				        <%} %>
 	                </div>
 	            </div>
 		    	<br><br>
@@ -166,10 +195,9 @@
      	        
 		        <br><br>
 		        <div>
-		        	 <!-- <button class="board-button-reply">답글달기</button> -->
 		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=shoppingId%>">수정</a>
 		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=shoppingId%>">삭제</a>
-		        	<a id="board-list-btn" href="/petpark.do#board">목록</a>
+		        	<a id="board-list-btn" href="/petpark.do#shopping">목록</a>
 		        </div>
 		        <hr>
 		        <br>
