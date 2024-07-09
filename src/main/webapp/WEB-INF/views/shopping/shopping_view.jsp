@@ -111,18 +111,34 @@
 	-->
 	
 	<script>
-		function price(price, count) {
+	
+	    function validateAndSendPrice(input) {
+	        let value = parseInt(input.value, 10);
+	        if (isNaN(value) || value < 0) {
+	            value = 0; // 유효하지 않은 값인 경우 기본값을 0으로 설정
+	            input.value = 0;
+	        } else if (value > 999) {
+	            value = 999; // 값을 최대값으로 제한
+	            input.value = 999;
+	        }
+	        price(value);
+	    }	
+	
+		let shoppingId = '<%=shoppingId%>';
+		function price( count) {
 			$.ajax({
 				type:'GET', // 타입 ( GET, POST, PUT 등... )
 				url:'/price.do', // 요청할 URL 서버
 				async:true,	 // 비동기화 여부 ( default : true ) / true : 비동기 , false : 동기
 				dataType:'json', // 데이터 타입 ( HTML, XML, JSON, TEXT 등 .. )
 				data: { // 보낼 데이터 설정
-					'price' : price,
+					'shoppingId' : shoppingId,
 					'count' : count
 				},
-				success: function(price) {
-					console.log(price);
+				success: function(response) {
+					console.log(response.price);
+					let formattedPrice = Number(response.price).toLocaleString();
+					$('#money').text(formattedPrice);
 				},
 				error: function(error) {
 					console.log(error);
@@ -171,16 +187,20 @@
 	                <div class="right-text flex-grow-1">
 	                	<span class="product-setting">상품명 : </span>&nbsp;<input type="text" class="product-input" name="subject" id="product-name" placeholder="<%=subject %>" />    
 	                	<br>           	
-				        <span class="product-setting">수량 : </span><input type="number" class="product-input" name="select-count" id="count" placeholder="상품의 수량을 입력해주세요." />	  
+				        <span class="product-setting">수량 : </span><input type="number" class="product-input" name="select-count" id="count" placeholder="0" max="999" oninput="validateAndSendPrice(this)" />	  
 				        <br>
-				        <span class="product-setting">가격 : </span>&nbsp;<span id="money"><%=price %></span><span>원</span>
+				        <span class="product-setting">가격 : </span>&nbsp;<span id="money"></span><span>원</span>
 				        <br>
 				        <span class="product-setting">판매상태 : </span>
 				        <%if(status == true) { %>
-				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="<%=status %>" /> 
+				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="판매중" /> 
 				        <%} else if(status == false) {%>
-				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="<%=status %>" /> 
+				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="품절" /> 
 				        <%} %>
+	                </div>
+	                
+	                <div>
+	                	<label>선택한 상품</label>
 	                </div>
 	            </div>
 		    	<br><br>

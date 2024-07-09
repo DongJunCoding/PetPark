@@ -117,13 +117,7 @@ public class ShoppingController {
 			currentPage = Integer.parseInt(currentPageStr);
 			
 		}
-							
-		System.out.println();
-		System.out.println("currentPage : " + currentPage);
-		System.out.println("searchInput : " + searchInput);
-		System.out.println("category : " + category);
-		
-	
+
 		// 뉴스 리스트 검색을 한다면
 		if(searchInput != null) {			
 			// 페이징 설정을 위해 해당 카테고리의 뉴스 데이터 size를 가져옴
@@ -157,6 +151,22 @@ public class ShoppingController {
 		mv.addObject("shoppingView", shoppingView);
 		mv.setViewName("shopping/shopping_view");
 		return mv;
+	}
+	
+	@ResponseBody
+	@GetMapping("/price.do")
+	public Map<String, Object> shoppingPrice(HttpServletRequest req) {
+			
+		String shoppingId = req.getParameter("shoppingId");
+		String count = req.getParameter("count");
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		if(shoppingId != null && count != null) {
+			response = shoppingServiceImpl.selectPrice(shoppingId, count);
+		}
+		
+		return response;
 	}
 	
 }

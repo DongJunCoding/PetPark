@@ -126,4 +126,18 @@ public class ShoppingServiceImpl implements ShoppingService {
 			return searchBoardDataSize;			
 		}
 	}
+
+	@Override
+	public Map<String, Object> selectPrice(String shopping_id, String count) {
+		
+		int productCount = Integer.parseInt(count);		
+		int price = shoppingMapper.selectPrice(shopping_id);
+		int productPrice = productCount * price;
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("price", productPrice);
+		
+		return response;
+	}
 }

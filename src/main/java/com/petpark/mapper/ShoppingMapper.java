@@ -42,4 +42,7 @@ public interface ShoppingMapper {
 	
 	// 쇼핑 전체 카테고리에서 검색한 데이터
 	public ArrayList<ShoppingDTO> searchPostsPerPageAll(String searchInput, int startIndex, int countIndex);
+	
+	// 수량변동시 가격변동에 필요한 price 데이터 가져오기 
+	public int selectPrice(String shopping_id);
 }

@@ -21,4 +21,7 @@ public interface ShoppingService {
 		
 	// 검색한 데이터 개수
 	public int searchShoppingDataSize(String productKind, String searchInput);
+	
+	// 수량변동시 가격변동에 필요한 price 데이터 가져오기 
+	public Map<String, Object> selectPrice(String shopping_id, String count);
 }
