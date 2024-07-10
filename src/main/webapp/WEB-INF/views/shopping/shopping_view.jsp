@@ -111,12 +111,17 @@
 	-->
 	
 	<script>
+
+	    $(document).ready(function() {
+	        let productPrice = Number(<%= price %>).toLocaleString();
+	        $('#money').text(productPrice);
+	    });
 	
 	    function validateAndSendPrice(input) {
 	        let value = parseInt(input.value, 10);
 	        if (isNaN(value) || value < 0) {
-	            value = 0; // 유효하지 않은 값인 경우 기본값을 0으로 설정
-	            input.value = 0;
+	            value = 1; // 유효하지 않은 값인 경우 기본값을 0으로 설정
+	            input.value = 1;
 	        } else if (value > 999) {
 	            value = 999; // 값을 최대값으로 제한
 	            input.value = 999;
@@ -125,7 +130,7 @@
 	    }	
 	
 		let shoppingId = '<%=shoppingId%>';
-		function price( count) {
+		function price(count) {
 			$.ajax({
 				type:'GET', // 타입 ( GET, POST, PUT 등... )
 				url:'/price.do', // 요청할 URL 서버
@@ -136,14 +141,28 @@
 					'count' : count
 				},
 				success: function(response) {
-					console.log(response.price);
 					let formattedPrice = Number(response.price).toLocaleString();
-					$('#money').text(formattedPrice);
+					$('#total-money').text(formattedPrice);
+					$('#product-count').text(count);
+					$('#select-product-count').val(count);
+					$('#select-product-total-money').val(formattedPrice);
 				},
 				error: function(error) {
 					console.log(error);
 				}
 			});		
+		}
+		
+		
+		window.onload = function() {
+			document.getElementById('payment-button').onclick = function() {
+				let countString = document.getElementById('select-count').value;
+								
+				if(countString == null || countString == 0) {
+					alert('수량을 입력해주세요.');
+					return false;
+				}
+			}
 		}
 	</script>
 </head>
@@ -180,14 +199,14 @@
 	    	<div class="board_content">
 		        <hr>
 				<!-- 실제 게시글 내용 -->
-		        <div class="d-flex mt-3">
-	            	<div class="left-text flex-grow-1 text-end">
-						<img class="shopping-write-image" id="preview" src="setting/image/코코1.jpg">		
+		        <div class="d-flex mt-3 shopping-view-div">
+	            	<div class="">
+						<img class="shopping-write-image" id="preview" src="setting/shopping_image/<%=image%>">		
 	                </div>
 	                <div class="right-text flex-grow-1">
 	                	<span class="product-setting">상품명 : </span>&nbsp;<input type="text" class="product-input" name="subject" id="product-name" placeholder="<%=subject %>" />    
 	                	<br>           	
-				        <span class="product-setting">수량 : </span><input type="number" class="product-input" name="select-count" id="count" placeholder="0" max="999" oninput="validateAndSendPrice(this)" />	  
+				        <span class="product-setting">수량 : </span><input type="number" class="product-input" id="select-count" name="select-count" id="count" placeholder="0" max="<%=productCount %>" oninput="validateAndSendPrice(this)"  />	  
 				        <br>
 				        <span class="product-setting">가격 : </span>&nbsp;<span id="money"></span><span>원</span>
 				        <br>
@@ -197,11 +216,34 @@
 				        <%} else if(status == false) {%>
 				        &nbsp;<input type="text" class="product-input" name="status" id="product-name" placeholder="품절" /> 
 				        <%} %>
+				        <br>
+				        
+		                <div class="select-product-info">		                
+		                	<div class="select-product">
+			                	<strong>선택한 상품</strong>
+		                	</div>		                	
+		                	<br>
+		                	<form action="/payment.do" method="GET">	                		
+		                		<input type="hidden" name="shoppingId" value="<%=shoppingId%>"/>
+		                		<input type="hidden" name="product-image" value="<%=image%>"/>
+			                	<span>상품 : <%=subject %></span>
+			                	<input type="hidden" name="select-product" value="<%=subject%>" />
+			                	<br>
+			                	<span>수량 : </span><span id="product-count"></span>
+			                	<input type="hidden" id="select-product-count" name="select-product-count" value="" />
+			                	<br>
+			                	<span>총금액 : </span><span id="total-money"></span><span>원</span>
+			                	<input type="hidden" id="select-product-total-money" name="select-product-total-money" value="" />
+			                	<br>
+			                	
+								<div class="select-product">
+				                	<button id="payment-button">결제하기</button>
+				                </div>	
+			                </form>		                
+		                </div>
+		                
 	                </div>
 	                
-	                <div>
-	                	<label>선택한 상품</label>
-	                </div>
 	            </div>
 		    	<br><br>
 		    	<div>
@@ -215,8 +257,8 @@
      	        
 		        <br><br>
 		        <div>
-		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=shoppingId%>">수정</a>
-		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=shoppingId%>">삭제</a>
+		        	<a id="board-modify-btn" href="boardModify.do?board_id=<%=shoppingId %>">수정</a>
+		        	<a id="board-delete-btn" href="boardDelete.do?board_id=<%=shoppingId %>">삭제</a>
 		        	<a id="board-list-btn" href="/petpark.do#shopping">목록</a>
 		        </div>
 		        <hr>
@@ -246,7 +288,7 @@
                 <div class="col-xs-6 col-md-3">
                     <h6>Developer</h6>
                     <ul class="footer-links">
-                        이동준 ( ehdwns977@gmail.com )
+                        <li>이동준 ( ehdwns977@gmail.com )</li>
                     </ul>
                     <p>문의사항은 이메일로 부탁드립니다.</p>
                 </div>   

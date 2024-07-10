@@ -356,12 +356,17 @@ for(BoardDTO board : recentBoard) {
 				'searchInput' : searchInput
 			},
 			success: function(page) { // 결과 성공 콜백함수
-							
+											
 				let postsPerPages = page.postsPerPage;
-				
+										
 				let shoppingSB = new StringBuilder();
 				
 				postsPerPages.forEach(postsPerPage => {
+					
+					let price = parseInt(postsPerPage.product_price);
+					
+					let formattedPrice = Number(price).toLocaleString();
+					
 					shoppingSB.append("<div class='shopping_item'>");
 					
 					shoppingSB.append("<table>");
@@ -385,7 +390,7 @@ for(BoardDTO board : recentBoard) {
 					shoppingSB.append("</tr>");
 					
 					shoppingSB.append("<tr>");
-					shoppingSB.append("<td>가격 : " + postsPerPage.product_price + "</td>");
+					shoppingSB.append("<td>가격 : " + formattedPrice + "</td>");
 					shoppingSB.append("</tr>");	
 					
 					shoppingSB.append("<tr>");

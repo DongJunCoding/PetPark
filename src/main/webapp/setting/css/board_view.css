@@ -173,3 +173,68 @@ header {
 .footer-links a{
   color:#737373
 }
+
+
+/* Shopping Write CSS */
+
+.shopping-view-div {
+	float:center;
+}
+
+.shopping-write-image {
+	width:500px;
+	height:600px;
+    border-radius:50px;
+}
+
+.d-flex {
+	margin-left: 100px;
+}
+
+.left-text,
+.right-text {
+  padding: 0 20px; /* 좌우 여백 설정 */
+}
+
+.right-text {
+	margin-top : 80px;
+}
+
+.product-setting {
+	font-weight: bolder;
+	font-size:18px;
+	display: inline-block;
+    width: 100px; /* 원하는 너비로 설정 */
+    height:50px;
+    text-align: right;
+    padding: 10px;
+    margin-bottom:30px;
+}
+
+.select-product-info {
+	border:none;
+	border-radius:10px;
+	width:500px;
+	padding:40px;
+	background-color:#FBF6E2;
+}
+
+.product-input {
+	border:none;
+	width:200px;
+}
+
+.select-product {
+	text-align:center;
+	float:center;
+}
+
+#payment-button {
+	border:none;
+	border-radius: 100px;
+	padding: 5px 10px;
+}
+
+#payment-button:hover {
+	background-color:yellowgreen;
+}

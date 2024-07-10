@@ -169,4 +169,24 @@ public class ShoppingController {
 		return response;
 	}
 	
+	
+	@GetMapping("/payment.do")
+	public ModelAndView payment(HttpServletRequest req) {
+		String shoppingId = req.getParameter("shoppingId");
+		String productImage = req.getParameter("product-image");
+		String productName = req.getParameter("select-product");
+		String productCount = req.getParameter("select-product-count");
+		String productPrice = req.getParameter("select-product-total-money");
+			
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("shoppingId",shoppingId);
+		mv.addObject("productImage",productImage);
+		mv.addObject("productName",productName);
+		mv.addObject("productCount",productCount);
+		mv.addObject("productPrice",productPrice);
+		mv.setViewName("shopping/payment");
+		
+		return mv;
+	}
 }
