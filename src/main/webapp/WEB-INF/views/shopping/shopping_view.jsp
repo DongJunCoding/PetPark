@@ -234,16 +234,13 @@
 			                	<br>
 			                	<span>총금액 : </span><span id="total-money"></span><span>원</span>
 			                	<input type="hidden" id="select-product-total-money" name="select-product-total-money" value="" />
-			                	<br>
-			                	
+			                	<br>		                	
 								<div class="select-product">
 				                	<button id="payment-button">결제하기</button>
 				                </div>	
 			                </form>		                
-		                </div>
-		                
-	                </div>
-	                
+		                </div>	                
+	                </div>	                
 	            </div>
 		    	<br><br>
 		    	<div>

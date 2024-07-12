@@ -2,11 +2,18 @@
     pageEncoding="UTF-8"%>
     
 <%
+	String storeId = (String)request.getAttribute("storeId");
+	String identificationCode = (String)request.getAttribute("identificationCode");
+	String portOneAPIKEY = (String)request.getAttribute("portOneAPIKEY");
+	String portOneSecretKey = (String)request.getAttribute("portOneSecretKey");
+	
 	String shoppingId = (String)request.getAttribute("shoppingId");
 	String productImage = (String)request.getAttribute("productImage");
 	String productName = (String)request.getAttribute("productName");
 	String productCount = (String)request.getAttribute("productCount");
-	String productPrice = (String)request.getAttribute("productPrice");
+	String productPriceString = (String)request.getAttribute("productPrice");
+	
+	int productPrice = Integer.parseInt(productPriceString.replace(",", ""));
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,11 +22,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetPark</title> 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
-    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     
     <link rel="stylesheet" href="setting/css/payment.css">
 
     <script>  
+    /*
         function sample6_execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -67,7 +79,33 @@
                 }
             }).open();
         }
- 
+ 	*/
+        IMP.init('<%=identificationCode%>');
+        function requestPay() {        	  
+        	let merchant_uid  = "O" + new Date().getTime()
+        	console.log(payment_uid);
+        	IMP.request_pay(
+       		  {
+       		    pg: "html5_inicis",
+       		    pay_method: "card",
+       		    merchant_uid: merchant_uid , // 주문 고유 번호
+       		    name: "<%=productName%>",
+       		    amount: 1000,
+       		    buyer_email: "gildong@gmail.com",
+       		    buyer_name: "홍길동",
+       		    buyer_tel: "010-4242-4242",
+       		    buyer_addr: "서울특별시 강남구 신사동",
+       		    buyer_postcode: "01181",
+       		  },
+       		  function (response) {  			  
+       			  if(response.success) {
+       		          console.log("결제 성공");
+       			  } else {
+       				  console.log("결제 실패");
+       			  }
+       		  },
+       		);
+        }
     </script>
 </head>
 <body>
@@ -83,7 +121,7 @@
     <main>
         <fieldset id="fieldset">
             <a href="petpark.do"><img id="logo_home" src="setting/image/home.png"></a>
-            <form class="joinForm" id="paymentForm">        
+            <form class="joinForm">        
 
 				<h2>배송지</h2>
 
@@ -124,8 +162,7 @@
                     <h5>가격</h5><input name="product-price" type="text" class="input_text"  id="sample6_address" value="<%=productPrice%>" readonly><br>
                 </div>  
 
-                <input type="submit" class="btn on" value="회원가입"/>
-
+                <input type="button" class="btn on" value="결제" onclick="requestPay()"/>
             </form>
         </fieldset>
     </main>

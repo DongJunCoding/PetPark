@@ -26,8 +26,20 @@ public class ShoppingController {
 	@Autowired
 	private ShoppingServiceImpl shoppingServiceImpl;
 	
-	@Value("spring.servlet.multipart.location")
+	@Value("${spring.servlet.multipart.location}")
 	private String uploadDirectory;
+	
+	@Value("${portOne-Store-ID}")
+	private String storeId;
+	
+	@Value("${portOne-identification-code}")
+	private String identificationCode;
+	
+	@Value("${portOne-V1-REST-API-KEY}")
+	private String portOneAPIKEY;
+	
+	@Value("${portOne-V1-REST-API-Secret}")
+	private String portOneSecretKey;
 
 	@GetMapping("/shoppingWrite.do")
 	public ModelAndView shoppingWrite(HttpServletRequest req) {
@@ -141,7 +153,7 @@ public class ShoppingController {
 	
 	@GetMapping("/shoppingView.do")
 	public ModelAndView shoppingView(HttpServletRequest req) {
-		
+				
 		String shoppingId = req.getParameter("shopping_id");
 		
 		ShoppingDTO shoppingView = shoppingServiceImpl.shoppingView(shoppingId);
@@ -172,6 +184,12 @@ public class ShoppingController {
 	
 	@GetMapping("/payment.do")
 	public ModelAndView payment(HttpServletRequest req) {
+
+		String storeId = this.storeId;
+		String identificationCode = this.identificationCode;
+		String portOneAPIKEY = this.portOneAPIKEY;
+		String portOneSecretKey = this.portOneSecretKey;
+		
 		String shoppingId = req.getParameter("shoppingId");
 		String productImage = req.getParameter("product-image");
 		String productName = req.getParameter("select-product");
@@ -180,11 +198,17 @@ public class ShoppingController {
 			
 		ModelAndView mv = new ModelAndView();
 		
+		mv.addObject("storeId",storeId);
+		mv.addObject("identificationCode",identificationCode);
+		mv.addObject("portOneAPIKEY",portOneAPIKEY);
+		mv.addObject("portOneSecretKey",portOneSecretKey);
+		
 		mv.addObject("shoppingId",shoppingId);
 		mv.addObject("productImage",productImage);
 		mv.addObject("productName",productName);
 		mv.addObject("productCount",productCount);
 		mv.addObject("productPrice",productPrice);
+		
 		mv.setViewName("shopping/payment");
 		
 		return mv;
